@@ -1,5 +1,4 @@
-using Back_End.Contexts;
-using Back_End.Services;
+using Backend.Contexts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using NSwag;
@@ -17,20 +16,13 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
-builder.Services.AddDbContext<TodoItemContext>(opt =>
-    opt.UseInMemoryDatabase(configuration.GetConnectionString("DatabaseConnection"))
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+
+builder.Services.AddDbContext<DataContext>(o =>
+    o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
-builder.Services.AddScoped<TodoItemService>();
 
-builder.Services.AddDbContext<TodoListContext>(opt =>
-    opt.UseInMemoryDatabase(configuration.GetConnectionString("DatabaseConnection"))
-);
-builder.Services.AddScoped<TodoListService>();
-
-builder.Services.AddScoped<IUserService, UserService>();
-
-builder.Services.AddAuthentication("BasicAuthentication")
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+builder.Services.AddScoped<DataContext>();
 
 builder.Services.AddAuthorization();
 
@@ -53,6 +45,9 @@ builder.Services.AddOpenApiDocument(document =>
 });
 
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
