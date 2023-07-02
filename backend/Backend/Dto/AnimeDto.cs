@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Backend.Models
+﻿using System;
+namespace Backend.Dto
 {
-    public class Anime
-    {
-        [Key]
+	public class AnimeDto
+	{
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -12,9 +10,6 @@ namespace Backend.Models
         public string ImageURL { get; set; }
 
         public string Description { get; set; }
-
-        public ICollection<Bookmark> Bookmarks { get; set; }
-
     }
 }
 

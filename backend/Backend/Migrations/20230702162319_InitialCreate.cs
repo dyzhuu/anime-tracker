@@ -20,10 +20,12 @@ namespace Backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ImageURL = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<int>(type: "int", nullable: false)
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -37,7 +39,7 @@ namespace Backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(type: "longtext", nullable: false)
+                    Username = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Password = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
@@ -49,27 +51,26 @@ namespace Backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "SavedAnimes",
+                name: "Bookmarks",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AnimeId = table.Column<int>(type: "int", nullable: false),
-                    AnimeId1 = table.Column<int>(type: "int", nullable: false),
                     Review = table.Column<int>(type: "int", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SavedAnimes", x => new { x.AnimeId, x.UserId });
+                    table.PrimaryKey("PK_Bookmarks", x => new { x.AnimeId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_SavedAnimes_Animes_AnimeId1",
-                        column: x => x.AnimeId1,
+                        name: "FK_Bookmarks_Animes_AnimeId",
+                        column: x => x.AnimeId,
                         principalTable: "Animes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SavedAnimes_Users_AnimeId",
-                        column: x => x.AnimeId,
+                        name: "FK_Bookmarks_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -77,16 +78,16 @@ namespace Backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SavedAnimes_AnimeId1",
-                table: "SavedAnimes",
-                column: "AnimeId1");
+                name: "IX_Bookmarks_UserId",
+                table: "Bookmarks",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SavedAnimes");
+                name: "Bookmarks");
 
             migrationBuilder.DropTable(
                 name: "Animes");

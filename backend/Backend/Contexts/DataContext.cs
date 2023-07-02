@@ -13,18 +13,22 @@ namespace Backend.Contexts
 
 		public DbSet<Anime> Animes { get; set; }
 
-		public DbSet<SavedAnime> SavedAnimes { get; set; }
+		public DbSet<Bookmark> Bookmarks { get; set; }
 
 		public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-			modelBuilder.Entity<SavedAnime>()
-				.HasKey(savedAnime => new { savedAnime.AnimeId, savedAnime.UserId });
-			modelBuilder.Entity<SavedAnime>()
-				.HasOne(savedAnime => savedAnime.User)
-				.WithMany(user => user.SavedAnimes)
-				.HasForeignKey(savedAnime => savedAnime.AnimeId);
+            modelBuilder.Entity<Bookmark>()
+				.HasKey(b => new { b.AnimeId, b.UserId });
+			modelBuilder.Entity<Bookmark>()
+				.HasOne(b => b.User)
+				.WithMany(user => user.Bookmarks)
+				.HasForeignKey(b => b.UserId);
+			modelBuilder.Entity<Bookmark>()
+				.HasOne(b => b.Anime)
+				.WithMany(a => a.Bookmarks)
+				.HasForeignKey(b => b.AnimeId);
         }
     }
 }

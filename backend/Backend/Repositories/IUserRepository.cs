@@ -7,15 +7,20 @@ namespace Backend.Repositories
 	{
 		ICollection<User> GetUsers();
 
-		User GetUser(string username);
+		User GetUser(int id);
 
-		ICollection<SavedAnime> GetSavedAnimes();
+        User GetUser(string username);
 
-		SavedAnime GetSavedAnime(int id);
+        User CreateUser(User user);
 
-		SavedAnime GetSavedAnime(string title);
+		ICollection<Bookmark> GetBookmarks(int userId);
 
-		bool SaveAnimeExists(int id);
+		Bookmark GetBookmark(int animeId, int userId);
+
+		bool UserExists(int userId);
+
+		bool CreateBookmark(Bookmark bookmark);
+
 	}
 }
 

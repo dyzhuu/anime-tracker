@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230701141635_InitialCreate")]
+    [Migration("20230702162319_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,22 +27,24 @@ namespace Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Description")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Title")
-                        .HasColumnType("int");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("Animes");
                 });
 
-            modelBuilder.Entity("Backend.Models.SavedAnime", b =>
+            modelBuilder.Entity("Backend.Models.Bookmark", b =>
                 {
                     b.Property<int>("AnimeId")
                         .HasColumnType("int");
@@ -50,20 +52,17 @@ namespace Backend.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AnimeId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("Review")
                         .HasColumnType("int");
 
-                    b.Property<int>("status")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("AnimeId", "UserId");
 
-                    b.HasIndex("AnimeId1");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("SavedAnimes");
+                    b.ToTable("Bookmarks");
                 });
 
             modelBuilder.Entity("Backend.Models.User", b =>
@@ -76,7 +75,7 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -85,17 +84,17 @@ namespace Backend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Backend.Models.SavedAnime", b =>
+            modelBuilder.Entity("Backend.Models.Bookmark", b =>
                 {
-                    b.HasOne("Backend.Models.User", "User")
-                        .WithMany("SavedAnimes")
+                    b.HasOne("Backend.Models.Anime", "Anime")
+                        .WithMany("Bookmarks")
                         .HasForeignKey("AnimeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Models.Anime", "Anime")
-                        .WithMany()
-                        .HasForeignKey("AnimeId1")
+                    b.HasOne("Backend.Models.User", "User")
+                        .WithMany("Bookmarks")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -104,9 +103,14 @@ namespace Backend.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Backend.Models.Anime", b =>
+                {
+                    b.Navigation("Bookmarks");
+                });
+
             modelBuilder.Entity("Backend.Models.User", b =>
                 {
-                    b.Navigation("SavedAnimes");
+                    b.Navigation("Bookmarks");
                 });
 #pragma warning restore 612, 618
         }
