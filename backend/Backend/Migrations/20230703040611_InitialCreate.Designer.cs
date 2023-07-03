@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230702162319_InitialCreate")]
+    [Migration("20230703040611_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace Backend.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Review")
+                    b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")

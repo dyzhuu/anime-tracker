@@ -15,21 +15,24 @@ namespace Backend.Repositories
             _context = context;
         }
 
-        public User CreateUser(User user)
+        //scuffed CHANGE TO LOGIN AND REGISTER
+        public bool CreateUser(User user)
         {
             _context.Add(user);
-            _context.SaveChanges();
-            return user;
+            return _context.SaveChanges() > 0 ? true : false;
         }
 
-        public Bookmark GetBookmark(int animeId, int userId)
+        //Users
+        public bool UpdateUser(User user)
         {
-            return _context.Bookmarks.Where(a => a.AnimeId == animeId).Where(u => u.User.Id == userId).FirstOrDefault();
+            //FIXME
+            _context.Update(user);
+            return _context.SaveChanges() > 0 ? true : false;
         }
 
-        public ICollection<Bookmark> GetBookmarks(int userId)
+        public ICollection<User> GetUsers()
         {
-            return _context.Bookmarks.Where(b => b.User.Id == userId).Include(b => b.Anime).OrderBy(b => b.Anime.Title).ToList();
+            return _context.Users.OrderBy(u => u.Id).Include(u => u.Bookmarks).ToList();
         }
 
         public User GetUser(int userId)
@@ -42,14 +45,25 @@ namespace Backend.Repositories
             return _context.Users.Where(u => u.Username == username).FirstOrDefault();
         }
 
-        public ICollection<User> GetUsers()
-        {
-            return _context.Users.OrderBy(u => u.Id).ToList();
-        }
-
         public bool UserExists(int userId)
         {
             return _context.Users.Any(u => u.Id == userId);
+        }
+
+        //Bookmarks
+        public ICollection<Bookmark> GetBookmarks(int userId)
+        {
+            return _context.Bookmarks.Where(b => b.User.Id == userId).Include(b => b.Anime).OrderBy(b => b.Anime.Title).ToList();
+        }
+
+        public Bookmark GetBookmark(int userId, int animeId)
+        {
+            return _context.Bookmarks.Where(a => a.AnimeId == animeId).Where(u => u.User.Id == userId).Include(b => b.Anime).Include(b => b.User).FirstOrDefault();
+        }
+
+        public bool BookmarkExists(int userId, int animeId)
+        {
+            return _context.Bookmarks.Where(b => b.UserId == userId).Any(b => b.AnimeId == animeId);
         }
 
         public bool CreateBookmark(Bookmark bookmark)
@@ -58,6 +72,14 @@ namespace Backend.Repositories
             return _context.SaveChanges() > 0 ? true : false;
         }
 
+        public bool UpdateBookmark(BookmarkDto bookmarkDto)
+        {
+            Bookmark existingBookmark = GetBookmark(bookmarkDto.UserId, bookmarkDto.AnimeId);
+            existingBookmark.Rating = bookmarkDto.Rating;
+            existingBookmark.Status = bookmarkDto.Status;
+
+            return _context.SaveChanges() > 0 ? true : false;
+        }
     }
 }
 

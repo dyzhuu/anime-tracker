@@ -1,12 +1,15 @@
 ﻿
 using System;
-namespace Backend.Dto
+
+namespace Backend.Dtos
 {
 	public class UserDto
 	{
+		public int Id { get; set; }
+
 		public string Username { get; set; }
 
 		public string Password { get; set; }
-	}
+    }
 }
 

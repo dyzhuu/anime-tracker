@@ -1,6 +1,6 @@
 ﻿using System;
 using Backend.Models;
-using Backend.Dto;
+using Backend.Dtos;
 
 namespace Backend.Services
 {
@@ -8,7 +8,7 @@ namespace Backend.Services
 	{
         AnimeDto GetAnime(int id);
 
-        Anime CreateAnime(AnimeDto animeDto);
+        bool CreateAnime(AnimeDto animeDto);
     }
 }
 

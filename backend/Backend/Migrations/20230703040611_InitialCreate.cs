@@ -56,7 +56,7 @@ namespace Backend.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AnimeId = table.Column<int>(type: "int", nullable: false),
-                    Review = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

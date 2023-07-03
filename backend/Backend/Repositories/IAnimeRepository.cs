@@ -7,7 +7,7 @@ namespace Backend.Repositories
 	{
 		Anime GetAnime(int id);
 
-        Anime CreateAnime(Anime anime);
+        bool CreateAnime(Anime anime);
 	}
 }
 

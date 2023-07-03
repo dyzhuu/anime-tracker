@@ -13,7 +13,7 @@ namespace Backend.Models
 
         public virtual Anime Anime { get; set; }
 
-        public int Review { get; set; }
+        public int Rating { get; set; }
 
         public Status Status { get; set; }
     }

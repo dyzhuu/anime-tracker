@@ -28,11 +28,17 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
-
+// establish connection to database
 var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
 
 builder.Services.AddDbContext<DataContext>(o =>
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+);
+
+// Manage JSON output
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
 builder.Services.AddAuthorization();

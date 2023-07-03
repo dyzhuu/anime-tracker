@@ -11,19 +11,22 @@ namespace Backend.Repositories
         public AnimeRepository(DataContext context)
         {
             _context = context;
-
         }
 
-        public Anime CreateAnime(Anime anime)
+        public bool CreateAnime(Anime anime)
         {
             _context.Add(anime);
-            _context.SaveChanges();
-            return anime;
+            return _context.SaveChanges() > 0 ? true : false;
         }
 
         public Anime GetAnime(int id)
         {
             return _context.Animes.Where(a => a.Id == id).FirstOrDefault();
+        }
+
+        public bool AnimeExists(int id)
+        {
+            return _context.Animes.Any(a => a.Id == id);
         }
     }
 }

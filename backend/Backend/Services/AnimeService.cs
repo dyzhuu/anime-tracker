@@ -17,7 +17,7 @@ namespace Backend.Services
             _mapper = mapper;
         }
 
-        public Anime CreateAnime(AnimeDto animeDto)
+        public bool CreateAnime(AnimeDto animeDto)
         {
             return _animeRepo.CreateAnime(_mapper.Map<Anime>(animeDto));
         }

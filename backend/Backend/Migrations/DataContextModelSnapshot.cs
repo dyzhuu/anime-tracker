@@ -49,7 +49,7 @@ namespace Backend.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Review")
+                    b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
