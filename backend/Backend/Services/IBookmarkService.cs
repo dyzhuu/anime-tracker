@@ -1,5 +1,5 @@
 ﻿using System;
-using Backend.Dto;
+using Backend.Dtos;
 using Backend.Models;
 
 namespace Backend.Services
@@ -15,6 +15,8 @@ namespace Backend.Services
         bool CreateBookmark(BookmarkDto bookmarkDto);
 
         bool UpdateBookmark(BookmarkDto bookmarkDto);
+
+        bool DeleteBookmark(int userId, int animeId);
     }
 }
 

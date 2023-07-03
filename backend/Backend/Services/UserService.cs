@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using Backend.Dto;
+using Backend.Dtos;
 using Backend.Models;
 using Backend.Repositories;
 
@@ -17,7 +17,7 @@ namespace Backend.Services
             _mapper = mapper;
         }
 
-        //scuffed
+        //FIXME scuffed
         public bool CreateUser(User user)
         {
             return _userRepo.CreateUser(user);
@@ -26,6 +26,12 @@ namespace Backend.Services
         public bool UpdateUser(UserDto userDto)
         {
             return _userRepo.UpdateUser(_mapper.Map<User>(userDto));
+        }
+
+        public bool DeleteUser(int userId)
+        {
+            User user = GetUser(userId);
+            return _userRepo.DeleteUser(user);
         }
 
         public User GetUser(int userId)

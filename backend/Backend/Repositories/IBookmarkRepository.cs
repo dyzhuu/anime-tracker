@@ -15,6 +15,8 @@ namespace Backend.Repositories
         bool CreateBookmark(Bookmark bookmark);
 
         bool UpdateBookmark(BookmarkDto bookmarkDto);
+
+        bool DeleteBookmark(Bookmark bookmark);
     }
 }
 

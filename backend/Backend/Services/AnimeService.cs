@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Backend.Models;
-using Backend.Dto;
+using Backend.Dtos;
 using Backend.Repositories;
 
 namespace Backend.Services

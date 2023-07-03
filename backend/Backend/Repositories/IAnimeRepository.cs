@@ -8,6 +8,8 @@ namespace Backend.Repositories
 		Anime GetAnime(int id);
 
         bool CreateAnime(Anime anime);
+
+		bool AnimeExists(int id);
 	}
 }
 

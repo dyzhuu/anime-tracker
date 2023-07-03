@@ -24,11 +24,19 @@ namespace Backend.Contexts
 			modelBuilder.Entity<Bookmark>()
 				.HasOne(b => b.User)
 				.WithMany(user => user.Bookmarks)
-				.HasForeignKey(b => b.UserId);
+				.HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 			modelBuilder.Entity<Bookmark>()
 				.HasOne(b => b.Anime)
 				.WithMany(a => a.Bookmarks)
-				.HasForeignKey(b => b.AnimeId);
+				.HasForeignKey(b => b.AnimeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Bookmarks)
+                .WithOne(b => b.User)
+				.HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

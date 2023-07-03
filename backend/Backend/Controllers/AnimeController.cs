@@ -1,7 +1,7 @@
 ﻿using System;
 using Backend.Services;
 using Backend.Models;
-using Backend.Dto;
+using Backend.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -42,12 +42,10 @@ namespace Backend.Controllers
 			if (anime != null)
 				return BadRequest("Resource already exists");
 
-			if (!ModelState.IsValid)
-				return BadRequest();
+			if (!_animeService.CreateAnime(animeDto))
+                return StatusCode(500, new { message = "Something went wrong" });
 
-			_animeService.CreateAnime(animeDto);
-
-			return CreatedAtAction(nameof(CreateAnime), animeDto);
+            return CreatedAtAction(nameof(CreateAnime), animeDto);
         }
     }
 }

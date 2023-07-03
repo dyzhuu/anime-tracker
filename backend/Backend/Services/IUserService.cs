@@ -1,6 +1,6 @@
 ﻿using System;
 using Backend.Models;
-using Backend.Dto;
+using Backend.Dtos;
 
 namespace Backend.Services
 {
@@ -17,17 +17,9 @@ namespace Backend.Services
 
         User GetUser(string username);
 
-        ICollection<BookmarkDto> GetBookmarks(int userId);
-
-        Bookmark GetBookmark(int userId, int animeId);
-
         bool UserExists(int userId);
 
-        bool BookmarkExists(int userId, int animeId);
-
-        bool CreateBookmark(BookmarkDto bookmarkDto);
-
-        bool UpdateBookmark(BookmarkDto bookmarkDto);
+        bool DeleteUser(int userId);
 
     }
 }

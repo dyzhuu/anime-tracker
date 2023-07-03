@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using Backend.Dto;
+using Backend.Dtos;
 using Backend.Models;
 using Backend.Repositories;
 
@@ -50,6 +50,12 @@ namespace Backend.Services
         public bool UpdateBookmark(BookmarkDto bookmarkDto)
         {
             return _bookmarkRepo.UpdateBookmark(bookmarkDto);
+        }
+
+        public bool DeleteBookmark(int userId, int animeId)
+        {
+            Bookmark bookmark = GetBookmark(userId, animeId);
+            return _bookmarkRepo.DeleteBookmark(bookmark);
         }
     }
 }

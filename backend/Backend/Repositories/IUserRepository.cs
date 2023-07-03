@@ -1,6 +1,6 @@
 ﻿using System;
 using Backend.Models;
-using Backend.Dto;
+using Backend.Dtos;
 
 namespace Backend.Repositories
 {
@@ -17,17 +17,9 @@ namespace Backend.Repositories
 
         User GetUser(string username);
 
+		bool DeleteUser(User user);
+
         bool UserExists(int userId);
-
-        ICollection<Bookmark> GetBookmarks(int userId);
-
-		Bookmark GetBookmark(int userId, int animeId);
-
-		bool BookmarkExists(int userId, int animeId);
-
-		bool CreateBookmark(Bookmark bookmark);
-
-		bool UpdateBookmark(BookmarkDto bookmarkDto);
 	}
 }
 
