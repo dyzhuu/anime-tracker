@@ -1,0 +1,98 @@
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/appsettings.Development.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/appsettings.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Infrastructure/azure/azuredeploy.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Infrastructure/azure/parameters.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Back-End
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Back-End.deps.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Back-End.runtimeconfig.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Back-End.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Back-End.pdb
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Namotion.Reflection.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NJsonSchema.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NJsonSchema.Yaml.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NSwag.Annotations.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NSwag.AspNetCore.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NSwag.Core.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NSwag.Core.Yaml.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NSwag.Generation.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/NSwag.Generation.AspNetCore.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/bin/Debug/net7.0/YamlDotNet.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.csproj.AssemblyReference.cache
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.AssemblyInfoInputs.cache
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.AssemblyInfo.cs
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.csproj.CoreCompileInputs.cache
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.MvcApplicationPartsAssemblyInfo.cs
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.MvcApplicationPartsAssemblyInfo.cache
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.Back-End.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.build.Back-End.props
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.Back-End.props
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.Back-End.props
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets.pack.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets.build.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/staticwebassets.development.json
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/scopedcss/bundle/Back-End.styles.css
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.csproj.CopyComplete
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/refint/Back-End.dll
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.pdb
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/Back-End.genruntimeconfig.cache
+/Users/davidzhu/Projects/MSA23 Phase 2/backend/Back-End/obj/Debug/net7.0/ref/Back-End.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/appsettings.Development.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/appsettings.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Infrastructure/azure/azuredeploy.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Infrastructure/azure/parameters.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Back-End
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Back-End.deps.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Back-End.runtimeconfig.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Back-End.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Back-End.pdb
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Namotion.Reflection.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NJsonSchema.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NJsonSchema.Yaml.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NSwag.Annotations.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NSwag.AspNetCore.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NSwag.Core.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NSwag.Core.Yaml.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NSwag.Generation.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/NSwag.Generation.AspNetCore.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/bin/Debug/net7.0/YamlDotNet.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.csproj.AssemblyReference.cache
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.AssemblyInfoInputs.cache
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.AssemblyInfo.cs
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.csproj.CoreCompileInputs.cache
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.MvcApplicationPartsAssemblyInfo.cs
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.MvcApplicationPartsAssemblyInfo.cache
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.Back-End.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.build.Back-End.props
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.Back-End.props
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.Back-End.props
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets.pack.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets.build.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/staticwebassets.development.json
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/scopedcss/bundle/Back-End.styles.css
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.csproj.CopyComplete
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/refint/Back-End.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.pdb
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/Back-End.genruntimeconfig.cache
+/Users/davidzhu/Projects/MSA23-Project/backend/Back-End/obj/Debug/net7.0/ref/Back-End.dll
