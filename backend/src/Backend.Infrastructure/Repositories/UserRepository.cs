@@ -1,6 +1,6 @@
 ﻿using Backend.Infrastructure.Contexts;
 using Backend.Core.Interfaces;
-using Backend.Core.Models;
+using Backend.Domain;
 
 namespace Backend.Infrastructure.Repositories
 {
@@ -44,6 +44,11 @@ namespace Backend.Infrastructure.Repositories
         public bool UserExists(int userId)
         {
             return _context.Users.Any(u => u.Id == userId);
+        }
+
+        public bool UserExists(string username)
+        {
+            return _context.Users.Any(u => u.Username == username);
         }
 
         public bool DeleteUser(User user)

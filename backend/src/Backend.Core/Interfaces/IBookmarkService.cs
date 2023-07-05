@@ -1,13 +1,11 @@
 ﻿using Backend.Core.Dtos;
-using Backend.Core.Models;
+using Backend.Domain;
 
 namespace Backend.Core.Interfaces
 {
     public interface IBookmarkService
 	{
         ICollection<BookmarkDto> GetBookmarks(int userId);
-
-        Bookmark GetBookmark(int userId, int animeId);
 
         bool BookmarkExists(int userId, int animeId);
 

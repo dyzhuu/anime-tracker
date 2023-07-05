@@ -1,9 +1,8 @@
 ﻿using Backend.Core.Interfaces;
-using Backend.Core.Models;
 using Backend.Core.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers
+namespace Backend.Api.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
@@ -27,12 +26,10 @@ namespace Backend.Controllers
             if (username is null)
                 return BadRequest();
 
-            User user = _userService.GetUser(username);
-
-            if (user != null)
+            if (_userService.UserExists(username))
                 return BadRequest("Resource already exists");
 
-            _userService.CreateUser(new User() { Username = username, Password = password });
+            _userService.CreateUser(new UserDto() { Username = username, Password = password });
 
             return CreatedAtAction(nameof(CreateUser), new { username = username, password = password} );
         }
@@ -61,9 +58,9 @@ namespace Backend.Controllers
         [ProducesResponseType(200)]
         public IActionResult GetUsers()
 		{
-            IEnumerable<User> users = _userService.GetUsers();
+            IEnumerable<UserDto> userDtos = _userService.GetUsers();
 
-            return Ok(users);
+            return Ok(userDtos);
 		}
 
 		[HttpGet("{userId}")]
@@ -71,7 +68,7 @@ namespace Backend.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetUser(int userId)
 		{
-			User user = _userService.GetUser(userId);
+			UserDto user = _userService.GetUser(userId);
 
             if (user is null)
                 return NotFound();

@@ -673,10 +673,16 @@
       "Backend.Core/1.0.0": {
         "dependencies": {
           "AutoMapper": "12.0.1",
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1"
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Backend.Domain": "1.0.0"
         },
         "runtime": {
           "Backend.Core.dll": {}
+        }
+      },
+      "Backend.Domain/1.0.0": {
+        "runtime": {
+          "Backend.Domain.dll": {}
         }
       },
       "Backend.Infrastructure/1.0.0": {
@@ -1131,6 +1137,11 @@
       "hashPath": "yamldotnet.11.2.1.nupkg.sha512"
     },
     "Backend.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Backend.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

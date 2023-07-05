@@ -1,5 +1,5 @@
 ﻿using Backend.Core.Dtos;
-using Backend.Core.Models;
+using Backend.Domain;
 
 namespace Backend.Core.Interfaces
 {

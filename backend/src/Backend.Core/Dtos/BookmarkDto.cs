@@ -1,5 +1,5 @@
 ﻿using System;
-using Backend.Core.Models;
+using Backend.Domain;
 
 namespace Backend.Core.Dtos
 {

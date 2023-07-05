@@ -1,4 +1,4 @@
-﻿using Backend.Core.Models;
+﻿using Backend.Domain;
 using Backend.Infrastructure.Contexts;
 using Backend.Core.Interfaces;
 

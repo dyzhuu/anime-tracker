@@ -27,3 +27,5 @@
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Infrastructure/obj/Debug/net7.0/refint/Backend.Infrastructure.dll
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Infrastructure/obj/Debug/net7.0/Backend.Infrastructure.pdb
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Infrastructure/obj/Debug/net7.0/ref/Backend.Infrastructure.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Infrastructure/bin/Debug/net7.0/Backend.Domain.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Infrastructure/bin/Debug/net7.0/Backend.Domain.pdb

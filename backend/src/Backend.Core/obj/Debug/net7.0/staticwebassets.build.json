@@ -1,11 +1,23 @@
 {
   "Version": 1,
-  "Hash": "zr3k36nsjhztNHzEj8PmkqgxWlEhNQG33oSiPcKYap0=",
+  "Hash": "72q1nrGMruCxMXL/PNCk5HNgf0fxoDin8y7y4AnayrQ=",
   "Source": "Backend.Core",
   "BasePath": "_content/Backend.Core",
   "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Domain/Backend.Domain.csproj",
+      "Version": 2,
+      "Source": "Backend.Domain",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
   "DiscoveryPatterns": [],
   "Assets": []
 }

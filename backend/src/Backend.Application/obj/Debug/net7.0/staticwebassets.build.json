@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "zhUADQNicBExtKiDtgbDqEOQIoK84IHWkndIp0Jbojw=",
+  "Hash": "J69+v57PXN/Esv8lzDjnwKBkwiSkQWljN+VbOzEo/LE=",
   "Source": "Backend.App",
   "BasePath": "_content/Backend.App",
   "Mode": "Default",
@@ -16,6 +16,17 @@
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
       "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
       "AdditionalBuildPropertiesToRemove": "TargetFramework;RuntimeIdentifier;SelfContained"
+    },
+    {
+      "Identity": "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Domain/Backend.Domain.csproj",
+      "Version": 2,
+      "Source": "Backend.Domain",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
     },
     {
       "Identity": "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Infrastructure/Backend.Infrastructure.csproj",

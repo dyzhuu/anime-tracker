@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Backend.Core.Models
+﻿namespace Backend.Domain
 {
-	public class User
-	{
-        [Key]
-        public int Id { get; set; }
-
+    public class User : BaseEntity
+    {
         public string Username { get; set; }
 
         public string Password { get; set; }

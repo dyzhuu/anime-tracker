@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Backend.Core.Models;
+using Backend.Domain;
 
 namespace Backend.Infrastructure.Contexts
 {

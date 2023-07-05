@@ -18,3 +18,6 @@
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Core/obj/Debug/net7.0/refint/Backend.Core.dll
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Core/obj/Debug/net7.0/Backend.Core.pdb
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Core/obj/Debug/net7.0/ref/Backend.Core.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Core/bin/Debug/net7.0/Backend.Domain.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Core/bin/Debug/net7.0/Backend.Domain.pdb
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Core/obj/Debug/net7.0/Backend.Core.csproj.CopyComplete

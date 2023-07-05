@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+3WPa3/1ZwNFMwNaaPJaFzvMfrrIqgCTon4Oo9rHSXBoPaYVqpXqM6G2qjzGfEPFjrRMSN08oQ17u/ir9QOsdA==",
+  "dgSpecHash": "ZXB/z0JI5gLwdoWPVb5TZYRlO8JoOKwcyG0mf1c/lVvmw1+r9ggWCacgziDAT91tuJGMcZXWVMr0UhqFL+tWpw==",
   "success": true,
-  "projectFilePath": "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/Backend.App.csproj",
+  "projectFilePath": "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/Backend.Api.csproj",
   "expectedPackageFiles": [
     "/Users/davidzhu/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/davidzhu/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

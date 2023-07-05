@@ -1,4 +1,4 @@
-﻿using Backend.Core.Models;
+﻿using Backend.Domain;
 
 namespace Backend.Core.Interfaces
 {
@@ -18,6 +18,9 @@ namespace Backend.Core.Interfaces
 		bool DeleteUser(User user);
 
         bool UserExists(int userId);
-	}
+
+        bool UserExists(string username);
+
+    }
 }
 

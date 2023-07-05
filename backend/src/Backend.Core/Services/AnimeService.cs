@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Backend.Core.Models;
+using Backend.Domain;
 using Backend.Core.Dtos;
 using Backend.Core.Interfaces;
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Backend.Core.Dtos;
-using Backend.Core.Models;
+using Backend.Domain;
 using Backend.Core.Interfaces;
 
 namespace Backend.Core.Services
@@ -17,9 +17,9 @@ namespace Backend.Core.Services
         }
 
         //FIXME scuffed
-        public bool CreateUser(User user)
+        public bool CreateUser(UserDto userDto)
         {
-            return _userRepo.CreateUser(user);
+            return _userRepo.CreateUser(_mapper.Map<User>(userDto));
         }
 
         public bool UpdateUser(UserDto userDto)
@@ -29,28 +29,36 @@ namespace Backend.Core.Services
 
         public bool DeleteUser(int userId)
         {
-            User user = GetUser(userId);
+            User user = _userRepo.GetUser(userId);
             return _userRepo.DeleteUser(user);
         }
 
-        public User GetUser(int userId)
+        public UserDto GetUser(int userId)
         {
-            return _userRepo.GetUser(userId);
+            User user = _userRepo.GetUser(userId);
+            return _mapper.Map<UserDto>(user);
         }
 
-        public User GetUser(string username)
+        public UserDto GetUser(string username)
         {
-            return _userRepo.GetUser(username);
+            UserDto userDto = _mapper.Map<UserDto>(_userRepo.GetUser(username));
+            return userDto;
         }
 
-        public ICollection<User> GetUsers()
+        public ICollection<UserDto> GetUsers()
         {
-            return _userRepo.GetUsers();
+            ICollection<UserDto> userDtos = _mapper.Map<List<UserDto>>(_userRepo.GetUsers());
+            return userDtos;
         }
 
         public bool UserExists(int userId)
         {
             return _userRepo.UserExists(userId);
+        }
+
+        public bool UserExists(string username)
+        {
+            return _userRepo.UserExists(username);
         }
     }
 }

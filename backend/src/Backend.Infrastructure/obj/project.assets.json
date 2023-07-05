@@ -241,13 +241,27 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "AutoMapper": "12.0.1",
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1"
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Backend.Domain": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Backend.Core.dll": {}
         },
         "runtime": {
           "bin/placeholder/Backend.Core.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Backend.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Backend.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Backend.Domain.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -668,6 +682,11 @@
       "type": "project",
       "path": "../Backend.Core/Backend.Core.csproj",
       "msbuildProject": "../Backend.Core/Backend.Core.csproj"
+    },
+    "Backend.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Backend.Domain/Backend.Domain.csproj",
+      "msbuildProject": "../Backend.Domain/Backend.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {

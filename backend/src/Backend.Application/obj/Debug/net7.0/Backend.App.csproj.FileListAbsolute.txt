@@ -95,3 +95,5 @@
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/obj/Debug/net7.0/Backend.App.pdb
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/obj/Debug/net7.0/Backend.App.genruntimeconfig.cache
 /Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/obj/Debug/net7.0/ref/Backend.App.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/bin/Debug/net7.0/Backend.Domain.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Application/bin/Debug/net7.0/Backend.Domain.pdb

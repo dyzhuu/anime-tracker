@@ -107,6 +107,19 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "Backend.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Backend.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Backend.Domain.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -304,12 +317,18 @@
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Backend.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Backend.Domain/Backend.Domain.csproj",
+      "msbuildProject": "../Backend.Domain/Backend.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "AutoMapper >= 12.0.1",
-      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1"
+      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
+      "Backend.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -337,7 +356,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Domain/Backend.Domain.csproj": {
+              "projectPath": "/Users/davidzhu/Projects/MSA23-Project/backend/src/Backend.Domain/Backend.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

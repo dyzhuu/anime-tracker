@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace Backend.Core.Dtos
+﻿namespace Backend.Core.Dtos
 {
     public class UserDto
 	{

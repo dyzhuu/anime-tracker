@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Backend.Core.Models
+﻿namespace Backend.Domain
 {
-    public class Anime
+    public class Anime : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Title { get; set; }
 
         public string ImageURL { get; set; }
@@ -17,4 +12,3 @@ namespace Backend.Core.Models
 
     }
 }
-

@@ -1,7 +1,7 @@
-﻿namespace Backend.Core.Models
+﻿namespace Backend.Domain
 {
-	public class Bookmark
-	{
+    public class Bookmark
+    {
         public int UserId { get; set; }
 
         public int AnimeId { get; set; }
@@ -14,13 +14,4 @@
 
         public Status Status { get; set; }
     }
-
-    public enum Status
-    {
-        Watching,
-        Completed,
-        PlanToWatch,
-        Dropped
-    }
 }
-

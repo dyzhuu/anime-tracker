@@ -1,5 +1,4 @@
-﻿using System;
-using Backend.Core.Models;
+﻿using Backend.Domain;
 using Backend.Core.Dtos;
 using AutoMapper;
 
@@ -7,8 +6,6 @@ namespace Backend.Core.Helper
 {
 	public class AutoMapperProfile : Profile
 	{
-        private readonly IMapper _mapper;
-
         public AutoMapperProfile()
 		{
 			CreateMap<Anime, AnimeDto>();
@@ -24,7 +21,7 @@ namespace Backend.Core.Helper
 				.ForMember(d => d.Id, b => b.MapFrom(s => s.AnimeId));
 
 			CreateMap<UserDto, User>();
-			//CreateMap<User, UserDto>()
+			CreateMap<User, UserDto>();
 			//	.ForMember(d => d.BookmarkDtos, b => b.MapFrom(s => _mapper.Map<List<BookmarkDto>>(s.Bookmarks)));
         }
     }

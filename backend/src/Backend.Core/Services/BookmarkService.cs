@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Backend.Core.Dtos;
-using Backend.Core.Models;
+using Backend.Domain;
 using Backend.Core.Interfaces;
 
 namespace Backend.Core.Services
@@ -16,11 +16,6 @@ namespace Backend.Core.Services
             _bookmarkRepo = bookmarkRepository;
             _animeRepo = animeRepository;
             _mapper = mapper;
-        }
-
-        public Bookmark GetBookmark(int userId, int animeId)
-        {
-            return _bookmarkRepo.GetBookmark(userId, animeId);
         }
 
         public ICollection<BookmarkDto> GetBookmarks(int userId)
@@ -53,7 +48,7 @@ namespace Backend.Core.Services
 
         public bool DeleteBookmark(int userId, int animeId)
         {
-            Bookmark bookmark = GetBookmark(userId, animeId);
+            Bookmark bookmark = _bookmarkRepo.GetBookmark(userId, animeId);
             return _bookmarkRepo.DeleteBookmark(bookmark);
         }
     }
