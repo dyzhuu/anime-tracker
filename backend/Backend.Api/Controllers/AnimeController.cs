@@ -31,25 +31,25 @@ namespace Backend.Api.Controllers
 			return Ok(anime);
 		}
 
-		[HttpPost]
-		[ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> CreateAnime([FromBody] AnimeDto animeDto)
-		{
-			if (animeDto is null)
-				return BadRequest();
+		//[HttpPost, Authorize]
+		//[ProducesResponseType(201)]
+  //      [ProducesResponseType(400)]
+  //      [ProducesResponseType(500)]
+  //      public async Task<IActionResult> CreateAnime([FromBody] AnimeDto animeDto)
+		//{
+		//	if (animeDto is null)
+		//		return BadRequest();
 
-			AnimeDto anime = await _animeService.GetAnime(animeDto.Id);
+		//	AnimeDto anime = await _animeService.GetAnime(animeDto.Id);
 
-			if (anime != null)
-				return BadRequest("Resource already exists");
+		//	if (anime != null)
+		//		return BadRequest("Resource already exists");
 
-			if (!await _animeService.CreateAnime(animeDto))
-                return StatusCode(500, new { message = "Something went wrong" });
+		//	if (!await _animeService.CreateAnime(animeDto))
+  //              return StatusCode(500, new { message = "Something went wrong" });
 
-            return CreatedAtAction(nameof(CreateAnime), animeDto);
-        }
+  //          return CreatedAtAction(nameof(CreateAnime), animeDto);
+  //      }
     }
 }
 

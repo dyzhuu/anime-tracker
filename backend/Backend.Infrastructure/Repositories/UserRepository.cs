@@ -14,13 +14,6 @@ namespace Backend.Infrastructure.Repositories
             _context = context;
         }
 
-        //scuffed CHANGE TO LOGIN AND REGISTER
-        public async Task<bool> CreateUser(User user)
-        {
-            _context.Add(user);
-            return await _context.SaveChangesAsync() > 0 ? true : false;
-        }
-
         public async Task<User> RegisterUser(User user)
         {
             _context.Add(user);

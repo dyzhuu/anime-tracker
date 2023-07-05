@@ -20,6 +20,7 @@ namespace Backend.Core.Services
         {
             
             userReqDto.Password = BCrypt.Net.BCrypt.HashPassword(userReqDto.Password);
+
             //FIXMEFIXMEFIXME
             User user = _mapper.Map<User>(userReqDto);
             return _mapper.Map<UserDto>(await _userRepo.RegisterUser(user));

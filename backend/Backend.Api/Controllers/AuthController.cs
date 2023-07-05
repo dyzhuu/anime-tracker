@@ -56,7 +56,7 @@ namespace Backend.Api.Controllers
         private string CreateToken(UserDto userDto)
         {
             List<Claim> claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, userDto.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
                 new Claim(ClaimTypes.Role, "Admin")
             };
 
