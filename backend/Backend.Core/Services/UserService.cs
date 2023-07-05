@@ -31,12 +31,6 @@ namespace Backend.Core.Services
             return BCrypt.Net.BCrypt.Verify(userReqDto.Password, user.PasswordHash);
         }
 
-        //FIXME scuffed
-        public async Task<bool> CreateUser(UserDto userDto)
-        {
-            return await _userRepo.CreateUser(_mapper.Map<User>(userDto));
-        }
-
         public async Task<bool> UpdateUser(UserDto userDto)
         {
             return await _userRepo.UpdateUser(_mapper.Map<User>(userDto));

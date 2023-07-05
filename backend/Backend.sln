@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Domain", "Backend.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Tests", "Backend.Tests\Backend.Tests.csproj", "{EE5AA134-1062-4969-BFA9-FD34BD18F612}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poijds", "poijds\poijds.csproj", "{8CFA96B5-775A-460B-9F03-ECECE2452C7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EE5AA134-1062-4969-BFA9-FD34BD18F612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE5AA134-1062-4969-BFA9-FD34BD18F612}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE5AA134-1062-4969-BFA9-FD34BD18F612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CFA96B5-775A-460B-9F03-ECECE2452C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CFA96B5-775A-460B-9F03-ECECE2452C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CFA96B5-775A-460B-9F03-ECECE2452C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CFA96B5-775A-460B-9F03-ECECE2452C7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

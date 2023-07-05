@@ -17,23 +17,6 @@ namespace Backend.Api.Controllers
             _bookmarkService = bookmarkService;
         }
 
-        //FIXME: CHANGE TO LOGIN REGISTER LATER !!
-        [HttpPost]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateUser([FromQuery] string username, [FromQuery] string password)
-        {
-            if (username is null)
-                return BadRequest();
-
-            if (await _userService.UserExists(username))
-                return BadRequest("Resource already exists");
-
-            await _userService.CreateUser(new UserDto() { Username = username, Password = password });
-
-            return CreatedAtAction(nameof(CreateUser), new { username, password} );
-        }
-
         [HttpPut("{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

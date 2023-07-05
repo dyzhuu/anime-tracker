@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Backend.Core.Dtos;
 using Backend.Core.Interfaces;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace Backend.Api.Controllers
 {
@@ -9,9 +13,11 @@ namespace Backend.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(IUserService userService) {
+        public AuthController(IUserService userService, IConfiguration configuration) {
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -42,10 +48,35 @@ namespace Backend.Api.Controllers
             if (!await _userService.VerificationSuccess(userReqDto))
                 return BadRequest("Invalid credentials");
 
-            return Ok(userDto);
+            string token = CreateToken(userDto);
+
+            return Ok(token);
+        }
+
+        private string CreateToken(UserDto userDto)
+        {
+            List<Claim> claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, userDto.Id.ToString()),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration.GetSection("AppSettings:Token").Value!));
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: credentials
+                );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
         }
     }
-
+     
 
 }
 

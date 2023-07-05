@@ -4,9 +4,6 @@ namespace Backend.Core.Interfaces
 {
     public interface IUserRepository
 	{
-        // scuffed
-        Task<bool> CreateUser(User user);
-
         Task<User> RegisterUser(User user);
 
 		Task<bool> UpdateUser(User user);

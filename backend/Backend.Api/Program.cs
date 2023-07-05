@@ -1,12 +1,14 @@
-
 using Backend.Core.Interfaces;
 using Backend.Core.Services;
 using Backend.Infrastructure.Contexts;
 using Backend.Infrastructure.Repositories;
 using Backend.Core.Helper;
 using Microsoft.EntityFrameworkCore;
-using NSwag;
-using NSwag.Generation.Processors.Security;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,22 +51,32 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddAuthorization();
 
-// register the required Swagger services for NSwag
-builder.Services.AddOpenApiDocument(document =>
+
+builder.Services.AddEndpointsApiExplorer();
+
+
+builder.Services.AddSwaggerGen(options =>
 {
-    document.Title = "My Todo Api";
-    document.Version = "v1";
-    document.AddSecurity("Basic", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
-        Type = OpenApiSecuritySchemeType.Basic,
+        In = ParameterLocation.Header,
         Name = "Authorization",
-        In = OpenApiSecurityApiKeyLocation.Header,
-        Description = "Input your username and password to access the API"
+        Type = SecuritySchemeType.ApiKey
     });
 
-    document.OperationProcessors.Add(
-        new AspNetCoreOperationSecurityScopeProcessor("Basic")
-    );
+    options.OperationFilter<SecurityRequirementsOperationFilter>(); 
+});
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                builder.Configuration.GetSection("AppSettings:Token").Value!))
+    };
 });
 
 var app = builder.Build();
@@ -76,22 +88,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     // Register the Swagger generator and the Swagger UI middlewares
-    app.UseOpenApi();
-    app.UseSwaggerUi3();    
+    app.UseSwagger();
+    app.UseSwaggerUI();    
 }
 
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
 
-//app.UseCors(policy =>
-//{
-//    policy.WithOrigins("http://localhost:3000")
-//        .AllowCredentials()
-//        .AllowAnyHeader()
-//        .AllowAnyMethod();
-//});
+app.UseAuthorization();
 
 app.MapControllers();
 

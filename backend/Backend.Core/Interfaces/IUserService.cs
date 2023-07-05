@@ -5,9 +5,6 @@ namespace Backend.Core.Interfaces
 {
     public interface IUserService
 	{
-        //scuffed
-        Task<bool> CreateUser(UserDto userDto);
-
         Task<bool> VerificationSuccess(UserReqDto userReqDto);
 
         Task<UserDto> RegisterUser(UserReqDto userReqDto);

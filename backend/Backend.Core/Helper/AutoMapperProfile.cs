@@ -27,7 +27,7 @@ namespace Backend.Core.Helper
 
             CreateMap<UserReqDto, User>()
                 .ForMember(d => d.PasswordHash, b => b.MapFrom(s => s.Password));
-            //	.ForMember(d => d.BookmarkDtos, b => b.MapFrom(s => _mapper.Map<List<BookmarkDto>>(s.Bookmarks)));
+			//	.ForMember(d => d.BookmarkDtos, b => b.MapFrom(s => _mapper.Map<List<BookmarkDto>>(s.Bookmarks)));
         }
     }
 }
