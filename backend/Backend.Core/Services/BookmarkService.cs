@@ -44,7 +44,7 @@ namespace Backend.Core.Services
 
         public async Task<bool> UpdateBookmark(BookmarkDto bookmarkDto)
         {
-            return await _bookmarkRepo.UpdateBookmark(bookmarkDto);
+            return await _bookmarkRepo.UpdateBookmark(_mapper.Map<Bookmark>(bookmarkDto));
         }
 
         public async Task<bool> DeleteBookmark(int userId, int animeId)

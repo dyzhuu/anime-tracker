@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "s5pXpH+aZZWhHpqzyFzrxuzWUyiwIQVqsvJW1nVPSnT94xdKS4a+CcedUj2+Ih8QZAty7sTnG+SNvAVUulLVVg==",
+  "dgSpecHash": "WVpM8pDWcWAvIzw5dkbbvC1lKQxpthghkJD3hyB71/oevH84ziwesjrUeWYC8SNzmx/1M6qkvGdOZVhMCnilYA==",
   "success": true,
   "projectFilePath": "/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/Backend.Tests.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "/Users/davidzhu/.nuget/packages/microsoft.entityframeworkcore/7.0.8/microsoft.entityframeworkcore.7.0.8.nupkg.sha512",
     "/Users/davidzhu/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.8/microsoft.entityframeworkcore.abstractions.7.0.8.nupkg.sha512",
     "/Users/davidzhu/.nuget/packages/microsoft.entityframeworkcore.analyzers/7.0.8/microsoft.entityframeworkcore.analyzers.7.0.8.nupkg.sha512",
+    "/Users/davidzhu/.nuget/packages/microsoft.entityframeworkcore.inmemory/7.0.8/microsoft.entityframeworkcore.inmemory.7.0.8.nupkg.sha512",
     "/Users/davidzhu/.nuget/packages/microsoft.entityframeworkcore.relational/7.0.2/microsoft.entityframeworkcore.relational.7.0.2.nupkg.sha512",
     "/Users/davidzhu/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/Users/davidzhu/.nuget/packages/microsoft.extensions.caching.abstractions/7.0.0/microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",

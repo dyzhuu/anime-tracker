@@ -18,7 +18,7 @@ namespace Backend.Infrastructure.Repositories
         public async Task<ICollection<Bookmark>> GetBookmarks(int userId)
         {
             return await _context.Bookmarks
-                .Where(b => b.User.Id == userId)
+                .Where(b => b.UserId == userId)
                 .Include(b => b.Anime)
                 .OrderBy(b => b.Anime.Title)
                 .ToListAsync();
@@ -47,11 +47,9 @@ namespace Backend.Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        public async Task<bool> UpdateBookmark(BookmarkDto bookmarkDto)
+        public async Task<bool> UpdateBookmark(Bookmark bookmark)
         {
-            Bookmark existingBookmark = await GetBookmark(bookmarkDto.UserId, bookmarkDto.AnimeId);
-            existingBookmark.Rating = bookmarkDto.Rating;
-            existingBookmark.Status = bookmarkDto.Status;
+            _context.Bookmarks.Update(bookmark);
 
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }

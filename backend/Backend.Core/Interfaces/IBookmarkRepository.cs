@@ -13,7 +13,7 @@ namespace Backend.Core.Interfaces
 
         Task<bool> CreateBookmark(Bookmark bookmark);
 
-        Task<bool> UpdateBookmark(BookmarkDto bookmarkDto);
+        Task<bool> UpdateBookmark(Bookmark bookmark);
 
         Task<bool> DeleteBookmark(Bookmark bookmark);
     }

@@ -17,15 +17,16 @@
     <PackageReference Include="coverlet.collector" Version="3.2.0" />
     <PackageReference Include="NSubstitute" Version="5.0.0" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ControllerTests\" />
-    <None Remove="RepositoryTests\" />
+    <None Remove="RepositoryIntegrationTests\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ControllerTests\" />
-    <Folder Include="RepositoryTests\" />
+    <Folder Include="RepositoryIntegrationTests\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Backend.Api\Backend.Api.csproj" />
