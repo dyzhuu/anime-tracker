@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
+using Azure.Identity;
+using Microsoft.AspNetCore.DataProtection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +28,6 @@ builder.Services.AddScoped<IBookmarkRepository, BookmarkRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAnimeService, AnimeService>();
 builder.Services.AddScoped<IBookmarkService, BookmarkService>();
-
 
 
 //// Retrieve the configuration from appsettings.json
