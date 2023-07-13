@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 80
+RUN npm run build
+
+EXPOSE 443
 
 CMD ["npm", "run", "start"]
