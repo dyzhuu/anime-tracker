@@ -1,18 +1,17 @@
 version: '3.4'
-
 services:
-  backend:
-    image: 'backend'
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    # other backend service configurations
-
   frontend:
-    image: 'frontend'
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    # other frontend service configurations
+    image: ghcr.io/dyzhuu/msafrontend:main
+    container_name: frontend
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+        - "6379:6379"
+
+  backend:    
+    image: ghcr.io/dyzhuu/msabackend:main
+    container_name: backend
+    environment:
+      REDIS: azure-vote-back
+    ports:
+        - "80:80"
