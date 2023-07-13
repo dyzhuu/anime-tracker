@@ -26,7 +26,7 @@ namespace Backend.Tests
                 Description = "This is a mock anime.",
                 Bookmarks = new List<Bookmark>()
             };
-        }
+        }   
 
         public static BookmarkDto GetMockBookmarkDto(int userId = 1, int animeId = 1)
         {
