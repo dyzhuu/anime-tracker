@@ -68,9 +68,9 @@ jobs:
       matrix:
         include:
           - image: msafrontend
-            dockerfile: ./frontend/Dockerfile
+            dockerfile: frontend/Dockerfile
           - image: msabackend
-            dockerfile: ./backend/Dockerfile
+            dockerfile: backend/Dockerfile
 
     steps:
     - name: Checkout
@@ -102,7 +102,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: ./backend
         file: ${{ matrix.dockerfile }}
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.meta.outputs.tags }}
