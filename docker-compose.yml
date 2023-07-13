@@ -3,15 +3,8 @@ services:
   frontend:
     image: ghcr.io/dyzhuu/msafrontend:main
     container_name: frontend
-    environment:
-      ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-        - "6379:6379"
+
 
   backend:    
     image: ghcr.io/dyzhuu/msabackend:main
     container_name: backend
-    environment:
-      REDIS: azure-vote-back
-    ports:
-        - "80:80"
