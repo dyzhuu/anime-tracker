@@ -36,7 +36,7 @@ public class UserRepoIntegrationTests
     public async Task RegisterUser_AddsUserToDatabase()
     {
         // Arrange
-        var user = new User { Id = 1, Username = "David", PasswordHash = "password" };
+        var user = MockData.GetMockUser();
 
         // Act
         var result = await _repository.RegisterUser(user);
@@ -50,7 +50,7 @@ public class UserRepoIntegrationTests
     public async Task UpdateUser_UpdatesUserInDatabase()
     {
         //Arrange
-        var user = new User { Id = 1, Username = "David", PasswordHash = "password" };
+        var user = MockData.GetMockUser();
         _context.Add(user);
         await _context.SaveChangesAsync();
 
@@ -69,9 +69,9 @@ public class UserRepoIntegrationTests
         //Arrange
         var users = new List<User>
         {
-             new User { Id = 1, Username = "David", PasswordHash = "password" },
-             new User { Id = 2, Username = "Zhu", PasswordHash = "password" }
-        };
+             MockData.GetMockUser(1),
+             MockData.GetMockUser(2)
+    };
         _context.Users.AddRange(users);
         await _context.SaveChangesAsync();
 
@@ -86,7 +86,7 @@ public class UserRepoIntegrationTests
     public async Task GerUserById_ReturnsUser()
     {
         //Arrange
-        var user = new User { Id = 1, Username = "David", PasswordHash = "password" };
+        var user = MockData.GetMockUser();
         _context.Add(user);
         await _context.SaveChangesAsync();
 
@@ -101,7 +101,7 @@ public class UserRepoIntegrationTests
     public async Task UserExistsById_ReturnsTrue()
     {
         //Arrange
-        var user = new User { Id = 1, Username = "David", PasswordHash = "password" };
+        var user = MockData.GetMockUser();
         _context.Add(user);
         await _context.SaveChangesAsync();
 
@@ -116,7 +116,7 @@ public class UserRepoIntegrationTests
     public async Task DeleteUser_DeletesUserFromDatabase()
     {
         //Arrange
-        var user = new User { Id = 1, Username = "David", PasswordHash = "password" };
+        var user = MockData.GetMockUser();
         _context.Add(user);
         await _context.SaveChangesAsync();
 

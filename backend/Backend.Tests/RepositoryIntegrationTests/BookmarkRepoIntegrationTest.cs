@@ -38,13 +38,11 @@ public class BookmarkRepoIntegrationTests
     {
         // Arrange
         var user = new User { Id = 1, Username = "David", PasswordHash = "12345" };
-        var CowboyBebop = new Anime { Id = 1, Title = "CowboyBebop", Description = "description", ImageURL = "www" };
-        var Naruto = new Anime { Id = 2, Title = "Naruto", Description = "description", ImageURL = "www" };
 
         var bookmarks = new List<Bookmark>
         {
-            new Bookmark { UserId = 1, AnimeId = 1, User = user, Anime = CowboyBebop, Rating = 10, Status = Status.Completed },
-            new Bookmark { UserId = 1, AnimeId = 2, User = user, Anime = Naruto, Rating = 0, Status = Status.PlanToWatch }
+            new Bookmark { UserId = 1, AnimeId = 1, User = user, Anime = MockData.GetMockAnime(1), Rating = 10, Status = Status.Completed },
+            new Bookmark { UserId = 1, AnimeId = 2, User = user, Anime = MockData.GetMockAnime(2), Rating = 0, Status = Status.PlanToWatch }
         };
         _context.Bookmarks.AddRange(bookmarks);
         await _context.SaveChangesAsync();
@@ -60,7 +58,7 @@ public class BookmarkRepoIntegrationTests
     public async Task BookmarkExists_ReturnTrue()
     {
         // Arrange
-        var bookmark = new Bookmark { UserId = 1, AnimeId = 1, Rating = 10, Status = Status.Completed };
+        var bookmark = MockData.GetMockBookmark();
         _context.Add(bookmark);
         await _context.SaveChangesAsync();
 
@@ -75,7 +73,7 @@ public class BookmarkRepoIntegrationTests
     public async Task CreateBookmark_AddsBookmarkInDatabase()
     {
         // Arrange
-        var bookmark = new Bookmark { UserId = 1, AnimeId = 1, Rating = 10, Status = Status.Completed };
+        var bookmark = MockData.GetMockBookmark();
 
         // Act
         var result = await _repository.CreateBookmark(bookmark);
@@ -89,7 +87,7 @@ public class BookmarkRepoIntegrationTests
     public async Task UpdateBookmark_UpdatesBookmarkInDatabase()
     {
         //Arrange
-        var bookmark = new Bookmark { UserId = 1, AnimeId = 1, Rating = 10, Status = Status.Completed };
+        var bookmark = MockData.GetMockBookmark();
         _context.Add(bookmark);
         await _context.SaveChangesAsync();
 
@@ -109,7 +107,7 @@ public class BookmarkRepoIntegrationTests
     public async Task DeleteBookmark_DeletesBookmarkFromDatabase()
     {
         //Arrange
-        var bookmark = new Bookmark { UserId = 1, AnimeId = 1, Rating = 10, Status = Status.Completed };
+        var bookmark = MockData.GetMockBookmark();
         _context.Add(bookmark);
         await _context.SaveChangesAsync();
 

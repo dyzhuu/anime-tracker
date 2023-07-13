@@ -36,7 +36,7 @@ public class AnimeRepoIntegrationTests
     public async Task CreateAnime_AddsAnimeToDatabase()
     {
         // Arrange
-        var anime = new Anime { Id = 1, Title = "Cowboy Bebop", Description = "description", ImageURL = "www" };
+        var anime = MockData.GetMockAnime();
 
         // Act
         var result = await _repository.CreateAnime(anime);
@@ -50,7 +50,7 @@ public class AnimeRepoIntegrationTests
     public async Task GetAnime_ExistingId_ReturnsAnime()
     {
         // Arrange
-        var anime = new Anime { Id = 1, Title = "Cowboy Bebop", Description = "description", ImageURL = "www" };
+        var anime = MockData.GetMockAnime();
         _context.Animes.Add(anime);
         _context.SaveChanges();
 
@@ -65,7 +65,7 @@ public class AnimeRepoIntegrationTests
     public async Task AnimeExists_ExistingId_ReturnsTrue()
     {
         // Arrange
-        var anime = new Anime { Id = 1, Title = "Cowboy Bebop", Description = "description", ImageURL = "www" };
+        var anime = MockData.GetMockAnime();
         _context.Animes.Add(anime);
         _context.SaveChanges();
 
