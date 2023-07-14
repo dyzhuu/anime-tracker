@@ -19,8 +19,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app .
 
-ENV ASPNETCORE_URLS=https://+:443;http://+:8080
+ENV ASPNETCORE_URLS=https://+:443;http://+:80
+ENV ASPNETCORE_HTTPS_PORT=443
 EXPOSE 443
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT ["dotnet", "Backend.Api.dll"]
