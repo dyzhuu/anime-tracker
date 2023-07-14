@@ -6,8 +6,8 @@ services:
     image: ghcr.io/dyzhuu/msa:frontend
     container_name: frontend
     ports:
-    - 80:3000
-    - 443:3000
+    - 80:80
+    - 443:80
 
   backend:
     build: ./backend
@@ -15,4 +15,4 @@ services:
     image: ghcr.io/dyzhuu/msa:backend
     container_name: backend
     ports:
-    - 8080:5000
+    - 80:5000
