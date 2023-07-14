@@ -1,10 +1,11 @@
 version: '3.4'
 services:
   frontend:
+    platform: linux/x86_64
     image: ghcr.io/dyzhuu/msafrontend:main
     container_name: frontend
 
-
-  backend:    
+  backend:
+    platform: linux/x86_64
     image: ghcr.io/dyzhuu/msabackend:main
     container_name: backend
