@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 
 const query = `
   query {
-    Page(perPage: 40) {
+    Page(perPage: 24) {
       pageInfo {
         hasNextPage
       }
@@ -49,7 +49,7 @@ export default async function Home() {
         <main>
             {/* <ScrollArea className='h-[360px]'> */}
             <ScrollArea>
-              <div className='flex p-10'>
+              <div className='p-2 grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 grid-cols-2 flex justify-center'>
                 {trendingAnime.map((anime: any, index: number) => (
                     <AnimeCard anime={anime} key={index}></AnimeCard>
                 ))}
