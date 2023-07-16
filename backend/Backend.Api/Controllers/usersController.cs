@@ -51,8 +51,6 @@ namespace Backend.Api.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
 		{
-            return Ok("dummy data");
-
             IEnumerable<UserDto> userDtos = await _userService.GetUsers();
 
             return Ok(userDtos);

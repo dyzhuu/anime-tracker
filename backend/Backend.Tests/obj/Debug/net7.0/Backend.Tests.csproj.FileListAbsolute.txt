@@ -1,4 +1,3 @@
-/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/CoverletSourceRootsMapping
 /Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Backend.Api.deps.json
 /Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Backend.Api.runtimeconfig.json
 /Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/appsettings.Development.json
@@ -147,3 +146,10 @@
 /Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/obj/Debug/net7.0/Backend.Tests.pdb
 /Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/obj/Debug/net7.0/Backend.Tests.genruntimeconfig.cache
 /Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/obj/Debug/net7.0/ref/Backend.Tests.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/CoverletSourceRootsMapping_Backend.Tests
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Azure.Core.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Azure.Identity.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Microsoft.Identity.Client.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/Microsoft.Identity.Client.Extensions.Msal.dll
+/Users/davidzhu/Projects/MSA23-Project/backend/Backend.Tests/bin/Debug/net7.0/System.Memory.Data.dll
