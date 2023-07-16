@@ -19,7 +19,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app .
 
-EXPOSE 80
-EXPOSE 443
+ENV ASPNETCORE_URLS=http://+:5000
+EXPOSE 5000
 
-ENTRYPOINT ["dotnet", "Backend.Api.dll"]
+ENTRYPOINT ["dotnet", "Backend.Api.dll"]`
