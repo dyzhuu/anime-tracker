@@ -1,5 +1,5 @@
 async function getUsers() {
-  const res = await fetch('dzmsabackend.azurewebsites.net/api/User');
+  const res = await fetch('https://dzmsabackend.azurewebsites.net/api/User');
   return await res.json()
 }
 

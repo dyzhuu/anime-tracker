@@ -74,24 +74,24 @@ jobs:
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC  }}/${{ env.IMAGE  }}:${{ github.sha }}
       
-#   deploy:
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: none
-#     needs: docker
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: none
+    needs: docker
 
-#     steps:
-#     - name: Set lower case owner name
-#       run: |
-#         echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-#       env:
-#         OWNER: '${{ github.repository_owner }}'
+    steps:
+    - name: Set lower case owner name
+      run: |
+        echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+      env:
+        OWNER: '${{ github.repository_owner }}'
 
-#     - name: 'Deploy to Azure Web App'
-#       id: deploy-to-webapp
-#       uses: azure/webapps-deploy@v2
-#       with:
-#         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-#         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_FRONTEND }}
-#         images: '${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE }}:main'
+    - name: 'Deploy to Azure Web App'
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_FRONTEND }}
+        images: '${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE }}:main'
  
