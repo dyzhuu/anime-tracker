@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_call:
 
 env:
   REGISTRY: ghcr.io
@@ -90,9 +91,8 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACKEND }}
-        images: '${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE }}:main'
+        images: '${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.IMAGE }}:${{ github.sha }}'
   
-    - name: Trigger frontend workflow
-      uses: benc-uk/workflow-dispatch@v1
-      with:
-        workflow: main_davidzhumsa.yml
+  trigger-frontend-workflow:
+    uses: dyzhuu/MSA23-Project/.github/workflows/main_davidzhumsa.yml@main
+    secrets: inherit
