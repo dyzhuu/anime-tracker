@@ -95,4 +95,5 @@ jobs:
   
   trigger-frontend-workflow:
     uses: dyzhuu/MSA23-Project/.github/workflows/main_davidzhumsa.yml@main
-    secrets: inherit
+    secrets:
+      AZURE_WEBAPP_PUBLISH_PROFILE_FRONTEND: ${{secrets.AZURE_WEBAPP_PUBLISH_PROFILE_FRONTEND}}
