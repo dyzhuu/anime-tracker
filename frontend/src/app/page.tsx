@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 
 const query = `
   query {
-    Page(perPage: 24) {
+    Page(perPage: 12) {
       pageInfo {
         hasNextPage
       }
@@ -17,7 +17,9 @@ const query = `
           english
         }
         coverImage {
+          extraLarge
           large
+          medium
         }
         description
       }
@@ -49,12 +51,12 @@ export default async function Home() {
         <main>
             {/* <ScrollArea className='h-[360px]'> */}
             <ScrollArea>
-              <div className='p-2 grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 grid-cols-2 flex justify-center'>
-                {trendingAnime.map((anime: any, index: number) => (
-                    <AnimeCard anime={anime} key={index}></AnimeCard>
-                ))}
-                <ScrollBar orientation='horizontal' className='hidden'/>
-              </div>
+                <div className='p-2 grid max-w-8xl lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 flex justify-center'>
+                    {trendingAnime.map((anime: any, index: number) => (
+                        <AnimeCard anime={anime} key={index}></AnimeCard>
+                    ))}
+                    <ScrollBar orientation='horizontal' className='hidden' />
+                </div>
             </ScrollArea>
         </main>
     );
