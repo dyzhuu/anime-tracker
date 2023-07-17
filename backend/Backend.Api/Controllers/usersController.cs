@@ -89,7 +89,7 @@ namespace Backend.Api.Controllers
 
         //Bookmarks
 
-        [HttpGet("profile/shows")]
+        [HttpGet("profile/bookmarks")]
 		[ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetBookmarks(int userId)
@@ -103,7 +103,7 @@ namespace Backend.Api.Controllers
 		}
 
         [Authorize]
-        [HttpPost("profile/shows")]
+        [HttpPost("profile/bookmarks")]
         [ProducesResponseType(201)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
@@ -128,7 +128,7 @@ namespace Backend.Api.Controllers
         }
 
         [Authorize]
-        [HttpPut("profile/shows/{animeId}")]
+        [HttpPut("profile/bookmarks/{animeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -156,7 +156,7 @@ namespace Backend.Api.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [HttpDelete("profile/shows/{animeId}")]
+        [HttpDelete("profile/bookmarks/{animeId}")]
         public async Task<IActionResult> DeleteBookmark(int animeId)
         {
             int userId = GetLoggedInUserId();
