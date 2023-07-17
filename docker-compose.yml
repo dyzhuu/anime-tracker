@@ -2,14 +2,16 @@ version: '3.4'
 services:
   backend:
     build: ./backend
+    platform: linux/x86_64
     image: ghcr.io/dyzhuu/msabackend:main
     container_name: backend
     ports:
-    - 8080:8080 
+    - 5001:5001 
     restart: always
 
   frontend:
     build: ./frontend
+    platform: linux/x86_64
     image: ghcr.io/dyzhuu/msafrontend:main
     container_name: frontend
     ports:
