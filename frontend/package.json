@@ -11,10 +11,13 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
+    "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-scroll-area": "^1.0.4",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.4",
     "@radix-ui/react-tooltip": "^1.0.6",
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.6.1",
@@ -25,8 +28,11 @@
     "postcss": "8.4.25",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.2",
+    "react-password-strength-bar": "^0.4.1",
     "tailwind-merge": "^1.13.2",
-    "tailwindcss-animate": "^1.0.6"
+    "tailwindcss-animate": "^1.0.6",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.27",
@@ -46,5 +52,6 @@
     "storybook": "^7.0.27",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.6"
-  }
+  },
+  "proxy": "https://dzmsabackend.azurewebsites.net"
 }

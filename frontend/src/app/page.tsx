@@ -2,8 +2,6 @@ import AnimeCard from '@/components/AnimeCard';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 
-export const dynamic = 'force-dynamic'
-
 const query = `
   query {
     Page(perPage: 12) {
@@ -48,7 +46,7 @@ export default async function Home() {
     const trendingAnime = await getTrendingAnime();
     console.log(trendingAnime)
     return (
-        <main>
+        <>
             {/* <ScrollArea className='h-[360px]'> */}
             <ScrollArea>
                 <div className='p-2 grid max-w-8xl lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 flex justify-center'>
@@ -58,6 +56,6 @@ export default async function Home() {
                     <ScrollBar orientation='horizontal' className='hidden' />
                 </div>
             </ScrollArea>
-        </main>
+        </>
     );
 }

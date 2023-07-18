@@ -1,11 +1,11 @@
 'use client'
-import { Button } from "./ui/button";
+import { Button } from '@/components/ui/button';
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
-    TooltipTrigger,
-} from './ui/tooltip';
+    TooltipTrigger
+} from '@/components/ui/tooltip';
 
 export default function BookmarkButton({className}: any) {
     return (

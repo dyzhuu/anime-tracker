@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link'
-import { AspectRatio } from './ui/aspect-ratio';
-import BookmarkButton from './BookmarkButton';
-import { Button } from './ui/button';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import BookmarkButton from '@/components/BookmarkButton';
+import { Button } from '@/components/ui/button';
 
 
 
