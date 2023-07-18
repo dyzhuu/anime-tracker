@@ -17,7 +17,6 @@ export default function AnimeCard({anime}: any) {
                             alt={anime.title.english ?? anime.title.romaji}
                             fill={true}
                             className="group-hover:brightness-[0.25] group-hover:scale-[1.5] group-hover:translate-y-[48px]"
-                            objectPosition='center'
                             priority={true}
 
                         ></Image>
