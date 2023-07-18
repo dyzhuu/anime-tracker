@@ -42,7 +42,6 @@ export default function LoginForm() {
              'https://dzmsabackend.azurewebsites.net/api/auth/login',
              {
                  method: 'POST',
-                 mode: 'no-cors',
                  cache: 'no-store',
                  headers: {
                      'Content-Type': 'application/json'
