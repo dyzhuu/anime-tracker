@@ -2,8 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link'
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import BookmarkButton from '@/components/BookmarkButton';
-import { Button } from '@/components/ui/button';
-
 
 
 export default function AnimeCard({anime}: any) {

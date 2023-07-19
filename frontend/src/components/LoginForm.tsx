@@ -46,23 +46,26 @@ export default function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      //  const data = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/login', {
-      const res = await fetch('http://localhost:5148/api/auth/login', {
-        method: 'POST',
-        cache: 'no-store',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      });
+      const res = await fetch(
+        'https://dzmsabackend.azurewebsites.net/api/auth/login',
+        {
+          // const res = await fetch('http://localhost:5148/api/auth/login', {
+          method: 'POST',
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(values)
+        }
+      );
       if (res.status == 200) {
         const data = await res.json();
-  
+
         // store JWT token in local storage
         setAuthToken(data.token);
-  
+
         const redirectTo = searchParams.get('redirectTo');
-  
+
         if (redirectTo) {
           router.push(`/${redirectTo.slice(1)}`);
         } else {
