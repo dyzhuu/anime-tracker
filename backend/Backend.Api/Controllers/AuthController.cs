@@ -4,6 +4,7 @@ using Backend.Core.Interfaces;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using System.Text;
 
 namespace Backend.Api.Controllers
@@ -39,18 +40,30 @@ namespace Backend.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserReqDto userReqDto)
         {
+            if (userReqDto.Password == "")
+            {
+                return BadRequest("Invalisdfd credentials");
+            }
+
             UserDto userDto = await _userService.GetUser(userReqDto.Username);
 
             if (userDto is null)
                 return BadRequest("User not found");
 
-            //FIXME service layer
             if (!await _userService.VerificationSuccess(userReqDto))
                 return BadRequest("Invalid credentials");
 
             string token = CreateToken(userDto);
 
-            return Ok(token);
+            return Ok(new { token = token });
+        }
+
+        [Authorize]
+        [HttpPost("verify")]
+        public IActionResult Verify()
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return Ok(new { id = userId });
         }
 
         private string CreateToken(UserDto userDto)

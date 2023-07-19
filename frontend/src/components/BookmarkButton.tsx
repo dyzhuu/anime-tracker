@@ -15,6 +15,7 @@ export default function BookmarkButton({className}: any) {
                     <Button
                         variant='icon'
                         className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
+                        aria-label='Bookmark'
                         onClick={(e) => {
                             alert('clicked');
                             e.stopPropagation();

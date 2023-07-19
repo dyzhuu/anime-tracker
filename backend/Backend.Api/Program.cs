@@ -48,7 +48,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("https://davidzhumsa.azurewebsites.net", "http://192.168.20.3:3000")
+            policy.WithOrigins("https://davidzhumsa.azurewebsites.net", "http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
