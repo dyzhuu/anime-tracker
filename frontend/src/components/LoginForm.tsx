@@ -18,7 +18,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter, usePathname, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
 import { setAuthToken } from '@/lib/auth';
-import { signIn, getSession, getCsrfToken } from 'next-auth/react';
+import { signIn, getSession, getCsrfToken, useSession } from 'next-auth/react';
+import { stat } from 'fs';
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
@@ -37,12 +38,11 @@ function redirectUrl(
   }
 }
 
-export default function LoginForm({providers}: any) {
+export default function LoginForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const {github, google} = providers
 
   // const pathname = usePathname();
   // const fromUrl = pathname + '?' + searchParams.toString()
@@ -59,10 +59,10 @@ export default function LoginForm({providers}: any) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
+      // const res = await fetch('http://localhost:5148/api/auth/login', {
       const res = await fetch(
         'https://dzmsabackend.azurewebsites.net/api/auth/login',
         {
-          // const res = await fetch('http://localhost:5148/api/auth/login', {
           method: 'POST',
           cache: 'no-store',
           headers: {

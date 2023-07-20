@@ -3,6 +3,8 @@ import { SearchBar } from '@/components/SearchBar';
 import { Card } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Icons } from '@/lib/icons';
+import { getProviders, getSession } from 'next-auth/react';
+
 
 const query = `
   query {
@@ -44,6 +46,9 @@ async function getTrendingAnime() {
 }
 
 export default async function Home() {
+      const session = await getSession();
+      console.log(session);
+
   const trendingAnime = await getTrendingAnime();
   return (
     <>
