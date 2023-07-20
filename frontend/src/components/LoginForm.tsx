@@ -9,7 +9,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/lib/icons';
@@ -17,21 +16,35 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
 import { setAuthToken } from '@/lib/auth';
+import { signIn, getSession, getCsrfToken } from 'next-auth/react';
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
   password: z.string().min(1, 'Required')
 });
 
-export default function LoginForm() {
+function redirectUrl(
+  searchParams: ReadonlyURLSearchParams | null,
+): string {
+  const redirectTo = searchParams?.get('redirectTo');
+
+  if (redirectTo) {
+    return `/${redirectTo.slice(1)}`;
+  } else {
+    return '/';
+  }
+}
+
+export default function LoginForm({providers}: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const {github, google} = providers
 
+  // const pathname = usePathname();
   // const fromUrl = pathname + '?' + searchParams.toString()
   // router.push(`/login?redirectTo=${fromUrl}`);
 
@@ -63,14 +76,7 @@ export default function LoginForm() {
 
         // store JWT token in local storage
         setAuthToken(data.token);
-
-        const redirectTo = searchParams.get('redirectTo');
-
-        if (redirectTo) {
-          router.push(`/${redirectTo.slice(1)}`);
-        } else {
-          router.push('/');
-        }
+        router.push(redirectUrl(searchParams));
       } else {
         toast({
           variant: 'destructive',
@@ -88,7 +94,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
           <div>
@@ -134,7 +140,7 @@ export default function LoginForm() {
           </Button>
         </form>
       </Form>
-      <div className="relative">
+      <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -142,13 +148,42 @@ export default function LoginForm() {
           <span className="bg-background px-2 text-muted-foreground ">OR</span>
         </div>
       </div>
-      <Button variant="outline" className="space-x-12" disabled={isLoading}>
+      <Button
+        key="Google"
+        variant="outline"
+        className="space-x-12"
+        disabled={isLoading}
+        onClick={() => {
+          setIsLoading(true)
+          signIn('google', { callbackUrl: redirectUrl(searchParams) });
+        }
+        }
+      >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.google className="mr-2 h-4 w-4" />
         )}{' '}
         Continue with Google
+      </Button>
+
+      <Button
+        key="GitHub"
+        variant="outline"
+        className="space-x-12"
+        disabled={isLoading}
+         onClick={() => {
+          setIsLoading(true)
+          signIn('github', { callbackUrl: redirectUrl(searchParams) });
+        }
+        }
+      >
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.gitHub className="mr-2 h-4 w-4" />
+        )}{' '}
+        Continue with GitHub
       </Button>
     </div>
   );
