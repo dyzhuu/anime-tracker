@@ -12,14 +12,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/lib/icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter, usePathname, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
-import { setAuthToken } from '@/lib/auth';
-import { signIn, getSession, getCsrfToken, useSession } from 'next-auth/react';
-import { error } from 'console';
+import { useRouter, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
+
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
@@ -51,6 +50,18 @@ export default function LoginForm() {
   // const pathname = usePathname();
   // const fromUrl = pathname + '?' + searchParams.toString()
   // router.push(`/login?redirectTo=${fromUrl}`);
+  
+  useEffect(() => {
+    if (searchParams?.get('error') !== null) {
+      setTimeout(() => {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'There was an error processing your request'
+        });
+      }, 200)
+    }
+  }, [])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,7 +77,6 @@ export default function LoginForm() {
     console.log('token', await token.json())
     
     const res = (await signIn('credentials', {...values, redirect: false}))!
-
     if (!res.error) {
       router.push(redirectUrl(searchParams));
     } else if (res.error === 'CredentialsSignin') {

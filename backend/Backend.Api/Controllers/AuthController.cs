@@ -37,6 +37,20 @@ namespace Backend.Api.Controllers
             return Ok(user);
         }
 
+        [HttpPost("oauth2")]
+        public async Task<IActionResult> RegisterFromExternalId([FromBody] ExternalRegistrationDto externalRegistrationDto)
+        {
+            
+            if (externalRegistrationDto.ExternalId == null || externalRegistrationDto.Username == null)
+            {
+                return BadRequest();
+            }
+            UserDto userDto = await _userService.CreateUserFromExternalId(externalRegistrationDto.ExternalId, externalRegistrationDto.Username);
+
+            return Ok(userDto);
+
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserReqDto userReqDto)
         {
@@ -63,7 +77,6 @@ namespace Backend.Api.Controllers
         public IActionResult Verify()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(new { id = userId });
         }
 

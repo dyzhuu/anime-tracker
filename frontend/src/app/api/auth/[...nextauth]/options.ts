@@ -58,17 +58,41 @@ export const options: NextAuthOptions = {
     }
   },
   callbacks: {
+    async signIn({account, user}) {
+      
+      if (account?.provider === 'google' || 'github') {
+        const username = user.name?.split(' ')[0]
+        try {
+          const res = await fetch('http://localhost:5148/api/auth/oauth2', {
+            method: 'POST',
+            cache: 'no-store',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              ExternalId: user.id,
+              Username: username
+            })
+          });
+          console.log(await res.json())
+        } catch (e) {
+          return false;
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token as any;
       return session;
     }
   },
   pages: {
     signIn: '/login',
-    newUser: '/register'
+    newUser: '/register',
+    error: '/login'
   },
   session: {
     strategy: 'jwt',

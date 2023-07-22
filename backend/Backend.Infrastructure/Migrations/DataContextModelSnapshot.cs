@@ -15,7 +15,7 @@ namespace Backend.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Backend.Domain.Anime", b =>
@@ -69,7 +69,6 @@ namespace Backend.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Username")
@@ -79,6 +78,19 @@ namespace Backend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ExternalUserMapping", b =>
+                {
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("InternalId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExternalId");
+
+                    b.ToTable("ExternalUserMappings");
                 });
 
             modelBuilder.Entity("Backend.Domain.Bookmark", b =>

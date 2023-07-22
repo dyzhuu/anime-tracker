@@ -21,7 +21,7 @@ namespace Backend.Api.Controllers
 
         private async Task<int> GetLoggedInUserId()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
             int internalUserId = await _userService.GetInternalId(userId);
 
@@ -51,27 +51,27 @@ namespace Backend.Api.Controllers
 
         }
 
-        [HttpGet]
-        [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-		{
-            IEnumerable<UserDto> userDtos = await _userService.GetUsers();
+  //      [HttpGet]
+  //      [ProducesResponseType(200)]
+  //      public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+		//{
+  //          IEnumerable<UserDto> userDtos = await _userService.GetUsers();
 
-            return Ok(userDtos);
-		}
+  //          return Ok(userDtos);
+		//}
 
-		[HttpGet("{userId}")]
-		[ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> GetUser(int userId)
-		{
-			UserDto user = await _userService.GetUser(userId);
+		//[HttpGet("{userId}")]
+		//[ProducesResponseType(200)]
+  //      [ProducesResponseType(404)]
+  //      public async Task<IActionResult> GetUser(int userId)
+		//{
+		//	UserDto user = await _userService.GetUser(userId);
 
-            if (user is null)
-                return NotFound();
+  //          if (user is null)
+  //              return NotFound();
 
-            return Ok(user);
-        }
+  //          return Ok(user);
+  //      }
 
         [Authorize]
         [HttpDelete("profile")]
