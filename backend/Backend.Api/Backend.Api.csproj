@@ -46,4 +46,7 @@
   <ItemGroup>
     <Compile Remove="Contexts\DataContext.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
 </Project>
