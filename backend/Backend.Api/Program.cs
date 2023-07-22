@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-string token = Environment.GetEnvironmentVariable("AppSettings_Token");
+string token = Environment.GetEnvironmentVariable("Token");
 string connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,19 +30,20 @@ builder.Services.AddScoped<IAnimeService, AnimeService>();
 builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 
 
-//// Retrieve the configuration from appsettings.json
+// Retrieve the configuration from appsettings.json
 //var configuration = new ConfigurationBuilder()
 //    .SetBasePath(builder.Environment.ContentRootPath)
 //    .AddJsonFile("appsettings.json")
 //    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
 //    .AddEnvironmentVariables()
 //    .Build();
+//string connectionString = configuration.GetConnectionString("DatabaseConnection");
+//string token = configuration.GetSection("AppSettings:Token").Value!;
 
-//    connectionString = configuration.GetConnectionString("DatabaseConnection");
-//    token = configuration.GetSection("AppSettings:Token").Value!;
+
+// establish connection to database
 
 
-//// establish connection to database
 
 builder.Services.AddDbContext<DataContext>(o =>
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
