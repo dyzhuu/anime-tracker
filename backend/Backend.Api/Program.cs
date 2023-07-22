@@ -9,6 +9,9 @@ using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+string token = Environment.GetEnvironmentVariable("AppSettings_Token");
+string connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -37,7 +40,14 @@ var configuration = new ConfigurationBuilder()
 
 
 // establish connection to database
-var connectionString = configuration.GetConnectionString("DatabaseConnection");
+if (connectionString == null)
+{
+    connectionString = configuration.GetConnectionString("DatabaseConnection");
+}
+if (token == null)
+{
+    token = configuration.GetSection("AppSettings:Token").Value!;
+}
 
 builder.Services.AddDbContext<DataContext>(o =>
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
@@ -78,7 +88,7 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey
     });
 
-    options.OperationFilter<SecurityRequirementsOperationFilter>(); 
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
 builder.Services.AddAuthentication().AddJwtBearer(options =>
@@ -88,8 +98,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         ValidateIssuerSigningKey = true,
         ValidateAudience = false,
         ValidateIssuer = false,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration.GetSection("AppSettings:Token").Value!))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token))
     };
 });
 
@@ -103,7 +112,7 @@ if (app.Environment.IsDevelopment())
 {
     // Register the Swagger generator and the Swagger UI middlewares
     app.UseSwagger();
-    app.UseSwaggerUI();    
+    app.UseSwaggerUI();
 }
 
 
