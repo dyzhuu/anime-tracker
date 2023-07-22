@@ -31,23 +31,18 @@ builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 
 
 //// Retrieve the configuration from appsettings.json
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
-    .AddEnvironmentVariables()
-    .Build();
+//var configuration = new ConfigurationBuilder()
+//    .SetBasePath(builder.Environment.ContentRootPath)
+//    .AddJsonFile("appsettings.json")
+//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
+//    .AddEnvironmentVariables()
+//    .Build();
+
+//    connectionString = configuration.GetConnectionString("DatabaseConnection");
+//    token = configuration.GetSection("AppSettings:Token").Value!;
 
 
-// establish connection to database
-if (connectionString == null)
-{
-    connectionString = configuration.GetConnectionString("DatabaseConnection");
-}
-if (token == null)
-{
-    token = configuration.GetSection("AppSettings:Token").Value!;
-}
+//// establish connection to database
 
 builder.Services.AddDbContext<DataContext>(o =>
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
