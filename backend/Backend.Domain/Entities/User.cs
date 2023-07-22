@@ -4,8 +4,8 @@
     {
         public string Username { get; set; }
 
-        public string PasswordHash { get; set; }
+        public string? PasswordHash { get; set; }
 
-        public ICollection<Bookmark> Bookmarks { get; set; }
+        public ICollection<Bookmark>? Bookmarks { get; set; }
     }
 }

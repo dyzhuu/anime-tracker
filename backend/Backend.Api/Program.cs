@@ -20,8 +20,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IBookmarkRepository, BookmarkRepository>();
-
-
+builder.Services.AddScoped<IExternalUserMappingRepository, ExternalUserMappingRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAnimeService, AnimeService>();
@@ -32,14 +31,18 @@ builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
+    .AddEnvironmentVariables()
     .Build();
 
+
 // establish connection to database
-var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+var connectionString = configuration.GetConnectionString("DatabaseConnection");
 
 builder.Services.AddDbContext<DataContext>(o =>
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

@@ -2,13 +2,14 @@ import Link from 'next/link';
 import LoginForm from '@/components/LoginForm';
 
 
-export default function LoginPage() {
+
+export default async function LoginPage() {
     return (
         <>
             <h1 className="text-3xl font-semibold tracking-tight text-primary">
                 Log In
             </h1>
-            <LoginForm />
+            <LoginForm/>
             <p className="px-8 text-sm text-muted-foreground">
                 Don&apos;t have an account?{' '}
                 <Link

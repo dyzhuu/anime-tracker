@@ -19,9 +19,13 @@ namespace Backend.Api.Controllers
             _bookmarkService = bookmarkService;
         }
 
-        private int GetLoggedInUserId()
+        private async Task<int> GetLoggedInUserId()
         {
-            return int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));   
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            int internalUserId = await _userService.GetInternalId(userId);
+
+            return internalUserId;
         }
 
         [Authorize]
@@ -32,7 +36,7 @@ namespace Backend.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateUser([FromBody] UserDto userDto)
         {
-            int userId = GetLoggedInUserId();
+            int userId = await GetLoggedInUserId();
 
             if (userId != userDto.Id)
                 return Unauthorized();
@@ -47,27 +51,27 @@ namespace Backend.Api.Controllers
 
         }
 
-        [HttpGet]
-        [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-		{
-            IEnumerable<UserDto> userDtos = await _userService.GetUsers();
+  //      [HttpGet]
+  //      [ProducesResponseType(200)]
+  //      public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+		//{
+  //          IEnumerable<UserDto> userDtos = await _userService.GetUsers();
 
-            return Ok(userDtos);
-		}
+  //          return Ok(userDtos);
+		//}
 
-		[HttpGet("{userId}")]
-		[ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> GetUser(int userId)
-		{
-			UserDto user = await _userService.GetUser(userId);
+		//[HttpGet("{userId}")]
+		//[ProducesResponseType(200)]
+  //      [ProducesResponseType(404)]
+  //      public async Task<IActionResult> GetUser(int userId)
+		//{
+		//	UserDto user = await _userService.GetUser(userId);
 
-            if (user is null)
-                return NotFound();
+  //          if (user is null)
+  //              return NotFound();
 
-            return Ok(user);
-        }
+  //          return Ok(user);
+  //      }
 
         [Authorize]
         [HttpDelete("profile")]
@@ -76,7 +80,7 @@ namespace Backend.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteUser()
         {
-            int userId = GetLoggedInUserId();
+            int userId = await GetLoggedInUserId();
 
             if (!await _userService.UserExists(userId))
                 return NotFound();
@@ -110,7 +114,7 @@ namespace Backend.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> CreateBookmark([FromQuery] int animeId, [FromBody] BookmarkDto bookmarkDto)
         {
-            int userId = GetLoggedInUserId();
+            int userId = await GetLoggedInUserId();
 
             if (userId != bookmarkDto.UserId)
                 return Unauthorized();
@@ -135,7 +139,7 @@ namespace Backend.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateBookmark(int animeId, [FromBody] BookmarkDto bookmarkDto)
         {
-            int userId = GetLoggedInUserId();
+            int userId = await GetLoggedInUserId();
 
             if (userId != bookmarkDto.UserId)
                 return Unauthorized();
@@ -159,7 +163,7 @@ namespace Backend.Api.Controllers
         [HttpDelete("profile/bookmarks/{animeId}")]
         public async Task<IActionResult> DeleteBookmark(int animeId)
         {
-            int userId = GetLoggedInUserId();
+            int userId = await GetLoggedInUserId();
 
             if (!await _bookmarkService.BookmarkExists(userId, animeId))
                 return NotFound();

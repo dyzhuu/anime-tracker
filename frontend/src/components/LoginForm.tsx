@@ -9,31 +9,61 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/lib/icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { setAuthToken } from '@/lib/auth';
+import { useRouter, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
   password: z.string().min(1, 'Required')
 });
 
+function redirectUrl(
+  searchParams: ReadonlyURLSearchParams | null,
+): string {
+  const redirectTo = searchParams?.get('redirectTo');
+
+  if (redirectTo) {
+    return `/${redirectTo.slice(1)}`;
+  } else {
+    return '/';
+  }
+}
+
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const { data: session } = useSession();
+  console.log(session?.user)
+
+  //TODO: redirect
+  // const pathname = usePathname();
   // const fromUrl = pathname + '?' + searchParams.toString()
   // router.push(`/login?redirectTo=${fromUrl}`);
+  
+  useEffect(() => {
+    if (searchParams?.get('error') !== null) {
+      setTimeout(() => {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'There was an error processing your request'
+        });
+      }, 200)
+    }
+  }, [])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,39 +75,19 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    try {
-      const res = await fetch(
-        'https://dzmsabackend.azurewebsites.net/api/auth/login',
-        {
-          // const res = await fetch('http://localhost:5148/api/auth/login', {
-          method: 'POST',
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(values)
-        }
-      );
-      if (res.status == 200) {
-        const data = await res.json();
-
-        // store JWT token in local storage
-        setAuthToken(data.token);
-
-        const redirectTo = searchParams.get('redirectTo');
-
-        if (redirectTo) {
-          router.push(`/${redirectTo.slice(1)}`);
-        } else {
-          router.push('/');
-        }
-      } else {
-        toast({
-          variant: 'destructive',
-          title: `Invalid Credentials`
-        });
-      }
-    } catch {
+    const token = await fetch('api/token');
+    console.log('token', await token.json())
+    
+    const res = (await signIn('credentials', {...values, redirect: false}))!
+    console.log(res)
+    if (!res.error) {
+      router.push(redirectUrl(searchParams));
+    } else if (res.error === 'CredentialsSignin') {
+      toast({
+        variant: 'destructive',
+        title: `Invalid Credentials`
+      });
+    } else {
       toast({
         variant: 'destructive',
         title: 'Error',
@@ -88,7 +98,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
           <div>
@@ -134,7 +144,7 @@ export default function LoginForm() {
           </Button>
         </form>
       </Form>
-      <div className="relative">
+      <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -142,13 +152,42 @@ export default function LoginForm() {
           <span className="bg-background px-2 text-muted-foreground ">OR</span>
         </div>
       </div>
-      <Button variant="outline" className="space-x-12" disabled={isLoading}>
+      <Button
+        key="Google"
+        variant="outline"
+        className="space-x-12"
+        disabled={isLoading}
+        onClick={() => {
+          setIsLoading(true)
+          signIn('google', { callbackUrl: redirectUrl(searchParams) });
+        }
+        }
+      >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.google className="mr-2 h-4 w-4" />
         )}{' '}
         Continue with Google
+      </Button>
+
+      <Button
+        key="GitHub"
+        variant="outline"
+        className="space-x-12"
+        disabled={isLoading}
+         onClick={() => {
+          setIsLoading(true)
+          signIn('github', { callbackUrl: redirectUrl(searchParams) });
+        }
+        }
+      >
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.gitHub className="mr-2 h-4 w-4" />
+        )}{' '}
+        Continue with GitHub
       </Button>
     </div>
   );

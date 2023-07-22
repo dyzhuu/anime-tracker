@@ -9,6 +9,10 @@ namespace Backend.Core.Interfaces
 
         Task<UserDto> RegisterUser(UserReqDto userReqDto);
 
+        Task<UserDto> CreateUserFromExternalId(string externalId, string username);
+
+        Task<int> GetInternalId(string externalId);
+
         Task<bool> UpdateUser(UserDto userDto);
 
         Task<ICollection<UserDto>> GetUsers();
