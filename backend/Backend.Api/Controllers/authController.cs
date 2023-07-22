@@ -14,11 +14,9 @@ namespace Backend.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IConfiguration _configuration;
 
         public AuthController(IUserService userService, IConfiguration configuration) {
             _userService = userService;
-            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -54,9 +52,9 @@ namespace Backend.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserReqDto userReqDto)
         {
-            if (userReqDto.Password == null)
+            if (userReqDto.Password == "")
             {
-                return BadRequest("Invaslid credentials");
+                return BadRequest("Invalid credentials");
             }
 
             UserDto userDto = await _userService.GetUser(userReqDto.Username);
@@ -87,8 +85,7 @@ namespace Backend.Api.Controllers
                 new Claim(ClaimTypes.Role, "Admin")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Token")));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
