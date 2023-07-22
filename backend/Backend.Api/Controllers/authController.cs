@@ -54,22 +54,22 @@ namespace Backend.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserReqDto userReqDto)
         {
-            if (userReqDto.Password == "")
+            if (userReqDto.Password == null)
             {
-                return BadRequest("Invalid credentials");
+                return BadRequest("Invaslid credentials");
             }
 
             UserDto userDto = await _userService.GetUser(userReqDto.Username);
 
-            if (userDto is null)
+            if (userDto == null)
                 return BadRequest("User not found");
 
             if (!await _userService.VerificationSuccess(userReqDto))
                 return BadRequest("Invalid credentials");
 
-            string token = CreateToken(userDto);
+            //string token = CreateToken(userDto);
 
-            return Ok(new { id = userDto.Id, username = userDto.Username, token = token });
+            return Ok(new { id = userDto.Id, username = userDto.Username });
         }
 
         [Authorize]
