@@ -10,7 +10,8 @@ env:
   REGISTRY: ghcr.io
   NODE_VERSION: '18.x'
   IMAGE: msafrontend
-  AZURE_WEBAPP_NAME: davidzhumsa    
+  AZURE_WEBAPP_NAME: davidzhumsa 
+  BACKEND_URL: https://dzmsabackend.azurewebsites.net   
   
 jobs:
   build:

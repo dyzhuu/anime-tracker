@@ -18,6 +18,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 
 const formSchema = z.object({
@@ -77,6 +79,7 @@ export default function LoginForm() {
     console.log('token', await token.json())
     
     const res = (await signIn('credentials', {...values, redirect: false}))!
+    console.log(res)
     if (!res.error) {
       router.push(redirectUrl(searchParams));
     } else if (res.error === 'CredentialsSignin') {

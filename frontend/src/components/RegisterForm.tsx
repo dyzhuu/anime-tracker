@@ -18,7 +18,6 @@ import { Icons } from '@/lib/icons';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useToast } from '@/components//ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { Description } from '@radix-ui/react-toast';
 
 export default function RegisterForm() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -57,15 +56,18 @@ export default function RegisterForm() {
       setIsLoading(true);
       
       try{
-          //  const res = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/register', {
-          const res = await fetch('http://localhost:5148/api/auth/register', {
-            method: 'POST',
-            cache: 'no-store',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
-          });
+          const res = await fetch(
+            'https://dzmsabackend.azurewebsites.net/api/auth/register',
+            // const res = await fetch('http://localhost:5148/api/auth/register',
+            {
+              method: 'POST',
+              cache: 'no-store',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(values)
+            }
+          );
     
           if (res.ok) {
             router.push('/login');

@@ -2,7 +2,7 @@ import type { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { getToken, JWT } from 'next-auth/jwt';
+import { JWT } from 'next-auth/jwt';
 import jsonwebtoken from 'jsonwebtoken'
 
 
@@ -23,14 +23,17 @@ export const options: NextAuthOptions = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        const res = await fetch('http://localhost:5148/api/auth/login', {
-          method: 'POST',
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(credentials)
-        });
+        const res = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/login', 
+        // const res = await fetch('http://localhost:5148/api/auth/login',
+          {
+            method: 'POST',
+            cache: 'no-store',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+          }
+        );
 
         if (res.ok) {
           const user = await res.json();
@@ -63,7 +66,9 @@ export const options: NextAuthOptions = {
       if (account?.provider === 'google' || 'github') {
         const username = user.name?.split(' ')[0]
         try {
-          const res = await fetch('http://localhost:5148/api/auth/oauth2', {
+          const res = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/login', 
+          // const res = await fetch('http://localhost:5148/api/auth/login', 
+          {
             method: 'POST',
             cache: 'no-store',
             headers: {

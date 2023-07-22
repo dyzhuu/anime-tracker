@@ -18,11 +18,34 @@ namespace Backend.Core.Services
             _userMappingRepo = userMappingRepository;
         }
 
+        private async Task<string> GenerateUniqueUsername(string originalUsername)
+        {
+            string uniqueUsername = originalUsername;
+            int counter = 1;
+
+            while (await _userRepo.UserExists(uniqueUsername))
+            {
+                uniqueUsername = $"{originalUsername}{counter}";
+                counter++;
+            }
+
+            return uniqueUsername;
+        }
+
+        public async Task<string> GetUniqueUsername(string desiredUsername)
+        {
+            if (!await _userRepo.UserExists(desiredUsername))
+            {
+                return desiredUsername;
+            }
+
+            return await GenerateUniqueUsername(desiredUsername);
+        }
+
         public async Task<UserDto> RegisterUser(UserReqDto userReqDto)
         {
             userReqDto.Password = BCrypt.Net.BCrypt.HashPassword(userReqDto.Password);
 
-            //FIXMEFIXMEFIXME
             User user = _mapper.Map<User>(userReqDto);
             return _mapper.Map<UserDto>(await _userRepo.RegisterUser(user));
         }
@@ -38,7 +61,7 @@ namespace Backend.Core.Services
             }
             else
             {
-                User newUser = new User { Username = username };
+                User newUser = new User { Username = await GetUniqueUsername(username) };
                 newUser = await _userRepo.RegisterUser(newUser);
 
                 await _userMappingRepo.AddMapping(externalId, newUser.Id);
