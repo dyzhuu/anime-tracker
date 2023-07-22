@@ -28,6 +28,8 @@ namespace Backend.Infrastructure.Contexts
 
 		public DbSet<User> Users { get; set; }
 
+        public DbSet<ExternalUserMapping> ExternalUserMappings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Bookmark>()
@@ -48,6 +50,9 @@ namespace Backend.Infrastructure.Contexts
                 .WithOne(b => b.User)
 				.HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ExternalUserMapping>().HasKey(e => e.ExternalId);
+
         }
     }
 }

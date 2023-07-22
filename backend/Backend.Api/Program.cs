@@ -20,8 +20,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IBookmarkRepository, BookmarkRepository>();
-
-
+builder.Services.AddScoped<IExternalUserMappingRepository, ExternalUserMappingRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAnimeService, AnimeService>();

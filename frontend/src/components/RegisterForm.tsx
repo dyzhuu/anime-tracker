@@ -67,7 +67,7 @@ export default function RegisterForm() {
             body: JSON.stringify(values)
           });
     
-          if (res.status == 200) {
+          if (res.ok) {
             router.push('/login');
           } else {
             toast({

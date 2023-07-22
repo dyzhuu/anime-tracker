@@ -29,7 +29,7 @@ namespace Backend.Api.Controllers
             if (await _userService.UserExists(userReqDto.Username))
                 return BadRequest("Username already exists");
 
-                //TODO: add validation logic
+                //TODO: add validation logic with fluent validation
                 UserDto user = await _userService.RegisterUser(userReqDto);
             if (user is null) 
                 return BadRequest("Invalid credentials");
@@ -42,7 +42,7 @@ namespace Backend.Api.Controllers
         {
             if (userReqDto.Password == "")
             {
-                return BadRequest("Invalisdfd credentials");
+                return BadRequest("Invalid credentials");
             }
 
             UserDto userDto = await _userService.GetUser(userReqDto.Username);
@@ -55,14 +55,15 @@ namespace Backend.Api.Controllers
 
             string token = CreateToken(userDto);
 
-            return Ok(new { token = token });
+            return Ok(new { id = userDto.Id, username = userDto.Username, token = token });
         }
 
         [Authorize]
         [HttpPost("verify")]
         public IActionResult Verify()
         {
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(new { id = userId });
         }
 

@@ -19,7 +19,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter, usePathname, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
 import { setAuthToken } from '@/lib/auth';
 import { signIn, getSession, getCsrfToken, useSession } from 'next-auth/react';
-import { stat } from 'fs';
+import { error } from 'console';
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
@@ -44,6 +44,10 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const { data: session } = useSession();
+  console.log(session?.user)
+
+  //TODO: redirect
   // const pathname = usePathname();
   // const fromUrl = pathname + '?' + searchParams.toString()
   // router.push(`/login?redirectTo=${fromUrl}`);
@@ -58,32 +62,19 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    try {
-      // const res = await fetch('http://localhost:5148/api/auth/login', {
-      const res = await fetch(
-        'https://dzmsabackend.azurewebsites.net/api/auth/login',
-        {
-          method: 'POST',
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(values)
-        }
-      );
-      if (res.status == 200) {
-        const data = await res.json();
+    const token = await fetch('api/token');
+    console.log('token', await token.json())
+    
+    const res = (await signIn('credentials', {...values, redirect: false}))!
 
-        // store JWT token in local storage
-        setAuthToken(data.token);
-        router.push(redirectUrl(searchParams));
-      } else {
-        toast({
-          variant: 'destructive',
-          title: `Invalid Credentials`
-        });
-      }
-    } catch {
+    if (!res.error) {
+      router.push(redirectUrl(searchParams));
+    } else if (res.error === 'CredentialsSignin') {
+      toast({
+        variant: 'destructive',
+        title: `Invalid Credentials`
+      });
+    } else {
       toast({
         variant: 'destructive',
         title: 'Error',

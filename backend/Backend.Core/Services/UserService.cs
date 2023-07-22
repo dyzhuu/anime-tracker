@@ -9,22 +9,57 @@ namespace Backend.Core.Services
     {
         private readonly IUserRepository _userRepo;
         private readonly IMapper _mapper;
+        private readonly IExternalUserMappingRepository _userMappingRepo;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, IExternalUserMappingRepository userMappingRepository)
         {
             _userRepo = userRepository;
             _mapper = mapper;
+            _userMappingRepo = userMappingRepository;
         }
 
         public async Task<UserDto> RegisterUser(UserReqDto userReqDto)
         {
-            
             userReqDto.Password = BCrypt.Net.BCrypt.HashPassword(userReqDto.Password);
 
             //FIXMEFIXMEFIXME
             User user = _mapper.Map<User>(userReqDto);
             return _mapper.Map<UserDto>(await _userRepo.RegisterUser(user));
         }
+
+        public async Task<UserDto> CreateUserFromExternalId(string externalId, string username)
+        {
+            ExternalUserMapping mapping = await _userMappingRepo.GetByExternalId(externalId);
+
+            if (mapping != null)
+            {
+                User user = await _userRepo.GetUser(mapping.InternalId);
+                return _mapper.Map<UserDto>(user);
+            }
+            else
+            {
+                User newUser = new User { Username = username };
+                newUser = await _userRepo.RegisterUser(newUser);
+
+                await _userMappingRepo.AddMapping(externalId, newUser.Id);
+
+                return _mapper.Map<UserDto>(newUser);
+            }
+        }
+
+        public async Task<int> GetInternalId(string externalId)
+        {
+            ExternalUserMapping mapping = await _userMappingRepo.GetByExternalId(externalId);
+            if (mapping == null)
+            {
+                return int.Parse(externalId);
+            }
+            else
+            {
+                return mapping.InternalId;
+            }
+        }
+
 
         public async Task<bool> VerificationSuccess(UserReqDto userReqDto)
         {
@@ -72,6 +107,7 @@ namespace Backend.Core.Services
         {
             return await _userRepo.UserExists(username);
         }
+
     }
 }
 
