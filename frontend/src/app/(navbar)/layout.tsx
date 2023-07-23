@@ -1,7 +1,8 @@
 import { NavBar } from "@/components/NavBar";
 
-export default function NavBarLayout({
-  children // will be a page or nested layout
+
+export default async function NavBarLayout({
+  children 
 }: {
   children: React.ReactNode;
 }) {

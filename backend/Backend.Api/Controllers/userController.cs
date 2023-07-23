@@ -51,27 +51,42 @@ namespace Backend.Api.Controllers
 
         }
 
-  //      [HttpGet]
-  //      [ProducesResponseType(200)]
-  //      public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-		//{
-  //          IEnumerable<UserDto> userDtos = await _userService.GetUsers();
+        [Authorize]
+        [HttpGet("me")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            int userId = await GetLoggedInUserId();
+            UserDto user = await _userService.GetUser(userId);
 
-  //          return Ok(userDtos);
-		//}
+            return Ok(new { userId = user.Id, Username = user.Username});
 
-		//[HttpGet("{userId}")]
-		//[ProducesResponseType(200)]
-  //      [ProducesResponseType(404)]
-  //      public async Task<IActionResult> GetUser(int userId)
-		//{
-		//	UserDto user = await _userService.GetUser(userId);
+        }
 
-  //          if (user is null)
-  //              return NotFound();
+        //      [HttpGet]
+        //      [ProducesResponseType(200)]
+        //      public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        //{
+        //          IEnumerable<UserDto> userDtos = await _userService.GetUsers();
 
-  //          return Ok(user);
-  //      }
+        //          return Ok(userDtos);
+        //}
+
+        //[HttpGet("{userId}")]
+        //[ProducesResponseType(200)]
+        //      [ProducesResponseType(404)]
+        //      public async Task<IActionResult> GetUser(int userId)
+        //{
+        //	UserDto user = await _userService.GetUser(userId);
+
+        //          if (user is null)
+        //              return NotFound();
+
+        //          return Ok(user);
+        //      }
 
         [Authorize]
         [HttpDelete("profile")]
