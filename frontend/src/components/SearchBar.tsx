@@ -51,7 +51,8 @@ export function SearchBar({ className, icon, imageSize }: any) {
     });
     const data = (await res.json()).data.Page.media;
     const filteredResults = data.filter((anime: any) => anime?.idMal);
-    setAnimeResults(filteredResults);
+    const reducedResults = filteredResults.slice(0, 10)
+    setAnimeResults(reducedResults);
   }
 
   return (
