@@ -63,8 +63,7 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     async signIn({account, user}) {
-      
-      if (account?.provider === 'google' || 'github') {
+      if (account?.provider === ('google' || 'github')) {
         const username = user.name?.split(' ')[0]
         try {
           const res = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/oauth2', 
@@ -80,8 +79,6 @@ export const options: NextAuthOptions = {
               Username: username
             })
           });
-
-          console.log(await res.json())
         } catch (e) {
           return false;
         }
@@ -106,7 +103,7 @@ export const options: NextAuthOptions = {
       const user = await res.json()
       session.user = { ...token, ...user } ;
       return session;
-    }
+    },
   },
   pages: {
     signIn: '/login',

@@ -3,7 +3,7 @@ import 'next-auth';
 declare module 'next-auth' {
   interface User {
     id?: number;
-    userId?: number;
+    userId?: string;
     username?: string;
   }
 

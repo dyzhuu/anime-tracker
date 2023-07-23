@@ -27,11 +27,8 @@ const formSchema = z.object({
   password: z.string().min(1, 'Required')
 });
 
-function redirectUrl(
-  searchParams: ReadonlyURLSearchParams | null,
-): string {
-  const redirectTo = searchParams?.get('redirectTo');
-
+function redirectUrl(searchParams: ReadonlyURLSearchParams | null): string {
+  let redirectTo = searchParams?.get('redirectTo');
   if (redirectTo) {
     return `/${redirectTo.slice(1)}`;
   } else {
@@ -44,11 +41,7 @@ export default function LoginForm() {
   const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  //TODO: redirect
-  // const pathname = usePathname();
-  // const fromUrl = pathname + '?' + searchParams.toString()
-  // router.push(`/login?redirectTo=${fromUrl}`);
+  const session = useSession()
   
   useEffect(() => {
     if (searchParams?.get('error') !== null) {
