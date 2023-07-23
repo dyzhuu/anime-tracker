@@ -10,7 +10,7 @@ export default function AuthLayout({
   return (
     <div>
       <Link href='/'>
-        <Button className="absolute left-4 top-3" variant='ghost'>
+        <Button className="absolute left-4 top-3 font-medium px-3" variant='ghost'>
           Home
         </Button>
       </Link>
