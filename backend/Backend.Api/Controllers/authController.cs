@@ -67,7 +67,7 @@ namespace Backend.Api.Controllers
 
             //string token = CreateToken(userDto);
 
-            return Ok(new { id = userDto.Id, username = userDto.Username });
+            return Ok(new { id = userDto.Id, name = userDto.Username });
         }
 
         [Authorize]

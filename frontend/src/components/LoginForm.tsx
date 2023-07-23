@@ -45,9 +45,6 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { data: session } = useSession();
-  console.log(session?.user)
-
   //TODO: redirect
   // const pathname = usePathname();
   // const fromUrl = pathname + '?' + searchParams.toString()
@@ -75,6 +72,7 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    //TODO:
     const token = await fetch('api/token');
     console.log('token', await token.json())
     

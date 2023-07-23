@@ -71,7 +71,7 @@ export function SearchBar({ className, icon, imageSize }: any) {
         onChange={(e) => onSearch(e.target.value)}
       />
       <div
-        className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 ${
+        className={`absolute opacity-0 pointer-events-none peer-focus:opacity-100 peer-focus:pointer-events-auto w-full bg-background shadow-lg rounded-bl rounded-br z-10 ${
           searchQuery.length === 0 && 'hidden'
         }`}
       >
