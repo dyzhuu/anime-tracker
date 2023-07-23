@@ -8,7 +8,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  FormLabel
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/lib/icons';
@@ -16,11 +16,14 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
+import {
+  useRouter,
+  useSearchParams,
+  ReadonlyURLSearchParams
+} from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
-import * as dotenv from 'dotenv'
-dotenv.config()
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
@@ -41,8 +44,7 @@ export default function LoginForm() {
   const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const session = useSession()
-  
+
   useEffect(() => {
     if (searchParams?.get('error') !== null) {
       setTimeout(() => {
@@ -51,9 +53,9 @@ export default function LoginForm() {
           title: 'Error',
           description: 'There was an error processing your request'
         });
-      }, 200)
+      }, 100);
     }
-  }, [])
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,12 +67,7 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    //TODO:
-    const token = await fetch('api/token');
-    console.log('token', await token.json())
-    
-    const res = (await signIn('credentials', {...values, redirect: false}))!
-    console.log(res)
+    const res = (await signIn('credentials', { ...values, redirect: false }))!;
     if (!res.error) {
       router.push(redirectUrl(searchParams));
     } else if (res.error === 'CredentialsSignin') {
@@ -149,10 +146,9 @@ export default function LoginForm() {
         className="space-x-12"
         disabled={isLoading}
         onClick={() => {
-          setIsLoading(true)
+          setIsLoading(true);
           signIn('google', { callbackUrl: redirectUrl(searchParams) });
-        }
-        }
+        }}
       >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -167,11 +163,10 @@ export default function LoginForm() {
         variant="outline"
         className="space-x-12"
         disabled={isLoading}
-         onClick={() => {
-          setIsLoading(true)
+        onClick={() => {
+          setIsLoading(true);
           signIn('github', { callbackUrl: redirectUrl(searchParams) });
-        }
-        }
+        }}
       >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

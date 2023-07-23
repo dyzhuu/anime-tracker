@@ -1,9 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import {
-  redirect,
-} from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export default function UserPage({ params }: { params: { id: string } }) {
   const session = useSession({

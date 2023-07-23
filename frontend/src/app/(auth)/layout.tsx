@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import Link from 'next/link';
 
 export default function AuthLayout({
   children // will be a page or nested layout
@@ -9,8 +9,11 @@ export default function AuthLayout({
 }) {
   return (
     <div>
-      <Link href='/'>
-        <Button className="absolute left-4 top-3 font-medium px-3" variant='ghost'>
+      <Link href="/">
+        <Button
+          className="absolute left-4 top-3 font-medium px-3"
+          variant="ghost"
+        >
           Home
         </Button>
       </Link>

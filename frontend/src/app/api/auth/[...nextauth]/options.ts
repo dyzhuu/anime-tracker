@@ -3,9 +3,9 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
-import jsonwebtoken from 'jsonwebtoken'
+import jsonwebtoken from 'jsonwebtoken';
 
-const secret = process.env.NEXTAUTH_SECRET
+const secret = process.env.NEXTAUTH_SECRET;
 
 export const options: NextAuthOptions = {
   providers: [
@@ -24,8 +24,9 @@ export const options: NextAuthOptions = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        const res = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/login', 
         // const res = await fetch('http://localhost:5148/api/auth/login',
+        const res = await fetch(
+          'https://dzmsabackend.azurewebsites.net/api/auth/login',
           {
             method: 'POST',
             cache: 'no-store',
@@ -62,23 +63,25 @@ export const options: NextAuthOptions = {
     }
   },
   callbacks: {
-    async signIn({account, user}) {
+    async signIn({ account, user }) {
       if (account?.provider === ('google' || 'github')) {
-        const username = user.name?.split(' ')[0]
+        const username = user.name?.split(' ')[0];
         try {
-          const res = await fetch('https://dzmsabackend.azurewebsites.net/api/auth/oauth2', 
-          // const res = await fetch('http://localhost:5148/api/auth/oauth2', 
-          {
-            method: 'POST',
-            cache: 'no-store',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              ExternalId: user.id,
-              Username: username
-            })
-          });
+          // const res = await fetch('http://localhost:5148/api/auth/oauth2',
+          const res = await fetch(
+            'https://dzmsabackend.azurewebsites.net/api/auth/oauth2',
+            {
+              method: 'POST',
+              cache: 'no-store',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                ExternalId: user.id,
+                Username: username
+              })
+            }
+          );
         } catch (e) {
           return false;
         }
@@ -89,21 +92,21 @@ export const options: NextAuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token }) {
-      // // const res = await fetch('https://dzmsabackend.azurewebsites.net/api/user/me',  
-      const encodedToken = jsonwebtoken.sign(
-        { ...token }, secret!
+      const encodedToken = jsonwebtoken.sign({ ...token }, secret!);
+      // const res = await fetch('http://localhost:5148/api/user/me',
+      const res = await fetch(
+        'https://dzmsabackend.azurewebsites.net/api/user/me',
+        {
+          cache: 'no-store',
+          headers: {
+            Authorization: `Bearer ${encodedToken}`
+          }
+        }
       );
-      const res = await fetch('http://localhost:5148/api/user/me', 
-          {
-            cache: 'no-store',
-            headers: {
-              Authorization: `Bearer ${encodedToken}`
-            },  
-          });
-      const user = await res.json()
-      session.user = { ...token, ...user } ;
+      const user = await res.json();
+      session.user = { ...token, ...user };
       return session;
-    },
+    }
   },
   pages: {
     signIn: '/login',

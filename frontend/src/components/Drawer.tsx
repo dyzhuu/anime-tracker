@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,8 +12,8 @@ import Link from 'next/link';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { usePathname } from 'next/navigation';
 
-export function Drawer({className}: any) {
-  const pathname = usePathname()
+export function Drawer({ className }: any) {
+  const pathname = usePathname();
   return (
     <div className={className}>
       <Dialog>
