@@ -51,19 +51,14 @@ namespace Backend.Api.Controllers
 
         }
 
-        [Authorize]
-        [HttpGet("me")]
+        [HttpGet("external/{externalId}")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> GetCurrentUser()
+        public async Task<IActionResult> GetUserFromExternalId(string externalId)
         {
-            int userId = await GetLoggedInUserId();
-            UserDto user = await _userService.GetUser(userId);
+            int internalId = await _userService.GetInternalId(externalId);
+            UserDto user = await _userService.GetUser(internalId);
 
-            return Ok(new { userId = user.Id, Username = user.Username});
-
+            return Ok(new { userId = internalId, Username = user.Username });
         }
 
         //      [HttpGet]

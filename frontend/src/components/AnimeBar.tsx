@@ -4,11 +4,6 @@ import AnimeCard from "@/components/AnimeCard";
 import { Button } from "@/components/ui/button";
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import 'react-horizontal-scrolling-menu/dist/styles.css';
-import { Icons } from "@/lib/icons";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-
-
-
 
 function LeftArrow() {
   const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);

@@ -92,19 +92,13 @@ export const options: NextAuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token }) {
-      const encodedToken = jsonwebtoken.sign({ ...token }, secret!);
-      // const res = await fetch('http://localhost:5148/api/user/me',
-      const res = await fetch(
-        'https://dzmsabackend.azurewebsites.net/api/user/me',
-        {
-          cache: 'no-store',
-          headers: {
-            Authorization: `Bearer ${encodedToken}`
-          }
-        }
-      );
+      const id = token.id;
+      const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
+      // const res = await fetch(
+      //   `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
       const user = await res.json();
       session.user = { ...token, ...user };
+      console.log(session.user);
       return session;
     }
   },
