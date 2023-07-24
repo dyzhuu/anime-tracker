@@ -44,8 +44,6 @@ const nextConfig = {
 
     config.entry = () =>
       entry().then((entries) => {
-        // Automatically registers the SW and enables certain `next-pwa` features in
-        // App Router (https://github.com/shadowwalker/next-pwa/pull/427)
         if (entries['main-app'] && !entries['main-app'].includes(registerJs)) {
           if (Array.isArray(entries['main-app'])) {
             entries['main-app'].unshift(registerJs);
