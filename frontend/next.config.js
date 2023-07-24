@@ -1,32 +1,31 @@
-// const path = require('path');
-// const withPWAInit = require('next-pwa');
+const withPWAInit = require('next-pwa');
+const path = require('path');
 
-// /** @type {import('next-pwa').PWAConfig} */
-// const withPWA = withPWAInit({
-//   dest: 'public',
-//   // Solution: https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017
-//   buildExcludes: ['app-build-manifest.json']
-// });
+const isDev = process.env.NODE_ENV !== 'production';
 
-// const generateAppDirEntry = (entry) => {
-//   const packagePath = require.resolve('next-pwa');
-//   const packageDirectory = path.dirname(packagePath);
-//   const registerJs = path.join(packageDirectory, 'register.js');
+/** @type {import('next-pwa').PWAConfig} */
+const withPWA = withPWAInit({
+  dest: 'public',
+  exclude: [
+    // add buildExcludes here
+    ({ asset, compilation }) => {
+      if (
+        asset.name.startsWith('server/') ||
+        asset.name.match(
+          /^((app-|^)build-manifest\.json|react-loadable-manifest\.json)$/
+        )
+      ) {
+        return true;
+      }
+      if (isDev && !asset.name.startsWith('static/runtime/')) {
+        return true;
+      }
+      return false;
+    }
+  ]
+});
 
-//   return entry().then((entries) => {
-//     // Register SW on App directory, solution: https://github.com/shadowwalker/next-pwa/pull/427
-//     if (entries['main-app'] && !entries['main-app'].includes(registerJs)) {
-//       if (Array.isArray(entries['main-app'])) {
-//         entries['main-app'].unshift(registerJs);
-//       } else if (typeof entries['main-app'] === 'string') {
-//         entries['main-app'] = [registerJs, entries['main-app']];
-//       }
-//     }
-//     return entries;
-//   });
-// };
-
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -36,12 +35,29 @@ const nextConfig = {
       }
     ]
   },
-  // webpack: (config) => {
-  //   const entry = generateAppDirEntry(config.entry);
-  //   config.entry = () => entry;
+  webpack(config) {
+    const registerJs = path.join(
+      path.dirname(require.resolve('next-pwa')),
+      'register.js'
+    );
+    const entry = config.entry;
 
-  //   return config;
-  // }
+    config.entry = () =>
+      entry().then((entries) => {
+        // Automatically registers the SW and enables certain `next-pwa` features in
+        // App Router (https://github.com/shadowwalker/next-pwa/pull/427)
+        if (entries['main-app'] && !entries['main-app'].includes(registerJs)) {
+          if (Array.isArray(entries['main-app'])) {
+            entries['main-app'].unshift(registerJs);
+          } else if (typeof entries['main-app'] === 'string') {
+            entries['main-app'] = [registerJs, entries['main-app']];
+          }
+        }
+        return entries;
+      });
+
+    return config;
+  }
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);
