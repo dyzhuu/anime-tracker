@@ -1,11 +1,12 @@
-import AnimeCard from '@/components/AnimeCard';
+import { AnimeBar } from '@/components/AnimeBar';
 import { SearchBar } from '@/components/SearchBar';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 
 const query = `
   query {
-    Page(perPage: 12) {
+    Page(perPage: 20
+      
+      ) {
       pageInfo {
         hasNextPage
       }
@@ -54,17 +55,7 @@ export default async function Home() {
           imageSize="h-[20dvh]"
         ></SearchBar>
       </div>
-      <div className="mx-3 bg-muted">
-        <ScrollArea>
-          {/* <div className="p-2 grid max-w-8xl lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"> */}
-          <div className="p-2 flex">
-            {trendingAnime.map((anime: any, index: number) => (
-              <AnimeCard anime={anime} key={index}></AnimeCard>
-            ))}
-            <ScrollBar orientation="horizontal" className="hidden" />
-          </div>
-        </ScrollArea>
-      </div>
+      <AnimeBar trendingAnime={trendingAnime}></AnimeBar>
     </>
   );
 }

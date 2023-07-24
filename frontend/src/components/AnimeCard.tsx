@@ -6,10 +6,10 @@ import BookmarkButton from '@/components/BookmarkButton';
 
 export default function AnimeCard({anime}: any) {
     return (
-      <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior>
+      <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior >
         <div className="overflow-hidden cursor-pointer">
           {/* w-full */}
-          <div className="group space-y-1 p-2 w-[44dvw] h-full hover:scale-105 overflow-hidden transition-all max-w-[250px]">
+          <div className="group space-y-1 p-2 w-[44dvw] h-full hover:scale-105 overflow-hidden transition-all max-w-[200px]">
             <AspectRatio ratio={3 / 4} className="bg-primary-background">
               <Image
                 src={anime.coverImage.extraLarge}

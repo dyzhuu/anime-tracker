@@ -90,8 +90,3 @@
   -webkit-box-orient: vertical;
   overflow: hidden
 }
-
-.image-hover-trigger image-hover{
-  scale: 1.4;
-  transform: translate(0, 55px)
-}
