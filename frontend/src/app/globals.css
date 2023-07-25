@@ -90,3 +90,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden
 }
+
+html {
+    overflow-x: hidden;
+}
+div ::-webkit-scrollbar {
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}

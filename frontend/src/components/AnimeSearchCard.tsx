@@ -4,7 +4,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 export default function AnimeSearchCard({ anime, index, imageSize }: any) {
   return (
-    <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior className="">
+    <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior>
       <div
         className={`flex w-full cursor-pointer hover:bg-primary p-2 space-x-5 group ${
           imageSize as string

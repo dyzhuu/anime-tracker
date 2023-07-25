@@ -33,26 +33,15 @@ export function NavBar({ user }: any) {
             Home
           </Link>
           <Link
-            href="/popular"
+            href="/trending"
             className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-3 py-2 text-sm font-medium transition-colors
               ${
-                pathname === '/popular'
+                pathname === '/trending'
                   ? 'bg-primary text-primary-foreground'
                   : 'hover:bg-accent hover:text-accent-foreground'
               }`}
           >
-            Popular
-          </Link>
-          <Link
-            href="/seasonal"
-            className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-3 py-2 text-sm font-medium transition-colors
-              ${
-                pathname === '/seasonal'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
-              }`}
-          >
-            Seasonal
+            Trending
           </Link>
           <Link
             href="/top"

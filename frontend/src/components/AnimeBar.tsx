@@ -1,7 +1,7 @@
-'use client'
-import { useContext, useState } from "react";
-import AnimeCard from "@/components/AnimeCard";
-import { Button } from "@/components/ui/button";
+'use client';
+import { useContext, useState } from 'react';
+import AnimeCard from '@/components/AnimeCard';
+import { Button } from '@/components/ui/button';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import 'react-horizontal-scrolling-menu/dist/styles.css';
 
@@ -45,35 +45,34 @@ function RightArrow() {
   );
 }
 
-export function AnimeBar({trendingAnime}: any) {
+export function AnimeBar({ animeList }: any) {
   const [selected, setSelected] = useState([]);
 
   const isItemSelected = (id: any) => !!selected.find((el) => el === id);
 
-  const handleClick =
-    (id: any) => () => {
-      const itemSelected = isItemSelected(id);
+  const handleClick = (id: any) => () => {
+    const itemSelected = isItemSelected(id);
 
-      setSelected((currentSelected) =>
-        itemSelected
-          ? currentSelected.filter((el) => el !== id)
-          : currentSelected.concat(id)
-      );
-    };
+    setSelected((currentSelected) =>
+      itemSelected
+        ? currentSelected.filter((el) => el !== id)
+        : currentSelected.concat(id)
+    );
+  };
 
   return (
-    <div className="mx-5 relative overflow-hidden px-8">
-        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-            {trendingAnime.map((anime: any, index: number) => (
-              <AnimeCard
-                anime={anime}
-                key={index}
-                onClick={handleClick(index)}
-                selected={isItemSelected(index)}
-                className='group-last:rounded-lg'
-              ></AnimeCard>
-            ))}
-        </ScrollMenu>
+    <div className="relative px-8">
+      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+        {animeList.map((anime: any, index: number) => (
+          <AnimeCard
+            anime={anime}
+            key={index}
+            onClick={handleClick(index)}
+            selected={isItemSelected(index)}
+            className="group-last:rounded-lg"
+          ></AnimeCard>
+        ))}
+      </ScrollMenu>
     </div>
   );
 }

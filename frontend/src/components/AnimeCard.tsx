@@ -8,7 +8,6 @@ export default function AnimeCard({anime}: any) {
     return (
       <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior >
         <div className="overflow-hidden cursor-pointer">
-          {/* w-full */}
           <div className="group space-y-1 p-2 w-[44dvw] h-full hover:scale-105 overflow-hidden transition-all max-w-[200px]">
             <AspectRatio ratio={3 / 4} className="bg-primary-background">
               <Image
@@ -24,7 +23,7 @@ export default function AnimeCard({anime}: any) {
                   {anime.title.english ?? anime.title.romaji}
                 </p>
                 <p className="text-white text-xs font-light vertical-desc-ellipsis mt-2 select-none">
-                  {anime.description.replace(/<[^>]+>/g, '')}
+                  {anime.description ? anime.description.replace(/<[^>]+>/g, '') : ''}
                 </p>
                 <div className="flex grow"></div>
                 <BookmarkButton></BookmarkButton>

@@ -40,28 +40,15 @@ export function Drawer({ className }: any) {
             </DialogPrimitive.Close>
             <DialogPrimitive.Close asChild>
               <Link
-                href="/popular"
+                href="/trending"
                 className={`h-10 w-full items-center rounded-md px-3 py-2 
               ${
-                pathname === '/popular'
+                pathname === '/trending'
                   ? 'bg-primary text-primary-foreground'
                   : 'hover:bg-accent hover:text-accent-foreground'
               }`}
               >
-                Popular
-              </Link>
-            </DialogPrimitive.Close>
-            <DialogPrimitive.Close asChild>
-              <Link
-                href="/seasonal"
-                className={`h-10 w-full items-center rounded-md px-3 py-2 
-              ${
-                pathname === '/seasonal'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
-              }`}
-              >
-                Seasonal
+                Trending
               </Link>
             </DialogPrimitive.Close>
             <DialogPrimitive.Close asChild>

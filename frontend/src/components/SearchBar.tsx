@@ -7,6 +7,7 @@ import AnimeSearchCard from './AnimeSearchCard';
 
 export function SearchBar({ className, icon, imageSize }: any) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [focus, setFocus] = useState(false);
   const [animeResults, setAnimeResults] = useState([]);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -71,10 +72,12 @@ export function SearchBar({ className, icon, imageSize }: any) {
           spellCheck="false"
           className={`peer ${className}`}
           onChange={(e) => onSearch(e.target.value)}
+          onBlur={() => setTimeout(() => setFocus(false), 100)}
+          onFocus={() => setFocus(true)}
         />
         <div
-          className={`absolute opacity-0 pointer-events-none peer-focus:opacity-100 peer-focus:pointer-events-auto w-full bg-background shadow-lg rounded-bl rounded-br z-10 ${
-            searchQuery.length === 0 && 'hidden'
+          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 ${
+            (searchQuery.length === 0 || !focus) && 'hidden'
           }`}
         >
           {animeResults.map((anime: any, index: number) => {
