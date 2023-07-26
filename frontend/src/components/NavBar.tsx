@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { SearchBar } from '@/components/SearchBar';
 import { usePathname } from 'next/navigation';
 import { Icons } from '@/lib/icons';
@@ -76,7 +75,7 @@ export function NavBar({ user }: any) {
             </Link>
             <Link href={{ pathname: `/user/${userId}` }}>
               <Button className="bg-background hover:bg-muted">
-                <Icons.profile className="h-8"></Icons.profile>
+                  <Icons.profile className="h-8"></Icons.profile>
               </Button>
             </Link>
           </div>

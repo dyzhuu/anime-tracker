@@ -5,8 +5,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
 import jsonwebtoken from 'jsonwebtoken';
 
-const secret = process.env.NEXTAUTH_SECRET;
-
 export const options: NextAuthOptions = {
   providers: [
     GithubProvider({
@@ -93,12 +91,11 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       const id = token.id;
-      const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
-      // const res = await fetch(
-      //   `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
+      // const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
+      const res = await fetch(
+        `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
       const user = await res.json();
       session.user = { ...token, ...user };
-      console.log(session.user);
       return session;
     }
   },

@@ -19,25 +19,14 @@ import { useToast } from '@/components/ui/use-toast';
 import {
   useRouter,
   useSearchParams,
-  ReadonlyURLSearchParams
 } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import { signIn } from 'next-auth/react';
+import { redirectUrl } from '@/lib/utils';
 
 const formSchema = z.object({
   username: z.string().min(1, 'Required'),
   password: z.string().min(1, 'Required')
 });
-
-function redirectUrl(searchParams: ReadonlyURLSearchParams | null): string {
-  let redirectTo = searchParams?.get('redirectTo');
-  if (redirectTo) {
-    return `/${redirectTo.slice(1)}`;
-  } else {
-    return '/';
-  }
-}
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

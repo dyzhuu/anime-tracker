@@ -5,9 +5,10 @@ import { Icons } from '@/lib/icons';
 import { useState } from 'react';
 import AnimeSearchCard from './AnimeSearchCard';
 
-export function SearchBar({ className, icon, imageSize }: any) {
+export function SearchBar({ className, icon, imageSize }: {className: string, icon: string, imageSize: string}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [focus, setFocus] = useState(false);
+  const [hidden, setHidden] = useState(true);
   const [animeResults, setAnimeResults] = useState([]);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -72,11 +73,13 @@ export function SearchBar({ className, icon, imageSize }: any) {
           spellCheck="false"
           className={`peer ${className}`}
           onChange={(e) => onSearch(e.target.value)}
-          onBlur={() => setTimeout(() => setFocus(false), 100)}
+          onBlur={() => {
+            setTimeout(() => setFocus(false), 300);
+          }}
           onFocus={() => setFocus(true)}
         />
         <div
-          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 ${
+          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 opacity-0 peer-focus:opacity-100 ${
             (searchQuery.length === 0 || !focus) && 'hidden'
           }`}
         >

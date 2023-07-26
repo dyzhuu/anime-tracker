@@ -2,7 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
-export default function AnimeSearchCard({ anime, index, imageSize }: any) {
+export default function AnimeSearchCard({
+  anime,
+  index,
+  imageSize
+}: {
+  anime: any
+  index: number
+  imageSize: string
+}) {
   return (
     <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior>
       <div

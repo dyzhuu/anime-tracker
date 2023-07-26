@@ -17,7 +17,9 @@ import { useState } from 'react';
 import { Icons } from '@/lib/icons';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useToast } from '@/components//ui/use-toast';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { redirectUrl } from '@/lib/utils';
 
 export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -25,6 +27,7 @@ export default function RegisterForm() {
   const [passwordScore, setPasswordScore] = useState(0); // 0: too short, 1: weak
   const { toast } = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const formSchema = z
     .object({
@@ -88,7 +91,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
           <div>
@@ -144,7 +147,7 @@ export default function RegisterForm() {
           </Button>
         </form>
       </Form>
-      <div className="relative">
+      <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -152,13 +155,40 @@ export default function RegisterForm() {
           <span className="bg-background px-2 text-muted-foreground ">OR</span>
         </div>
       </div>
-      <Button variant="outline" className="space-x-12" disabled={isLoading}>
+      <Button
+        key="Google"
+        variant="outline"
+        className="space-x-12"
+        disabled={isLoading}
+        onClick={() => {
+          setIsLoading(true);
+          signIn('google', { callbackUrl: redirectUrl(searchParams) });
+        }}
+      >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.google className="mr-2 h-4 w-4" />
         )}{' '}
-        Sign up with Google
+        Continue with Google
+      </Button>
+
+      <Button
+        key="GitHub"
+        variant="outline"
+        className="space-x-12"
+        disabled={isLoading}
+        onClick={() => {
+          setIsLoading(true);
+          signIn('github', { callbackUrl: redirectUrl(searchParams) });
+        }}
+      >
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.gitHub className="mr-2 h-4 w-4" />
+        )}{' '}
+        Continue with GitHub
       </Button>
     </div>
   );

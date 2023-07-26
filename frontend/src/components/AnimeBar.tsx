@@ -12,7 +12,7 @@ function LeftArrow() {
     <Button
       disabled={isFirstItemVisible}
       onClick={() => scrollPrev()}
-      className="absolute z-20 left-0 top-[125px] -translate-y-1/2 -translate-x disabled:hidden fill-white w-10 p-0"
+      className="absolute z-20 left-0 top-[125px] -translate-y-1/2 -translate-x disabled:hidden fill-white w-10 p-0 -sm:hidden"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ function RightArrow() {
     <Button
       disabled={isLastItemVisible}
       onClick={() => scrollNext()}
-      className="absolute right-0 top-[125px] -translate-y-1/2 translate-x disabled:hidden fill-white w-10 p-0"
+      className="absolute right-0 top-[125px] -translate-y-1/2 translate-x disabled:hidden fill-white w-10 p-0 -sm:hidden"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -45,12 +45,13 @@ function RightArrow() {
   );
 }
 
-export function AnimeBar({ animeList }: any) {
+export function AnimeBar({ animeList }: {animeList: any}) {
   const [selected, setSelected] = useState([]);
 
-  const isItemSelected = (id: any) => !!selected.find((el) => el === id);
+  const isItemSelected = (id: ConcatArray<never>) =>
+    !!selected.find((el) => el === id);
 
-  const handleClick = (id: any) => () => {
+  const handleClick = (id: ConcatArray<never>) => () => {
     const itemSelected = isItemSelected(id);
 
     setSelected((currentSelected) =>
@@ -61,15 +62,15 @@ export function AnimeBar({ animeList }: any) {
   };
 
   return (
-    <div className="relative px-8">
+    <div className="relative md:px-8">
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        {animeList.map((anime: any, index: number) => (
+        {animeList.map((anime: any, index: ConcatArray<never>) => (
           <AnimeCard
             anime={anime}
-            key={index}
+            key={index as unknown as number}
+            size="w-[41dvw] max-w-[200px]"
             onClick={handleClick(index)}
             selected={isItemSelected(index)}
-            className="group-last:rounded-lg"
           ></AnimeCard>
         ))}
       </ScrollMenu>

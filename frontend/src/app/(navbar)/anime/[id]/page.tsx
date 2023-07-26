@@ -1,3 +1,3 @@
-export default function AnimePage() {
-    return;
+export default function AnimePage({ params }: { params: { id: string } }) {
+  return;
 }
