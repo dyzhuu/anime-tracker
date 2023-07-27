@@ -4,75 +4,6 @@ import { Separator } from '@/components/ui/separator';
 import { getAnime, query } from '@/lib/gql';
 import Link from 'next/link';
 
-const trendingQuery = `
-  query {
-    Page(perPage: 20
-      ) {
-      pageInfo {
-        hasNextPage
-      }
-      media(sort: TRENDING_DESC, isAdult: false, type: ANIME) {
-        idMal
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          extraLarge
-        }
-        description
-      }
-    }
-  }
-`;
-const topQuery = `
-  query {
-    Page(perPage: 20
-      ) {
-      pageInfo {
-        hasNextPage
-      }
-      media(sort: POPULARITY_DESC, isAdult: false, type: ANIME) {
-        idMal
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          extraLarge
-        }
-        description
-      }
-    }
-  }
-`;
-const newQuery = `
-  query {
-    Page(perPage: 20
-      ) {
-      pageInfo {
-        hasNextPage
-      }
-        media(sort: [START_DATE_DESC, TRENDING_DESC], isAdult: false, type: ANIME, status_in: [RELEASING, FINISHED]) {
-        idMal
-        title {
-          romaji
-          english
-        }
-        startDate {
-          year
-          month
-          day
-        }
-        coverImage {
-          extraLarge
-        }
-        description
-      }
-    }
-  }
-`;
-
 export default async function Home() {
   const trendingAnime = await getAnime(query.trending);
   const topAnime = await getAnime(query.top);
@@ -91,7 +22,7 @@ export default async function Home() {
       <div className="md:space-y-10">
         <div className="mx-5">
           <div className="mx-5 md:mx-16">
-            <Link href="/new">
+            <Link href="/trending">
               <h1 className="text-3xl font-medium text-primary hover:underline underline-offset-8">
                 Trending {'>>'}
               </h1>
@@ -103,7 +34,10 @@ export default async function Home() {
           <div className="mx-6">
             <Separator className="my-2"></Separator>
           </div>
-          <AnimeBar animeList={trendingAnime}></AnimeBar>
+          <AnimeBar
+            animeList={trendingAnime}
+            size="w-[41dvw] max-w-[200px]"
+          ></AnimeBar>
         </div>
 
         <div className="mx-5">
@@ -120,7 +54,10 @@ export default async function Home() {
           <div className="mx-6">
             <Separator className="my-2"></Separator>
           </div>
-          <AnimeBar animeList={topAnime}></AnimeBar>
+          <AnimeBar
+            animeList={topAnime}
+            size="w-[41dvw] max-w-[200px]"
+          ></AnimeBar>
         </div>
 
         <div className="mx-5">
@@ -137,7 +74,10 @@ export default async function Home() {
           <div className="mx-6">
             <Separator className="my-2"></Separator>
           </div>
-          <AnimeBar animeList={newAnime}></AnimeBar>
+          <AnimeBar
+            animeList={newAnime}
+            size="w-[41dvw] max-w-[200px]"
+          ></AnimeBar>
         </div>
       </div>
     </>

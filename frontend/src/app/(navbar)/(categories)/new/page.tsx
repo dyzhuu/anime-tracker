@@ -7,7 +7,7 @@ export default async function NewPage() {
   const anime = await getAnime(query.new);
   return (
     <div className="flex justify-center md:p-10">
-      <Card className="w-full py-5 -md:border-hidden">
+      <Card className="w-full py-5 -md:border-hidden -md:shadow-none">
         <CardHeader className="text-3xl font-medium text-primary px-10">
           New Releases
         </CardHeader>

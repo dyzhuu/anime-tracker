@@ -45,7 +45,7 @@ function RightArrow() {
   );
 }
 
-export function AnimeBar({ animeList }: {animeList: any}) {
+export function AnimeBar({ animeList, size }: {animeList: any, size: string}) {
   const [selected, setSelected] = useState([]);
 
   const isItemSelected = (id: ConcatArray<never>) =>
@@ -62,13 +62,13 @@ export function AnimeBar({ animeList }: {animeList: any}) {
   };
 
   return (
-    <div className="relative md:px-8">
+    <div className="relative md:px-8 hide-scrollbar">
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {animeList.map((anime: any, index: ConcatArray<never>) => (
           <AnimeCard
             anime={anime}
             key={index as unknown as number}
-            size="w-[41dvw] max-w-[200px]"
+            size={size}
             onClick={handleClick(index)}
             selected={isItemSelected(index)}
           ></AnimeCard>

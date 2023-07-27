@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 export default function UserPage({ params }: { params: { id: string } }) {
   const session = useSession({
@@ -10,8 +10,13 @@ export default function UserPage({ params }: { params: { id: string } }) {
       redirect(`/login?redirectTo=/user/undefined`);
     }
   });
+  const user = ''
+
   if (params.id === 'undefined' && session.status === 'authenticated') {
     redirect(`/user/${session?.data?.user?.userId}`);
+  }
+  if (!user) {
+    return notFound()
   }
   if (session.status === 'loading') {
     return <p>Loading...</p>;
