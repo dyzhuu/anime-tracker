@@ -6,7 +6,7 @@ import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { AnimeBar } from "@/components/AnimeBar";
 
-export async function getRecommendedAnime(id: number) {
+async function getRecommendedAnime(id: number) {
   const recommendationQuery = `query {
   Page {
     recommendations(mediaId: ${id}) {
