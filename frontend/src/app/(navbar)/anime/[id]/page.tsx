@@ -56,7 +56,7 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
   anime = anime[0]
   return (
     <div className="flex justify-center p-3 md:p-10">
-      <Card className="w-full py-5 max-w-6xl">
+      <Card className="w-full pt-5 max-w-6xl">
         <CardHeader className="-md:text-center pb-2">
           <h1 className="text-2xl font-medium text-primary">
             {anime?.title?.english ?? anime?.title?.romaji}
@@ -83,7 +83,7 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
               </AspectRatio>
             </div>
             <Separator className="md:hidden"></Separator>
-            <div className="md:h-[333px] overflow-y-auto md:mask-image py-1 md:pr-3">
+            <div className="md:h-[333px] overflow-y-auto mask-image py-1 md:pr-3">
               <h1 className="text-lg font-medium text-primary">Description</h1>
               <p className="mt-2 font-light">
                 {anime?.description

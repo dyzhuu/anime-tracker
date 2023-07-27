@@ -68,7 +68,6 @@ export async function getAnimeFromId(id: number[]) {
       coverImage {
         extraLarge
       }
-      bannerImage
       description
     }
   }

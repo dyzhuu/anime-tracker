@@ -1,4 +1,4 @@
-import { InfiniteAnimeScroll } from '@/components/InfiniteAnimeScroll';
+import { InfiniteAnimeScroll } from '@/app/(navbar)/anime/[id]/InfiniteAnimeScroll';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { getAnime, query } from '@/lib/gql';
