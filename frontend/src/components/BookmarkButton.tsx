@@ -99,10 +99,14 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
         }
       );
       if (res.ok) {
-        return await res.json();
+        const data = await res.json();
+        console.log(data)
+        form.setValue('status', data?.status);
+        form.setValue('rating', data?.rating);
       }
     }
   });
+  
 
   async function onSubmit(submitData: any) {
     const bookmarkData = {
