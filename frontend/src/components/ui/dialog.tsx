@@ -14,7 +14,11 @@ const DialogPortal = ({
   className,
   ...props
 }: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props} />
+  <DialogPrimitive.Portal
+    onClick={(e) => e.stopPropagation()}
+    className={cn(className)}
+    {...props}
+  />
 );
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
@@ -23,6 +27,7 @@ const DialogOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
+    onClick={(e) => e.stopPropagation()}
     ref={ref}
     className={cn(
       'fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
@@ -41,7 +46,7 @@ const DialogContent = React.forwardRef<
     <DialogOverlay />
     <DialogPrimitive.Content ref={ref} className={cn(className)} {...props}>
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      <DialogPrimitive.Close onClick={e => e.stopPropagation()} className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -55,6 +60,7 @@ const DialogHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
+    onClick={(e) => e.stopPropagation()}
     className={cn(
       'flex flex-col space-y-1.5 text-center sm:text-left',
       className
@@ -69,6 +75,7 @@ const DialogFooter = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
+    onClick={(e) => e.stopPropagation()}
     className={cn(
       'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
       className
@@ -84,6 +91,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
+    onClick={(e) => e.stopPropagation()}
     className={cn(
       'text-lg font-semibold leading-none tracking-tight',
       className
@@ -98,6 +106,7 @@ const DialogDescription = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
+    onClick={(e) => e.stopPropagation()}
     ref={ref}
     className={cn('text-sm text-muted-foreground', className)}
     {...props}

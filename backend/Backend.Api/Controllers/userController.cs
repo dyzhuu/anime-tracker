@@ -21,7 +21,7 @@ namespace Backend.Api.Controllers
 
         private async Task<int> GetLoggedInUserId()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             int internalUserId = await _userService.GetInternalId(userId);
 
@@ -103,7 +103,7 @@ namespace Backend.Api.Controllers
 
         //Bookmarks
 
-        [HttpGet("profile/bookmarks")]
+        [HttpGet("{userId}/bookmarks")]
 		[ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetBookmarks(int userId)
@@ -116,13 +116,26 @@ namespace Backend.Api.Controllers
 			return Ok(bookmarkDtos);
 		}
 
+        [HttpGet("{userId}/bookmarks/{animeId}")]
+		[ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetBookmark(int userId, int animeId)
+        {
+            if (!await _bookmarkService.BookmarkExists(userId, animeId))
+                return NotFound();
+
+            BookmarkDto bookmarkDto = await _bookmarkService.GetBookmark(userId, animeId);
+
+            return Ok(bookmarkDto);
+        }
+
         [Authorize]
-        [HttpPost("profile/bookmarks")]
+        [HttpPost("profile/bookmarks/{animeId}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> CreateBookmark([FromQuery] int animeId, [FromBody] BookmarkDto bookmarkDto)
+        public async Task<IActionResult> CreateBookmark(int animeId, [FromBody] BookmarkDto bookmarkDto)
         {
             int userId = await GetLoggedInUserId();
 
@@ -157,7 +170,7 @@ namespace Backend.Api.Controllers
             if (bookmarkDto is null)
                 return BadRequest();
 
-            if (!await _bookmarkService.BookmarkExists(userId, animeId))
+            if (!(await _bookmarkService.BookmarkExists(userId, animeId)))
                 return NotFound();
 
             if (!await _bookmarkService.UpdateBookmark(bookmarkDto))

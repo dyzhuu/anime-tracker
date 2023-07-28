@@ -12,7 +12,7 @@ export default function AnimeSearchCard({
   imageSize: string
 }) {
   return (
-    <Link href={`/anime/${anime.idMal}`} passHref legacyBehavior>
+    <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
       <div
         className={`flex w-full cursor-pointer hover:bg-primary p-2 space-x-5 group ${
           imageSize as string

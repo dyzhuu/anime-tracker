@@ -18,6 +18,13 @@ namespace Backend.Core.Services
             _mapper = mapper;
         }
 
+        public async Task<BookmarkDto> GetBookmark(int userId, int animeId)
+        {
+            Bookmark bookmark = await _bookmarkRepo.GetBookmark(userId, animeId);
+            BookmarkDto bookmarkDto = _mapper.Map<BookmarkDto>(bookmark);
+            return bookmarkDto;
+        }
+
         public async Task<ICollection<BookmarkDto>> GetBookmarks(int userId)
         {
             ICollection<Bookmark> bookmarks = await _bookmarkRepo.GetBookmarks(userId);

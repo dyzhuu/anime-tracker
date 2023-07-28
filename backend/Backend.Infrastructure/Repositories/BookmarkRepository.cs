@@ -36,8 +36,7 @@ namespace Backend.Infrastructure.Repositories
         public async Task<bool> BookmarkExists(int userId, int animeId)
         {
             return await _context.Bookmarks
-                .Where(b => b.UserId == userId)
-                .AnyAsync(b => b.AnimeId == animeId);
+                .AnyAsync(b => b.AnimeId == animeId && b.UserId == userId);
         }
 
         public async Task<bool> CreateBookmark(Bookmark bookmark)

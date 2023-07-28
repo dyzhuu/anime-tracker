@@ -4,11 +4,10 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import BookmarkButton from '@/components/BookmarkButton';
 import { Fallback } from '@radix-ui/react-avatar';
 import { Suspense } from 'react';
-import AnimeCardLoading from './loading';
 
 export default function AnimeCard({ anime, size }: any) {
   return (
-    <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
+    <Link href={`/anime/${anime.id}`} passHref legacyBehavior className='pointer-events-none'>
       <div className="overflow-hidden cursor-pointer rounded-lg">
         <div
           className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}
@@ -32,7 +31,7 @@ export default function AnimeCard({ anime, size }: any) {
                   : ''}
               </p>
               <div className="flex grow"></div>
-              <BookmarkButton></BookmarkButton>
+                <BookmarkButton anime={anime}></BookmarkButton>
             </div>
           </AspectRatio>
           <div className="">

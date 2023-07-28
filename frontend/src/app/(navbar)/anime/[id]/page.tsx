@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { AnimeBar } from "@/components/AnimeBar";
+import BookmarkButton from "@/components/BookmarkButton";
 
 async function getRecommendedAnime(id: number) {
   const recommendationQuery = `query {
@@ -23,6 +24,7 @@ async function getRecommendedAnime(id: number) {
         }
         coverImage {
           extraLarge
+          medium
         }
         description
       }
@@ -47,12 +49,19 @@ async function getRecommendedAnime(id: number) {
   return data;
 }
 
+async function getUserBookmark(animeId: number) {
+  const res = await fetch(
+    `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${animeId}`
+  );
+  return await res.json();
+}
+
 export default async function AnimePage({ params }: { params: { id: number } }) {
   let anime = (await getAnimeFromId([params.id]))
-  const recommendations = await getRecommendedAnime(params.id)
   if (!anime) {
     notFound()
   }
+  const recommendations = await getRecommendedAnime(params.id)
   anime = anime[0]
   return (
     <div className="flex justify-center p-3 md:p-10">
@@ -81,9 +90,10 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
                   priority={true}
                 ></Image>
               </AspectRatio>
+              <BookmarkButton anime={anime} className=" mt-5 w-full bg-primary hover:bg-primary/90 active:bg-primary/90"></BookmarkButton>
             </div>
             <Separator className="md:hidden"></Separator>
-            <div className="md:h-[333px] overflow-y-auto mask-image py-1 md:pr-3">
+            <div className="md:h-[393px] overflow-y-auto mask-image py-1 md:pr-3">
               <h1 className="text-lg font-medium text-primary">Description</h1>
               <p className="mt-2 font-light">
                 {anime?.description

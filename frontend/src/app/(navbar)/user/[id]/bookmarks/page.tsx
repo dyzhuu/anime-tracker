@@ -58,5 +58,5 @@ export default function UserBookmarksPage({
         </CardContent>
       </Card>
     </div>
-  );  
+  );
 }

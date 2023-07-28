@@ -5,6 +5,8 @@ namespace Backend.Core.Interfaces
 {
     public interface IBookmarkService
 	{
+        Task<BookmarkDto> GetBookmark(int userId, int animeId);
+
         Task<ICollection<BookmarkDto>> GetBookmarks(int userId);
 
         Task<bool> BookmarkExists(int userId, int animeId);

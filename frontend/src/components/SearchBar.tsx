@@ -31,7 +31,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
     const query = `query {
   Page(perPage: 15) {
     media(search: "${search}", isAdult: false, sort: [POPULARITY_DESC, SEARCH_MATCH], type: ANIME) {
-      idMal
+      id
       title {
         romaji
         english
@@ -52,7 +52,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
       body: JSON.stringify({ query })
     });
     const data = (await res.json()).data.Page.media;
-    const filteredResults = data.filter((anime: any) => anime?.idMal);
+    const filteredResults = data.filter((anime: any) => anime?.id);
     const reducedResults = filteredResults.slice(0, 10);
     setAnimeResults(reducedResults);
   }

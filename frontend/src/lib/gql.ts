@@ -22,6 +22,7 @@ export async function getAnime(sort: string, page: number = 1) {
         }
         coverImage {
           extraLarge
+          medium
         }
         description
       }
@@ -67,6 +68,7 @@ export async function getAnimeFromId(id: number[]) {
       }
       coverImage {
         extraLarge
+        medium
       }
       description
     }
