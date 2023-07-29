@@ -25,14 +25,16 @@ export function BookmarkTable({
   className?: string;
 }) {
   return (
-    <div className={'-md:hidden ' + className}>
+    <div className={className}>
       <div className="py-2 bg-muted rounded-t-lg">
         <div className="h-5 items-center text-sm grid grid-cols-12 place-content-start font-semibold text-center">
           <span className="pl-2 border-r-[1px]">#</span>
-          <span className="border-r-[1px]">Image</span>
-          <span className="border-r-[1px] col-span-7">Title</span>
-          <span className="border-r-[1px]">Rating</span>
-          <span className="col-span-2">Status</span>
+          <span className="border-r-[1px] -md:hidden">Image</span>
+          <span className="border-r-[1px] col-span-7 -md:col-span-11">
+            Title
+          </span>
+          <span className="border-r-[1px] -md:hidden">Rating</span>
+          <span className="col-span-2 -md:hidden">Status</span>
         </div>
       </div>
       <div>
@@ -42,7 +44,7 @@ export function BookmarkTable({
             key={bookmark.animeId}
           >
             <div
-              className={`w-full flex justify-center items-center border-l-8 group-last:rounded-b-md ${
+              className={`w-full flex justify-center items-center border-l-8 group-last:rounded-b-md -md:row-span-2 ${
                 bookmark.status === 1
                   ? 'border-green-600'
                   : bookmark.status === 2
@@ -54,7 +56,10 @@ export function BookmarkTable({
             >
               {index + 1}
             </div>
-            <Link href={`/anime/${bookmark.animeId}`}>
+            <Link
+              href={`/anime/${bookmark.animeId}`}
+              className="-sm:col-span-2 -md:row-span-2"
+            >
               <div className="p-1 flex items-center">
                 <AspectRatio ratio={3 / 4}>
                   <Image
@@ -68,7 +73,7 @@ export function BookmarkTable({
                 </AspectRatio>
               </div>
             </Link>
-            <div className="w-full col-span-6 flex items-center pl-2 text-sm font-medium text-left">
+            <div className="w-full col-span-6 -sm:col-span-7 -md:col-span-8 flex items-center pl-2 text-sm font-medium text-left">
               <Link
                 href={`/anime/${bookmark.animeId}`}
                 className="hover:underline underline-offset-2 hover:font-semibold"
@@ -76,9 +81,9 @@ export function BookmarkTable({
                 {bookmark.title}
               </Link>
             </div>
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full flex items-center justify-center -md:col-span-2">
               {isUser && (
-                <div className="flex gap-1">
+                <div className="flex gap-2">
                   <BookmarkButton
                     hasTooltip={false}
                     anime={{
@@ -91,7 +96,7 @@ export function BookmarkTable({
                         medium: bookmark.imageURL
                       }
                     }}
-                    className="fill-primary w-0 h-7 bg-transparent"
+                    className="fill-primary -sm:px-1 w-0 h-7 bg-transparent"
                   >
                     <Icons.edit className="absolute"></Icons.edit>
                   </BookmarkButton>
@@ -102,10 +107,13 @@ export function BookmarkTable({
                 </div>
               )}
             </div>
-            <div className="w-full flex justify-center items-center">
+            <div className="w-full flex justify-center -md:justify-start -md:pl-2 -md:col-span-5 items-center">
+              <span className="font-medium text-sm md:hidden">
+                Rating:&nbsp;
+              </span>
               {bookmark.rating === 0 ? '-' : bookmark.rating}
             </div>
-            <div className="w-full flex justify-center items-center text-center text-sm px-1 col-span-2">
+            <div className="w-full flex justify-center items-center text-center text-sm px-1 -md:justify-end col-span-2 -md:col-span-5 -sm:col-span-4 -md:pr-2">
               {STATUS[bookmark.status as keyof typeof STATUS]}
             </div>
           </div>

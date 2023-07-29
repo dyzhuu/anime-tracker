@@ -31,7 +31,7 @@ export default function AnimeCard({ anime, size }: any) {
                   : ''}
               </p>
               <div className="flex grow"></div>
-                <BookmarkButton anime={anime}></BookmarkButton>
+                <BookmarkButton anime={anime} className='-sm:hidden'></BookmarkButton>
             </div>
           </AspectRatio>
           <div className="">
