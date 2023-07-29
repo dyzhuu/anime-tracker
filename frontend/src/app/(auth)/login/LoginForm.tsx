@@ -44,7 +44,7 @@ export default function LoginForm() {
         });
       }, 100);
     }
-  }, []);
+  }, [toast, searchParams]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

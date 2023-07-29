@@ -81,7 +81,6 @@ export function BookmarkTable({
                 <div className="flex gap-1">
                   <BookmarkButton
                     hasTooltip={false}
-                    children={<Icons.edit className="absolute"></Icons.edit>}
                     anime={{
                       id: bookmark.animeId,
                       title: {
@@ -93,8 +92,13 @@ export function BookmarkTable({
                       }
                     }}
                     className="fill-primary w-0 h-7 bg-transparent"
-                  />
-                  <DeleteBookmarkButton bookmark={bookmark} className="w-0 h-7 bg-transparent hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95"></DeleteBookmarkButton>
+                  >
+                    <Icons.edit className="absolute"></Icons.edit>
+                  </BookmarkButton>
+                  <DeleteBookmarkButton
+                    bookmark={bookmark}
+                    className="w-0 h-7 bg-transparent hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95"
+                  ></DeleteBookmarkButton>
                 </div>
               )}
             </div>
