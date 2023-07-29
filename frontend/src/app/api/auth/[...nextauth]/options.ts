@@ -92,9 +92,9 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       const id = token.id;
-      const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
-      // const res = await fetch(
-      //   `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
+      // const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
+      const res = await fetch(
+        `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
       const user = await res.json();
       session.user = { ...token, ...user };
       return session;
