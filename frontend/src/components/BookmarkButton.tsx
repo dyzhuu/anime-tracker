@@ -40,8 +40,6 @@ import {
 } from 'next/navigation';
 import { User } from 'next-auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { revalidatePath } from 'next/cache';
-import { parseArgs } from 'util';
 
 function TriggerButton({
   session,
@@ -69,6 +67,7 @@ function TriggerButton({
               onClick={(e) => {
                 e.stopPropagation();
                 if (session.status !== 'authenticated') {
+                  console.log(session)
                   toast({
                     variant: 'destructive',
                     title: 'Log in to use bookmarks'

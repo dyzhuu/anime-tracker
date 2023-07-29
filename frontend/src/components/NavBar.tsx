@@ -4,15 +4,20 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import { SearchBar } from '@/components/SearchBar';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
 import { Drawer } from '@/components/Drawer';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
+import { RedirectType } from 'next/dist/client/components/redirect';
 
 export function NavBar({ user }: any) {
   const pathname = usePathname();
   const session = useSession();
+  const router = useRouter();
+  const { toast } = useToast();
   const userId = session.data?.user?.userId;
 
   return (
@@ -68,16 +73,32 @@ export function NavBar({ user }: any) {
 
         <div className="flex flex-row-reverse w-full ml-2 gap-x-2">
           <div className="flex items-center">
-            <Link href={{ pathname: `/user/${userId}/bookmarks` }}>
-              <Button className="bg-background hover:bg-muted">
+            <Button
+              className="bg-background hover:bg-muted"
+              onClick={() => {
+                if (session.status === 'unauthenticated') {
+                  router.push('/login?redirectTo=/user/undefined/bookmarks');
+                  toast({
+                    variant: 'destructive',
+                    title: 'Log in to view content'
+                  });
+                }
+              }}
+            >
+              <Link href={{ pathname: `/user/${userId}/bookmarks` }}>
                 <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
-              </Button>
-            </Link>
-            <Link href={{ pathname: `/user/${userId}` }}>
-              <Button className="bg-background hover:bg-muted">
-                  <Icons.profile className="h-8"></Icons.profile>
-              </Button>
-            </Link>
+              </Link>
+            </Button>
+            <Button className="bg-background hover:bg-muted"
+            onClick={() => {
+              if (session.status === 'unauthenticated') {
+                router.push('/login?redirectTo=/profile');
+              }
+            }}>
+              <Link href={{ pathname: `/profile` }}>
+                <Icons.profile className="h-8"></Icons.profile>
+              </Link>
+            </Button>
           </div>
           <div
             className={`-lg:w-full items-center ${

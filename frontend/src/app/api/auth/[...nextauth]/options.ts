@@ -62,7 +62,7 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ account, user }) {
-      if (account?.provider === ('google' || 'github')) {
+      if (account?.provider === 'google' || account?.provider === 'github') {
         const username = user.name?.split(' ')[0];
         try {
           // const res = await fetch('http://localhost:5148/api/auth/oauth2',
@@ -81,6 +81,7 @@ export const options: NextAuthOptions = {
             }
           );
         } catch (e) {
+          console.error(e);
           return false;
         }
       }
@@ -91,9 +92,9 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       const id = token.id;
-      // const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
-      const res = await fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
+      const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
+      // const res = await fetch(
+      //   `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
       const user = await res.json();
       session.user = { ...token, ...user };
       return session;

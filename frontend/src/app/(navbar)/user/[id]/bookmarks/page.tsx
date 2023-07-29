@@ -33,7 +33,7 @@ export default function UserBookmarksPage({
   if (session.status === 'authenticated' && params.id === 'undefined') {
     redirect(`/user/${session?.data?.user?.userId}/bookmarks`);
   }
-  
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ['bookmarks'],
     queryFn: async () => {
@@ -59,6 +59,7 @@ export default function UserBookmarksPage({
       }
     }
   });
+  
 
   if (session.status === 'loading' || isLoading) {
     return (
