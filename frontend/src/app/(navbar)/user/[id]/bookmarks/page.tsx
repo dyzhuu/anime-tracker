@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from 'next-auth/react';
-import { notFound, redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { BookmarkTable } from './BookmarkTable';
 import { useQuery } from '@tanstack/react-query';
 import { Icons } from '@/lib/icons';

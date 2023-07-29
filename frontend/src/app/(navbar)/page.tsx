@@ -19,7 +19,7 @@ export default async function Home() {
           imageSize="h-[20dvh]"
         ></SearchBar>
       </div>
-      <div className="md:space-y-10">
+      <div className="space-y-2 md:space-y-10">
         <div className="mx-5">
           <div className="mx-5 md:mx-16">
             <Link href="/trending">
