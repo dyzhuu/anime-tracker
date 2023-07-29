@@ -16,10 +16,14 @@ export function getAuthToken() {
 
 export async function isAuthenticated() {
   try {
-    const response = await fetch('http://localhost:5148/api/auth/verify', {
-      headers: { Authorization: `Bearer ${getAuthToken()}` },
-      cache: 'no-store'
-    });
+    const response = await fetch(
+      'https://dzmsabackend.azurewebsites.net/api/auth/verify',
+      {
+        // const response = await fetch('http://localhost:5148/api/auth/verify', {
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+        cache: 'no-store'
+      }
+    );
 
     if (response.status === 200) {
       return true;

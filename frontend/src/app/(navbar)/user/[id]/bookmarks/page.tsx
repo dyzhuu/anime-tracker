@@ -51,8 +51,8 @@ export default function UserBookmarksPage({
     queryKey: ['user'],
     queryFn: async () => {
       const res = await fetch(
-        // `https://dzmsabackend.azurewebsites.net/api/user/${params.id}`
-        `http://localhost:5148/api/user/${params.id}`,
+        `https://dzmsabackend.azurewebsites.net/api/user/${params.id}`
+        // `http://localhost:5148/api/user/${params.id}`,
       );
       if (res.ok) {
         return await res.json();
