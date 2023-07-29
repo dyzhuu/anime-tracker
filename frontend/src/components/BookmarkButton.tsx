@@ -32,12 +32,7 @@ import {
 } from '@/components/ui/form';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
-import {
-  redirect,
-  usePathname,
-  useRouter,
-  useSearchParams
-} from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { User } from 'next-auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -45,7 +40,7 @@ function TriggerButton({
   session,
   hasTooltip = true,
   children,
-  className
+  className,
 }: {
   session: any;
   hasTooltip?: boolean;
@@ -67,7 +62,7 @@ function TriggerButton({
               onClick={(e) => {
                 e.stopPropagation();
                 if (session.status !== 'authenticated') {
-                  console.log(session)
+                  console.log(session);
                   toast({
                     variant: 'destructive',
                     title: 'Log in to use bookmarks'
@@ -92,7 +87,6 @@ function TriggerButton({
 }
 
 function SelectMenu({ anime, user }: { anime: any; user: User }) {
-  const form = useForm();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { data } = useQuery({
@@ -109,18 +103,23 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
           }
         }
       );
-      if (res.ok) {
-        const data = await res.json();
-        return data;
-      }
+      if (res.ok) return await res.json();
     }
   });
+
+  const form = useForm({
+    defaultValues: {
+      status: data?.status?.toString(),
+      rating: data?.rating?.toString()
+    }
+  });
+
+  console.log(data?.status?.toString());
 
   const mutation = useMutation({
     mutationFn: async (bookmarkData) => {
       const method = data ? 'PUT' : 'POST';
-            const token = (await fetch('/api/token').then((res) => res.json()))
-              .token;
+      const token = (await fetch('/api/token').then((res) => res.json())).token;
       return fetch(
         `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${anime.id}`,
         // `http://localhost:5148/api/user/profile/bookmarks/${anime.id}`,
@@ -135,7 +134,7 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['bookmarks']})
+      queryClient.invalidateQueries({ queryKey: ['bookmarks'] });
       if (data) {
         toast({
           title: 'Bookmark Updated'
@@ -148,14 +147,15 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
     },
     onError: () => {
       toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: 'Changes were not saved successfully'
-        });
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Changes were not saved successfully'
+      });
     }
-  })
+  });
 
   async function onSubmit(submitData: any) {
+    console.log(submitData);
     const bookmarkData = {
       userId: user.userId,
       animeId: anime.id,
@@ -164,7 +164,7 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
       imageUrl: anime?.coverImage.medium,
       ...submitData
     };
-    mutation.mutate(bookmarkData)
+    mutation.mutate(bookmarkData);
   }
 
   return (
@@ -176,13 +176,19 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={
+                  data?.status === 0 ? field.value : data?.status?.toString()
+                }
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="0">Select Status</SelectItem>
                   <SelectItem value="1">Watching</SelectItem>
                   <SelectItem value="2">Completed</SelectItem>
                   <SelectItem value="3">Plan to watch</SelectItem>
@@ -198,13 +204,19 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Rating</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={
+                  data?.rating === 0 ? field.value : data?.rating?.toString()
+                }
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select rating" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="0">Select Rating</SelectItem>
                   <SelectItem value="1">1</SelectItem>
                   <SelectItem value="2">2</SelectItem>
                   <SelectItem value="3">3</SelectItem>
@@ -248,6 +260,7 @@ export default function BookmarkButton({
   className?: string;
 }) {
   const session = useSession();
+  const queryClient = useQueryClient();
   return (
     <Dialog>
       <TriggerButton

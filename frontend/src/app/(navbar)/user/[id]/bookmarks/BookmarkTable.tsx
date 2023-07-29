@@ -6,6 +6,8 @@ import { Icons } from '@/lib/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import DeleteBookmarkButton from './DeleteBookmarkButton';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 
 const STATUS = {
   0: '-',
@@ -24,6 +26,8 @@ export function BookmarkTable({
   bookmarks: any;
   className?: string;
 }) {
+  const queryClient = useQueryClient();
+  const session = useSession();
   return (
     <div className={className}>
       <div className="py-2 bg-muted rounded-t-lg">
@@ -42,6 +46,29 @@ export function BookmarkTable({
           <div
             className="w-full grid grid-cols-12 border border-t-0 group last:rounded-b-lg"
             key={bookmark.animeId}
+            onMouseEnter={async () => {
+              queryClient.prefetchQuery({
+                queryKey: [
+                  'bookmark',
+                  bookmark.animeId,
+                  session.data?.user?.userId
+                ],
+                queryFn: async () => {
+                  const res = await fetch(
+                    `https://dzmsabackend.azurewebsites.net/api/user/${session.data?.user?.userId}/bookmarks/${bookmark.animeId}`,
+                    // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${fetch('/api/token').then(
+                          (res) => res.json()
+                        )}`
+                      }
+                    }
+                  );
+                  if (res.ok) return await res.json();
+                }
+              });
+            }}
           >
             <div
               className={`w-full flex justify-center items-center border-l-8 group-last:rounded-b-md -md:row-span-2 ${
@@ -61,7 +88,7 @@ export function BookmarkTable({
               className="-sm:col-span-2 -md:row-span-2"
             >
               <div className="p-1 flex items-center">
-                <AspectRatio ratio={3 / 4}>
+                <AspectRatio ratio={3 / 4} className="bg-muted">
                   <Image
                     priority
                     alt=""

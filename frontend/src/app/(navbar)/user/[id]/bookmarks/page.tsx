@@ -8,9 +8,6 @@ import { notFound, redirect } from 'next/navigation';
 import { BookmarkTable } from './BookmarkTable';
 import { useQuery } from '@tanstack/react-query';
 import { Icons } from '@/lib/icons';
-// //TODO:
-// const token = await fetch('api/token');
-// console.log('token', await token.json());
 
 export default function UserBookmarksPage({
   params

@@ -17,7 +17,8 @@ export default function AnimeCard({ anime, size }: any) {
         <div
           className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}
         >
-          <AspectRatio ratio={3 / 4} className="bg-muted rounded-md">
+          <AspectRatio ratio={3 / 4} className="rounded-md">
+            <Skeleton className="w-full h-full bg-muted absolute"></Skeleton>
             <Image
               priority
               src={anime?.coverImage?.extraLarge ?? ''}
@@ -36,7 +37,9 @@ export default function AnimeCard({ anime, size }: any) {
                   : ''}
               </p>
               <div className="flex grow"></div>
-              <Suspense fallback={<BookmarkButtonFallback></BookmarkButtonFallback>}>
+              <Suspense
+                fallback={<BookmarkButtonFallback></BookmarkButtonFallback>}
+              >
                 <BookmarkButton
                   anime={anime}
                   className="-sm:hidden"
