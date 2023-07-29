@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { useQuery } from '@tanstack/react-query';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   Select,
@@ -29,19 +28,30 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
-  FormMessage
+  FormLabel
 } from '@/components/ui/form';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams
+} from 'next/navigation';
 import { User } from 'next-auth';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { revalidatePath } from 'next/cache';
+import { parseArgs } from 'util';
 
-function InnerButton({
+function TriggerButton({
   session,
+  hasTooltip = true,
+  children,
   className
 }: {
   session: any;
+  hasTooltip?: boolean;
+  children?: React.ReactNode;
   className?: string;
 }) {
   const searchParams = useSearchParams();
@@ -68,11 +78,13 @@ function InnerButton({
                 }
               }}
             >
-              <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
+              {children ?? (
+                <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
+              )}
             </Button>
           </DialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className="w-30 p-1">
+        <TooltipContent className={`w-30 p-1 ${!hasTooltip && 'hidden'}`}>
           <p className="text-xs">Add to Bookmarks</p>
         </TooltipContent>
       </Tooltip>
@@ -83,8 +95,9 @@ function InnerButton({
 function SelectMenu({ anime, user }: { anime: any; user: User }) {
   const form = useForm();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { data } = useQuery({
-    queryKey: ['bookmark'],
+    queryKey: ['bookmark', anime.id, user.userId],
     queryFn: async () => {
       const res = await fetch(
         `https://dzmsabackend.azurewebsites.net/api/user/${user.userId}/bookmarks/${anime.id}`,
@@ -94,35 +107,22 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
             Authorization: `Bearer ${fetch('/api/token').then((res) =>
               res.json()
             )}`
-          },
-          cache: 'no-store'
+          }
         }
       );
       if (res.ok) {
         const data = await res.json();
-        console.log(data)
-        form.setValue('status', data?.status);
-        form.setValue('rating', data?.rating);
+        return data;
       }
     }
   });
-  
 
-  async function onSubmit(submitData: any) {
-    const bookmarkData = {
-      userId: user.userId,
-      animeId: anime.id,
-      title: anime.title.english ?? anime.title.romaji,
-      description: anime.description,
-      imageUrl: anime.coverImage.medium,
-      ...submitData
-    };
-    const method = data ? 'PUT' : 'POST';
-    console.log('method', method);
-    //TODO: FIX THIS LATER TO USEMUTATION!!!!
-    try {
-      const token = (await fetch('/api/token').then((res) => res.json())).token;
-      const res = await fetch(
+  const mutation = useMutation({
+    mutationFn: async (bookmarkData) => {
+      const method = data ? 'PUT' : 'POST';
+            const token = (await fetch('/api/token').then((res) => res.json()))
+              .token;
+      return fetch(
         `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${anime.id}`,
         // `http://localhost:5148/api/user/profile/bookmarks/${anime.id}`,
         {
@@ -134,27 +134,38 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
           body: JSON.stringify(bookmarkData)
         }
       );
-      if (res.ok && data) {
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['bookmarks']})
+      if (data) {
         toast({
-          title: 'Bookmark Updated',
-        });
-      } else if (res.ok) {
-        toast({
-          title: 'Bookmark Added',
+          title: 'Bookmark Updated'
         });
       } else {
         toast({
+          title: 'Bookmark Added'
+        });
+      }
+    },
+    onError: () => {
+      toast({
           variant: 'destructive',
           title: 'Error',
           description: 'Changes were not saved successfully'
         });
-      }
-    } catch (e) {
-      toast({
-        variant: 'destructive',
-        title: 'Error processing your request'
-      });
     }
+  })
+
+  async function onSubmit(submitData: any) {
+    const bookmarkData = {
+      userId: user.userId,
+      animeId: anime.id,
+      title: anime.title.english ?? anime.title.romaji,
+      description: anime.description,
+      imageUrl: anime?.coverImage.medium,
+      ...submitData
+    };
+    mutation.mutate(bookmarkData)
   }
 
   return (
@@ -173,13 +184,12 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="0">Watching</SelectItem>
-                  <SelectItem value="1">Completed</SelectItem>
-                  <SelectItem value="2">Plan to watch</SelectItem>
-                  <SelectItem value="3">Dropped</SelectItem>
+                  <SelectItem value="1">Watching</SelectItem>
+                  <SelectItem value="2">Completed</SelectItem>
+                  <SelectItem value="3">Plan to watch</SelectItem>
+                  <SelectItem value="4">Dropped</SelectItem>
                 </SelectContent>
               </Select>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -208,15 +218,20 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
                   <SelectItem value="10">10</SelectItem>
                 </SelectContent>
               </Select>
-              <FormMessage />
             </FormItem>
           )}
         />
-        <DialogPrimitive.Close asChild>
-          <Button type="submit" className="w-full" onClick={(e) => e.stopPropagation()}>
-            Save Changes
-          </Button>
-        </DialogPrimitive.Close>
+        <div className="flex gap-2">
+          <DialogPrimitive.Close asChild>
+            <Button
+              type="submit"
+              className="flex grow"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Save Changes
+            </Button>
+          </DialogPrimitive.Close>
+        </div>
       </form>
     </Form>
   );
@@ -224,15 +239,24 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
 
 export default function BookmarkButton({
   anime,
+  children,
+  hasTooltip,
   className
 }: {
   anime: any;
+  children?: React.ReactNode;
+  hasTooltip?: boolean;
   className?: string;
 }) {
   const session = useSession();
   return (
     <Dialog>
-      <InnerButton session={session} className={className}></InnerButton>
+      <TriggerButton
+        hasTooltip={hasTooltip}
+        children={children}
+        session={session}
+        className={className}
+      ></TriggerButton>
       {session.status === 'authenticated' && (
         <DialogContent className="sm:max-w-[425px] fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full">
           <DialogHeader>

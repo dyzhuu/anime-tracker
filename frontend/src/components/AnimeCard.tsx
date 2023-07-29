@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 export default function AnimeCard({ anime, size }: any) {
   return (
-    <Link href={`/anime/${anime.id}`} passHref legacyBehavior className='pointer-events-none'>
+    <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
       <div className="overflow-hidden cursor-pointer rounded-lg">
         <div
           className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}

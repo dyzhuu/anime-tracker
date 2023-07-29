@@ -70,18 +70,19 @@ namespace Backend.Api.Controllers
         //          return Ok(userDtos);
         //}
 
-        //[HttpGet("{userId}")]
-        //[ProducesResponseType(200)]
-        //      [ProducesResponseType(404)]
-        //      public async Task<IActionResult> GetUser(int userId)
-        //{
-        //	UserDto user = await _userService.GetUser(userId);
+        [HttpGet("{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetUser(int userId)
+        {
+            UserDto userDto = await _userService.GetUser(userId);
 
-        //          if (user is null)
-        //              return NotFound();
+            if (userDto is null)
+                return NotFound();
 
-        //          return Ok(user);
-        //      }
+            return Ok(new { userId = userDto.Id, name = userDto.Username });
+
+        }
 
         [Authorize]
         [HttpDelete("profile")]
