@@ -76,7 +76,6 @@ function TriggerButton({
                           onClick={(e) => {
                     e.stopPropagation();
                     if (session.status !== 'authenticated') {
-                      console.log(session);
                       toast({
                         variant: 'destructive',
                         title: 'Log in to use bookmarks'
@@ -148,7 +147,6 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
     }
   });
 
-  console.log(data?.status?.toString());
 
   const mutation = useMutation({
     mutationFn: async (bookmarkData) => {
@@ -189,7 +187,6 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
   });
 
   async function onSubmit(submitData: any) {
-    console.log(submitData);
     const bookmarkData = {
       userId: user.userId,
       animeId: anime.id,

@@ -89,7 +89,6 @@ export function ProfileForm() {
           body: JSON.stringify({username: data.username, password: currentPassword})
         }
       );
-      console.log(await res.json())
       if (!res.ok) {
         toast({
           variant: 'destructive',
@@ -102,10 +101,10 @@ export function ProfileForm() {
     
     try {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
-      const res = await fetch(
-        'http://localhost:5148/api/user/profile',
-        // const res = await fetch(
-        //   'https://dzmsabackend.azurewebsites.net/api/user/profile',
+      // const res = await fetch(
+      //   'http://localhost:5148/api/user/profile',
+        const res = await fetch(
+          'https://dzmsabackend.azurewebsites.net/api/user/profile',
         {
           method: 'PUT',
           cache: 'no-store',
