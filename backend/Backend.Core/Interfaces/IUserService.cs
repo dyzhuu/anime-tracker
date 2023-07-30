@@ -25,6 +25,8 @@ namespace Backend.Core.Interfaces
 
         Task<bool> UserExists(string username);
 
+        Task<bool> UserExists(string username, int currentUserId);
+
         Task<bool> DeleteUser(int userId);
 
     }

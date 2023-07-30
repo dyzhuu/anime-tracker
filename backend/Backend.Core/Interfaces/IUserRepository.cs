@@ -20,6 +20,8 @@ namespace Backend.Core.Interfaces
 
         Task<bool> UserExists(string username);
 
+        Task<bool> UserExistsExceptUserId(string username, int currentUserId);
+
     }
 }
 

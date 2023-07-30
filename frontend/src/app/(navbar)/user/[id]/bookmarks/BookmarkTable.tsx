@@ -54,14 +54,15 @@ export function BookmarkTable({
                   session.data?.user?.userId
                 ],
                 queryFn: async () => {
+                  const token = (
+                    await fetch('/api/token').then((res) => res.json())
+                  ).token;
                   const res = await fetch(
                     `https://dzmsabackend.azurewebsites.net/api/user/${session.data?.user?.userId}/bookmarks/${bookmark.animeId}`,
                     // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
                     {
                       headers: {
-                        Authorization: `Bearer ${fetch('/api/token').then(
-                          (res) => res.json()
-                        )}`
+                        Authorization: `Bearer ${token}`
                       }
                     }
                   );
@@ -103,7 +104,7 @@ export function BookmarkTable({
             <div className="w-full col-span-6 -sm:col-span-7 -md:col-span-8 flex items-center pl-2 text-sm font-medium text-left">
               <Link
                 href={`/anime/${bookmark.animeId}`}
-                className="hover:underline underline-offset-2 hover:font-semibold"
+                className="hover:underline underline-offset-2 hover:font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
               >
                 {bookmark.title}
               </Link>

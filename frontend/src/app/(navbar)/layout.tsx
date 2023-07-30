@@ -1,4 +1,4 @@
-import { NavBar } from "@/components/NavBar";
+import { NavBar } from "@/app/(navbar)/NavBar";
 
 
 export default async function NavBarLayout({

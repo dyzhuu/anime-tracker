@@ -27,7 +27,6 @@ namespace Backend.Api.Controllers
             if (await _userService.UserExists(userReqDto.Username))
                 return BadRequest("Username already exists");
 
-                //TODO: add validation logic with fluent validation
                 UserDto user = await _userService.RegisterUser(userReqDto);
             if (user is null) 
                 return BadRequest("Invalid credentials");
@@ -52,7 +51,7 @@ namespace Backend.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserReqDto userReqDto)
         {
-            if (userReqDto.Password == "")
+            if (string.IsNullOrEmpty(userReqDto.Password))
             {
                 return BadRequest("Invalid credentials");
             }

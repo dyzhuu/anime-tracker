@@ -1,7 +1,6 @@
 'use client';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { useToast } from '@/components/ui/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from 'next-auth/react';
 import { notFound, redirect } from 'next/navigation';
@@ -14,17 +13,7 @@ export default function UserBookmarksPage({
 }: {
   params: { id: string };
 }) {
-  const { toast } = useToast();
-  const session = useSession({
-    required: true,
-    onUnauthenticated() {
-      toast({
-        variant: 'destructive',
-        title: 'Log in to view content'
-      });
-      redirect(`/login?redirectTo=/user/undefined/bookmarks`);
-    }
-  });
+  const session = useSession();
 
 
   if (session.status === 'authenticated' && params.id === 'undefined') {

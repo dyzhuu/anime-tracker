@@ -41,6 +41,9 @@ namespace Backend.Api.Controllers
             if (userId != userDto.Id)
                 return Unauthorized();
 
+            if (await _userService.UserExists(userDto.Username, userId))
+                return BadRequest("Username already exists");
+
             if (userDto is null)
                 return BadRequest();
 

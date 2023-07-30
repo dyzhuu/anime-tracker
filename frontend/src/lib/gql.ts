@@ -7,7 +7,7 @@ export enum query {
 export async function getAnime(sort: string, page: number = 1) {
   const gqlQuery = `
   query {
-    Page(perPage: 20, page: ${page}
+    Page(perPage: 24, page: ${page}
       ) {
         media(${sort}, isAdult: false, type: ANIME) {
         id

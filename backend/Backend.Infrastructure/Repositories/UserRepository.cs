@@ -52,6 +52,11 @@ namespace Backend.Infrastructure.Repositories
             return await _context.Users.AnyAsync(u => u.Username == username);
         }
 
+        public async Task<bool> UserExistsExceptUserId(string username, int currentUserId)
+        {
+            return await _context.Users.AnyAsync(u => u.Username == username && u.Id != currentUserId);
+        }
+
         public async Task<bool> DeleteUser(User user)
         {
             _context.Remove(user);

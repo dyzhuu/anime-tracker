@@ -33,9 +33,14 @@ export default function RegisterForm() {
     .object({
       username: z
         .string()
-        .min(1, 'Required')
+        .min(1, {
+          message: 'Username required.'
+        })
+        .max(30, {
+          message: 'Username must not be longer than 30 characters.'
+        })
         .regex(new RegExp(/^[a-zA-Z0-9-_]+$/), 'Username must be alphanumeric'),
-      password: z.string().min(1, 'Required')
+      password: z.string().min(1, 'Password required.')
     })
     .superRefine((values, ctx) => {
       if (passwordScore < 2) {
@@ -52,7 +57,8 @@ export default function RegisterForm() {
     defaultValues: {
       username: '',
       password: ''
-    }
+    },
+    mode: 'onChange'
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

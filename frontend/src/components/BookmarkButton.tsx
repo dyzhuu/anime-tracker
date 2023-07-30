@@ -35,54 +35,89 @@ import { useSession } from 'next-auth/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { User } from 'next-auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 
 function TriggerButton({
   session,
   hasTooltip = true,
   children,
   className,
+  onMouseEnter
 }: {
   session: any;
   hasTooltip?: boolean;
   children?: React.ReactNode;
   className?: string;
+  onMouseEnter?: React.MouseEventHandler;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const url = pathname + '?' + searchParams.toString();
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <DialogTrigger asChild>
-            <Button
-              variant="icon"
-              className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 z-50 ${className}`}
-              aria-label="Bookmark"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (session.status !== 'authenticated') {
-                  console.log(session);
-                  toast({
-                    variant: 'destructive',
-                    title: 'Log in to use bookmarks'
-                  });
-                  const url = pathname + '?' + searchParams.toString();
-                  router.push(`/login?redirectTo=${url}`);
-                }
-              }}
-            >
-              {children ?? (
-                <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
-              )}
-            </Button>
-          </DialogTrigger>
-        </TooltipTrigger>
-        <TooltipContent className={`w-30 p-1 ${!hasTooltip && 'hidden'}`}>
-          <p className="text-xs">Add to Bookmarks</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <>
+      {session.status === 'loading' ? (
+        <Button
+          variant="icon"
+          className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 z-50 ${className}`}
+        >
+            {children ?? (
+              <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
+            )}
+        </Button>
+      ) : session.status === 'authenticated' ? (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
+                <Button
+                  variant="icon"
+                  className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 z-50 ${className}`}
+                          onClick={(e) => {
+                    e.stopPropagation();
+                    if (session.status !== 'authenticated') {
+                      console.log(session);
+                      toast({
+                        variant: 'destructive',
+                        title: 'Log in to use bookmarks'
+                      });
+                      router.push(`/login?redirectTo=${url}`);
+                    }
+                  }}
+                  onMouseEnter={onMouseEnter}
+                >
+                  {children ?? (
+                    <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
+                  )}
+                </Button>
+              </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent className={`w-30 p-1 ${!hasTooltip && 'hidden'}`}>
+              <p className="text-xs">Add to Bookmarks</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        <Button
+          variant="icon"
+          className={`group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 z-50 ${className}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            toast({
+              variant: 'destructive',
+              title: 'Log in to use bookmarks'
+            });
+          }}
+          asChild
+        >
+          <Link href={`/login?redirectTo=${url}`}>
+            {children ?? (
+              <Icons.bookmarkHollow className="group-hover/button:scale-110 fill-white"></Icons.bookmarkHollow>
+            )}
+          </Link>
+        </Button>
+      )}
+    </>
   );
 }
 
@@ -92,14 +127,13 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
   const { data } = useQuery({
     queryKey: ['bookmark', anime.id, user.userId],
     queryFn: async () => {
+      const token = (await fetch('/api/token').then((res) => res.json())).token;
       const res = await fetch(
         `https://dzmsabackend.azurewebsites.net/api/user/${user.userId}/bookmarks/${anime.id}`,
         // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
         {
           headers: {
-            Authorization: `Bearer ${fetch('/api/token').then((res) =>
-              res.json()
-            )}`
+            Authorization: `Bearer ${token}`
           }
         }
       );
@@ -217,16 +251,16 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="0">Select Rating</SelectItem>
-                  <SelectItem value="1">1</SelectItem>
-                  <SelectItem value="2">2</SelectItem>
-                  <SelectItem value="3">3</SelectItem>
-                  <SelectItem value="4">4</SelectItem>
-                  <SelectItem value="5">5</SelectItem>
-                  <SelectItem value="6">6</SelectItem>
-                  <SelectItem value="7">7</SelectItem>
-                  <SelectItem value="8">8</SelectItem>
-                  <SelectItem value="9">9</SelectItem>
                   <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="9">9</SelectItem>
+                  <SelectItem value="8">8</SelectItem>
+                  <SelectItem value="7">7</SelectItem>
+                  <SelectItem value="6">6</SelectItem>
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="4">4</SelectItem>
+                  <SelectItem value="3">3</SelectItem>
+                  <SelectItem value="2">2</SelectItem>
+                  <SelectItem value="1">1</SelectItem>
                 </SelectContent>
               </Select>
             </FormItem>
@@ -263,10 +297,37 @@ export default function BookmarkButton({
   const queryClient = useQueryClient();
   return (
     <Dialog>
+      {/* <Link href='/login'>
+        <TriggerButton session={session} className={'pointer-events-none' + className}></TriggerButton>
+      </Link> */}
       <TriggerButton
         hasTooltip={hasTooltip}
         session={session}
         className={className}
+        onMouseEnter={async () => {
+          queryClient.prefetchQuery({
+            queryKey: [
+              'bookmark',
+              anime.id,
+              session.data?.user?.userId
+            ],
+            queryFn: async () => {
+              const token = (
+                await fetch('/api/token').then((res) => res.json())
+              ).token;
+              const res = await fetch(
+                `https://dzmsabackend.azurewebsites.net/api/user/${session.data?.user?.userId}/bookmarks/${anime.id}`,
+                // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  }
+                }
+              );
+              if (res.ok) return await res.json();
+            }
+          });
+        }}
       >
         {children}
       </TriggerButton>

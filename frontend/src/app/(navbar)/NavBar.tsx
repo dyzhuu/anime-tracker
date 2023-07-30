@@ -1,24 +1,26 @@
 'use client';
 
-import * as React from 'react';
 import Link from 'next/link';
 
 import { SearchBar } from '@/components/SearchBar';
-import { redirect, usePathname } from 'next/navigation';
+import { redirect, usePathname, useSearchParams } from 'next/navigation';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
-import { Drawer } from '@/components/Drawer';
+import { Drawer } from '@/app/(navbar)/Drawer';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { RedirectType } from 'next/dist/client/components/redirect';
+import { ProfileDropdown } from './ProfileDropdown';
+import { Suspense } from 'react';
+import { ProfileButton } from './ProfileButton';
 
-export function NavBar({ user }: any) {
+export function NavBar() {
   const pathname = usePathname();
   const session = useSession();
-  const router = useRouter();
   const { toast } = useToast();
   const userId = session.data?.user?.userId;
+
 
   return (
     <nav className="border-b sticky top-0 z-20 bg-background">
@@ -73,32 +75,55 @@ export function NavBar({ user }: any) {
 
         <div className="flex flex-row-reverse w-full ml-2 gap-x-2">
           <div className="flex items-center">
-            <Button
-              className="bg-background hover:bg-muted"
-              onClick={() => {
-                if (session.status === 'unauthenticated') {
-                  router.push('/login?redirectTo=/user/undefined/bookmarks');
-                  toast({
-                    variant: 'destructive',
-                    title: 'Log in to view content'
-                  });
-                }
-              }}
-            >
-              <Link href={{ pathname: `/user/${userId}/bookmarks` }}>
-                <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
-              </Link>
-            </Button>
-            <Button className="bg-background hover:bg-muted"
-            onClick={() => {
-              if (session.status === 'unauthenticated') {
-                router.push('/login?redirectTo=/profile');
-              }
-            }}>
-              <Link href={{ pathname: `/profile` }}>
-                <Icons.profile className="h-8"></Icons.profile>
-              </Link>
-            </Button>
+            {session.status === 'loading' ? (
+              <>
+                <Button variant="ghost">
+                  <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
+                </Button>
+                <Button variant="ghost">
+                  <Icons.profile className="h-8"></Icons.profile>
+                </Button>
+              </>
+            ) : session.status === 'unauthenticated' ? (
+              <>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    toast({
+                      variant: 'destructive',
+                      title: 'Log in to view content'
+                    });
+                  }}
+                  asChild
+                >
+                  <Link href="/login?redirectTo=/user/undefined/bookmarks">
+                    <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
+                  </Link>
+                </Button>
+                <Suspense
+                  fallback={
+                    <Button variant="ghost">
+                      <Icons.profile className="h-8"></Icons.profile>
+                    </Button>
+                  }
+                >
+                  <ProfileButton></ProfileButton>
+                </Suspense>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link href={`/user/${userId}/bookmarks`}>
+                    <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
+                  </Link>
+                </Button>
+                <ProfileDropdown>
+                  <Button variant="ghost">
+                    <Icons.profile className="h-8"></Icons.profile>
+                  </Button>
+                </ProfileDropdown>
+              </>
+            )}
           </div>
           <div
             className={`-lg:w-full items-center ${

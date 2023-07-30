@@ -92,7 +92,27 @@ namespace Backend.Core.Services
 
         public async Task<bool> UpdateUser(UserDto userDto)
         {
-            return await _userRepo.UpdateUser(_mapper.Map<User>(userDto));
+            User user = await _userRepo.GetUser(userDto.Id);
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(userDto.Username))
+            {
+                userDto.Username = user.Username;
+            }
+            if (!string.IsNullOrEmpty(userDto.Password))
+            {
+                userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+            } else
+            {
+                userDto.Password = user.PasswordHash;
+            }
+
+            _mapper.Map(userDto, user);
+            
+            return await _userRepo.UpdateUser(user);
         }
 
         public async Task<bool> DeleteUser(int userId)
@@ -129,6 +149,12 @@ namespace Backend.Core.Services
         public async Task<bool> UserExists(string username)
         {
             return await _userRepo.UserExists(username);
+        }
+
+        public async Task<bool> UserExists(string username, int currentUserId)
+        {
+            // Perform a query to check if the username already exists for a user other than the current user.
+            return await _userRepo.UserExistsExceptUserId(username, currentUserId);
         }
 
     }

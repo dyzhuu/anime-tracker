@@ -11,9 +11,11 @@ import { Icons } from '@/lib/icons';
 import Link from 'next/link';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 
 export function Drawer({ className }: any) {
   const pathname = usePathname();
+  const session = useSession();
   return (
     <div className={className}>
       <Dialog>
@@ -78,11 +80,15 @@ export function Drawer({ className }: any) {
               </Link>
             </DialogPrimitive.Close>
           </DialogHeader>
-          <DialogFooter className="absolute left-9 bottom-5 font-medium">
-            <DialogPrimitive.Close asChild>
-              <Link href="/profile">Profile</Link>
-            </DialogPrimitive.Close>
-          </DialogFooter>
+          {session.status === 'authenticated' && (
+            <DialogFooter className="absolute left-6 bottom-5 font-medium">
+              <DialogPrimitive.Close asChild>
+                <Button variant={'ghost'} className="text-destructive text-md" onClick={() => signOut()}>
+                  Log out
+                </Button>
+              </DialogPrimitive.Close>
+            </DialogFooter>
+          )}
         </DialogContent>
       </Dialog>
     </div>
