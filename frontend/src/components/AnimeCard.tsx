@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import BookmarkButton from '@/components/BookmarkButton';
-import { Fallback } from '@radix-ui/react-avatar';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 

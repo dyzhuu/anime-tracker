@@ -8,7 +8,6 @@ import Link from 'next/link';
 import DeleteBookmarkButton from './DeleteBookmarkButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 const STATUS = {

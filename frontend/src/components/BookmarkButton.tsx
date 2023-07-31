@@ -294,9 +294,6 @@ export default function BookmarkButton({
   const queryClient = useQueryClient();
   return (
     <Dialog>
-      {/* <Link href='/login'>
-        <TriggerButton session={session} className={'pointer-events-none' + className}></TriggerButton>
-      </Link> */}
       <TriggerButton
         hasTooltip={hasTooltip}
         session={session}

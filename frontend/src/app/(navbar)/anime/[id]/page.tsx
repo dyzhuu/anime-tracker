@@ -49,13 +49,6 @@ async function getRecommendedAnime(id: number) {
   return data;
 }
 
-async function getUserBookmark(animeId: number) {
-  const res = await fetch(
-    `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${animeId}`
-  );
-  return await res.json();
-}
-
 export default async function AnimePage({ params }: { params: { id: number } }) {
   let anime = (await getAnimeFromId([params.id]))
   if (!anime) {

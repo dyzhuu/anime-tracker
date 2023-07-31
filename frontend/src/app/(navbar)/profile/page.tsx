@@ -1,12 +1,8 @@
 'use client';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { useToast } from '@/components/ui/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from 'next-auth/react';
-import { notFound, redirect } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { Icons } from '@/lib/icons';
 import { ProfileForm } from './ProfileForm';
 
 export default function UserBookmarksPage() {
@@ -14,17 +10,6 @@ export default function UserBookmarksPage() {
     required: true
   });
 
-  const userQuery = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/${session?.data?.user?.userId}`
-      );
-      if (res.ok) {
-        return await res.json();
-      }
-    }
-  });
   if (session.status === 'authenticated') {
     return (
       <div className="flex justify-center py-10 md:px-10">

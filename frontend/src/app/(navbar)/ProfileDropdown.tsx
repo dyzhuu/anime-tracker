@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { useToast } from '@/components/ui/use-toast';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
@@ -25,7 +24,7 @@ export function ProfileDropdown({ children }: { children: React.ReactNode }) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/profile">Settings</Link>
+            <Link href="/profile">Account Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <button className='w-full'
