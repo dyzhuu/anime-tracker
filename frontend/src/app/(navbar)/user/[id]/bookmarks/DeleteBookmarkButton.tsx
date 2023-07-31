@@ -31,7 +31,7 @@ export default function DeleteBookmarkButton({
         `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${animeId}`,
         // `http://localhost:5148/api/user/profile/bookmarks/${bookmark.animeId}`,
         {
-          method: 'Delete',
+          method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'

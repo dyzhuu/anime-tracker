@@ -25,12 +25,6 @@ export function ProfileForm() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordScore, setPasswordScore] = useState(0); // 0: too short, 1: weak
-
-  useEffect(() => {
-    if (currentPassword.length === 0) {
-      form.setValue('newPassword', '')
-    }
-  }, [currentPassword])
   const profileFormSchema = z
     .object({
       username: z
@@ -61,21 +55,18 @@ export function ProfileForm() {
     mode: 'onChange'
   });
 
+  useEffect(() => {
+    if (currentPassword.length === 0) {
+      form.setValue('newPassword', '');
+    }
+  }, [form, currentPassword]);
+
   async function onSubmit(values: z.infer<typeof profileFormSchema>) {
     const data = {
       id: session.data?.user?.userId,
       username: values.username ? values.username : session.data?.user?.username,
       password: values.newPassword ?? ''
     };
-
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      )
-    });
 
     if (data.password) {
       const res = await fetch(
@@ -107,7 +98,6 @@ export function ProfileForm() {
           'https://dzmsabackend.azurewebsites.net/api/user/profile',
         {
           method: 'PUT',
-          cache: 'no-store',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`

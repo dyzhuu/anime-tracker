@@ -8,6 +8,8 @@ import Link from 'next/link';
 import DeleteBookmarkButton from './DeleteBookmarkButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const STATUS = {
   0: '-',
@@ -28,17 +30,43 @@ export function BookmarkTable({
 }) {
   const queryClient = useQueryClient();
   const session = useSession();
+  const searchParams = useSearchParams();
+
+
+  bookmarks.sort((a: any, b: any) => {
+    switch (searchParams.get('sort')) {
+      case 'title':
+        return a.title.localeCompare(b.title); // sort alphabetically
+      case 'rating':
+        return b.rating - a.rating; // sort by rating
+      }
+    return a.status - b.status; // sort by status
+    
+  });
+
   return (
     <div className={className}>
       <div className="py-2 bg-muted rounded-t-lg">
         <div className="h-5 items-center text-sm grid grid-cols-12 place-content-start font-semibold text-center">
           <span className="pl-2 border-r-[1px]">#</span>
           <span className="border-r-[1px] -md:hidden">Image</span>
-          <span className="border-r-[1px] col-span-7 -md:col-span-11">
+          <Link
+            href="?sort=title"
+            replace={true}
+            className="border-r-[1px] col-span-7 -md:col-span-11"
+          >
             Title
-          </span>
-          <span className="border-r-[1px] -md:hidden">Rating</span>
-          <span className="col-span-2 -md:hidden">Status</span>
+          </Link>
+          <Link
+            href="?sort=rating"
+            replace={true}
+            className="border-r-[1px] -md:hidden"
+          >
+            Rating
+          </Link>
+          <Link href="?sort=status" replace={true} className="col-span-2 -md:hidden">
+            Status
+          </Link>
         </div>
       </div>
       <div>
