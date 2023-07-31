@@ -12,7 +12,7 @@ export default async function Home() {
   // prefetch queries
   return (
     <>
-      <div className="w-[100dvw] h-[150px] md:h-[300px] py-12 flex flex-col items-center justify-center px-10 gap-3">
+      <div className="w-full h-[150px] md:h-[300px] py-12 flex flex-col items-center justify-center px-10 gap-3">
         <SearchBar
           className="pl-14 pr-[21px] w-[80dvw] h-14 text-xl"
           icon="h-[28px] translate-x-4"
