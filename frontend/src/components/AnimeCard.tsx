@@ -17,9 +17,8 @@ export default function AnimeCard({ anime, size }: any) {
           className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}
         >
           <AspectRatio ratio={3 / 4} className="rounded-md">
-            <Skeleton className="w-full h-full bg-muted absolute"></Skeleton>
+            <Skeleton className="w-full h-full bg-muted absolute group-hover:scale-[1.5]"></Skeleton>
             <Image
-              priority
               src={anime?.coverImage?.extraLarge ?? ''}
               alt={anime?.title?.english ?? anime?.title?.romaji}
               fill={true}
@@ -46,7 +45,7 @@ export default function AnimeCard({ anime, size }: any) {
               </Suspense>
             </div>
           </AspectRatio>
-          <div className="">
+          <div className="group-hover:hidden">
             <p className="text-sm font-medium vertical-text-ellipsis h-16 m-1">
               {anime?.title?.english ?? anime?.title?.romaji}
             </p>
