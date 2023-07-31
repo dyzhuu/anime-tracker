@@ -42,7 +42,7 @@ export default function AnimeCard({ anime, size }: any) {
               >
                 <BookmarkButton
                   anime={anime}
-                  className="-sm:hidden"
+                  className="-sm:hidden fill-white"
                 ></BookmarkButton>
               </Suspense>
             </div>

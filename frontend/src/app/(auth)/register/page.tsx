@@ -10,7 +10,7 @@ function RegisterFormFallback() {
 export default function RegisterPage() {
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight text-primary">
+      <h1 className="text-3xl font-semibold tracking-tight">
         Sign up
       </h1>
       <Suspense fallback={<RegisterFormFallback></RegisterFormFallback>}>

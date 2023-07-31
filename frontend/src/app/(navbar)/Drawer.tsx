@@ -20,7 +20,7 @@ export function Drawer({ className }: any) {
     <div className={className}>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="ghost" className="p-2">
+          <Button variant="ghost" className="p-2 fill-foreground hover:bg-transparent">
             <Icons.menu className="h-8"></Icons.menu>
           </Button>
         </DialogTrigger>

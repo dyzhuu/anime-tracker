@@ -62,7 +62,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
       <div className="relative transition-all">
         <Icons.search
           className={
-            'absolute top-[50%] -translate-y-[50%] pointer-events-none ' + icon
+            'absolute top-[50%] -translate-y-[50%] pointer-events-none fill-foreground ' + icon
           }
         ></Icons.search>
         <Input

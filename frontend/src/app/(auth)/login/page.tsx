@@ -10,7 +10,7 @@ function LoginFormFallback() {
 export default async function LoginPage() {
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight text-primary">
+      <h1 className="text-3xl font-semibold tracking-tight">
         Log In
       </h1>
       <Suspense fallback={<LoginFormFallback></LoginFormFallback>}>

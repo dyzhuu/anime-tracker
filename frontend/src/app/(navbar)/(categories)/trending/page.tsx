@@ -8,7 +8,7 @@ export default async function TrendingPage() {
   return (
     <div className="flex justify-center md:p-10">
       <Card className="w-full py-5 -md:border-hidden -md:shadow-none">
-        <CardHeader className="text-3xl font-medium text-primary px-10">
+        <CardHeader className="text-3xl font-medium px-10">
           Trending Anime
         </CardHeader>
         <div className="mx-5">

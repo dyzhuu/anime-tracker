@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,12 +10,13 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/components/ui/use-toast';
-import { getSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
-export function ProfileDropdown({children}: {children: React.ReactNode}) {
-  const { toast } = useToast();
+export function ProfileDropdown({ children }: { children: React.ReactNode }) {
+  const { theme, systemTheme, setTheme } = useTheme();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -26,15 +27,34 @@ export function ProfileDropdown({children}: {children: React.ReactNode}) {
           <DropdownMenuItem asChild>
             <Link href="/profile">Settings</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Change Theme
+          <DropdownMenuItem asChild>
+            <button className='w-full'
+              onClick={() => {
+                if (theme === 'system') {
+                  if (systemTheme === 'dark') {
+                    setTheme('light');
+                  } else {
+                    setTheme('dark');
+                  }
+                } else if (theme === 'dark') {
+                  setTheme('light');
+                } else {
+                  setTheme('dark');
+                }
+              }}
+            >
+              Change Theme
+            </button>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-destructive" asChild>
-          <button onClick={() => {
-            signOut();
-          }} className="w-full">
+          <button
+            onClick={() => {
+              signOut();
+            }}
+            className="w-full"
+          >
             Log out
           </button>
         </DropdownMenuItem>

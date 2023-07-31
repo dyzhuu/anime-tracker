@@ -23,7 +23,7 @@ export default async function Home() {
         <div className="mx-5">
           <div className="mx-5 md:mx-16">
             <Link href="/trending">
-              <h1 className="text-3xl font-medium text-primary hover:underline underline-offset-8">
+              <h1 className="text-3xl font-medium hover:underline underline-offset-8">
                 Trending {'>>'}
               </h1>
             </Link>
@@ -43,7 +43,7 @@ export default async function Home() {
         <div className="mx-5">
           <div className="mx-5 md:mx-16">
             <Link href="/top">
-              <h1 className="text-3xl font-medium text-primary hover:underline underline-offset-8">
+              <h1 className="text-3xl font-medium hover:underline underline-offset-8">
                 Top Anime {'>>'}
               </h1>
             </Link>
@@ -63,7 +63,7 @@ export default async function Home() {
         <div className="mx-5">
           <div className="mx-5 md:mx-16">
             <Link href="/new">
-              <h1 className="text-3xl font-medium text-primary hover:underline underline-offset-8">
+              <h1 className="text-3xl font-medium hover:underline underline-offset-8">
                 New Releases {'>>'}
               </h1>
             </Link>

@@ -34,17 +34,17 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (searchParams?.get('error') !== null) {
-      setTimeout(() => {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: 'There was an error processing your request'
-        });
-      }, 100);
-    }
-  }, [toast, searchParams]);
+  // useEffect(() => {
+  //   if (searchParams?.get('error') !== null) {
+  //     setTimeout(() => {
+  //       toast({
+  //         variant: 'destructive',
+  //         title: 'Error',
+  //         description: searchParams.get('error')
+  //       });
+  //     }, 100);
+  //   }
+  // }, [toast, searchParams]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -126,7 +126,7 @@ export default function LoginForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs">
-          <span className="bg-background px-2 text-muted-foreground ">OR</span>
+          <span className="bg-card px-2 text-muted-foreground ">OR</span>
         </div>
       </div>
       <Button

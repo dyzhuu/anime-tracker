@@ -64,7 +64,11 @@ export function BookmarkTable({
           >
             Rating
           </Link>
-          <Link href="?sort=status" replace={true} className="col-span-2 -md:hidden">
+          <Link
+            href="?sort=status"
+            replace={true}
+            className="col-span-2 -md:hidden"
+          >
             Status
           </Link>
         </div>
@@ -104,7 +108,7 @@ export function BookmarkTable({
                 bookmark.status === 1
                   ? 'border-green-600'
                   : bookmark.status === 2
-                  ? 'border-purple-800'
+                  ? 'border-blue-900'
                   : bookmark.status === 4
                   ? 'border-red-700'
                   : 'border-muted-foreground'
@@ -152,7 +156,7 @@ export function BookmarkTable({
                         medium: bookmark.imageURL
                       }
                     }}
-                    className="fill-primary -sm:px-1 w-0 h-7 bg-transparent"
+                    className="fill-foreground -sm:px-1 w-0 h-7 bg-transparent"
                   >
                     <Icons.edit className="absolute"></Icons.edit>
                   </BookmarkButton>

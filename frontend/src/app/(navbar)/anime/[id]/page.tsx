@@ -67,7 +67,7 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
     <div className="flex justify-center p-3 md:p-10">
       <Card className="w-full pt-5 max-w-6xl">
         <CardHeader className="-md:text-center pb-2">
-          <h1 className="text-2xl font-medium text-primary">
+          <h1 className="text-2xl font-medium">
             {anime?.title?.english ?? anime?.title?.romaji}
           </h1>
           <p className="text-md font-light italic tracking-tighter">
@@ -94,7 +94,7 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
             </div>
             <Separator className="md:hidden"></Separator>
             <div className="md:h-[393px] overflow-y-auto mask-image py-1 md:pr-3">
-              <h1 className="text-lg font-medium text-primary">Description</h1>
+              <h1 className="text-lg font-medium">Description</h1>
               <p className="mt-2 font-light">
                 {anime?.description
                   ? anime.description.replace(/<[^>]+>/g, '')
@@ -106,7 +106,7 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
             <>
               <Separator className="my-5"></Separator>
               <div className="space-y-5">
-                <h1 className="text-lg font-medium text-primary">
+                <h1 className="text-lg font-medium">
                   Recommendations based on this anime:
                 </h1>
                 <AnimeBar

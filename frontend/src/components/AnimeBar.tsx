@@ -12,7 +12,7 @@ function LeftArrow() {
     <Button
       disabled={isFirstItemVisible}
       onClick={() => scrollPrev()}
-      className="absolute z-20 left-0 top-[125px] -translate-y-1/2 -translate-x disabled:hidden fill-white w-10 p-0 -sm:hidden"
+      className="absolute z-20 left-0 top-[125px] -translate-y-1/2 -translate-x disabled:hidden bg-zinc-800 hover:bg-zinc-700 fill-white w-10 p-0 -sm:hidden"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ function RightArrow() {
     <Button
       disabled={isLastItemVisible}
       onClick={() => scrollNext()}
-      className="absolute right-0 top-[125px] -translate-y-1/2 translate-x disabled:hidden fill-white w-10 p-0 -sm:hidden"
+      className="absolute right-0 top-[125px] -translate-y-1/2 translate-x disabled:hidden bg-zinc-800 hover:bg-zinc-700 fill-white w-10 p-0 -sm:hidden"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
