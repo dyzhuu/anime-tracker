@@ -30,7 +30,7 @@ export function NavBar() {
               ${
                 pathname === '/'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent-foreground'
+                  : 'hover:bg-accent2'
               }`}
           >
             Home
@@ -41,7 +41,7 @@ export function NavBar() {
               ${
                 pathname === '/trending'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent-foreground'
+                  : 'hover:bg-accent2'
               }`}
           >
             Trending
@@ -52,7 +52,7 @@ export function NavBar() {
               ${
                 pathname === '/top'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent-foreground'
+                  : 'hover:bg-accent2'
               }`}
           >
             Top
@@ -63,7 +63,7 @@ export function NavBar() {
               ${
                 pathname === '/new'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent-foreground'
+                  : 'hover:bg-accent2'
               }`}
           >
             New Releases
@@ -76,13 +76,13 @@ export function NavBar() {
               <>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent-foreground"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2"
                 >
                   <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
                 </Button>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent-foreground"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2"
                 >
                   <Icons.profile className="h-8"></Icons.profile>
                 </Button>
@@ -91,7 +91,7 @@ export function NavBar() {
               <>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent-foreground"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2"
                   onClick={() => {
                     toast({
                       variant: 'destructive',
@@ -108,20 +108,20 @@ export function NavBar() {
                   fallback={
                     <Button
                       variant="ghost"
-                      className="fill-foreground hover:fill-primary hover:bg-accent-foreground"
+                      className="fill-foreground hover:fill-primary hover:bg-accent2"
                     >
                       <Icons.profile className="h-8"></Icons.profile>
                     </Button>
                   }
                 >
-                  <ProfileButton className="fill-foreground hover:fill-primary hover:bg-accent-foreground"></ProfileButton>
+                  <ProfileButton className="fill-foreground hover:fill-primary hover:bg-accent2"></ProfileButton>
                 </Suspense>
               </>
             ) : (
               <>
                 <Button
                   variant="ghost"
-                  className={`fill-foreground hover:fill-primary hover:bg-accent-foreground ${
+                  className={`fill-foreground hover:fill-primary hover:bg-accent2 ${
                     pathname === `/user/${userId}/bookmarks` &&
                     'fill-primary'
                   }`}
@@ -134,7 +134,7 @@ export function NavBar() {
                 <ProfileDropdown>
                   <Button
                     variant="ghost"
-                    className="fill-foreground hover:fill-primary hover:bg-accent-foreground"
+                    className="fill-foreground hover:fill-primary hover:bg-accent2"
                   >
                     <Icons.profile className="h-8"></Icons.profile>
                   </Button>

@@ -34,7 +34,7 @@ export function Drawer({ className }: any) {
               ${
                 pathname === '/'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
+                  : 'hover:bg-accent2 hover:text-accent-foreground'
               }`}
               >
                 Home
@@ -47,7 +47,7 @@ export function Drawer({ className }: any) {
               ${
                 pathname === '/trending'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
+                  : 'hover:bg-accent2 hover:text-accent-foreground'
               }`}
               >
                 Trending
@@ -60,7 +60,7 @@ export function Drawer({ className }: any) {
               ${
                 pathname === '/top'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
+                  : 'hover:bg-accent2 hover:text-accent-foreground'
               }`}
               >
                 Top
@@ -73,7 +73,7 @@ export function Drawer({ className }: any) {
               ${
                 pathname === '/new'
                   ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
+                  : 'hover:bg-accent2 hover:text-accent-foreground'
               }`}
               >
                 New Releases

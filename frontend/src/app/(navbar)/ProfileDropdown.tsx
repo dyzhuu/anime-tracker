@@ -12,9 +12,11 @@ import {
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 
 export function ProfileDropdown({ children }: { children: React.ReactNode }) {
   const { theme, systemTheme, setTheme } = useTheme();
+  const pathname = usePathname()
 
   return (
     <DropdownMenu>
@@ -50,7 +52,11 @@ export function ProfileDropdown({ children }: { children: React.ReactNode }) {
         <DropdownMenuItem className="text-destructive" asChild>
           <button
             onClick={() => {
-              signOut();
+              if (pathname === '/profile') {
+                signOut({callbackUrl: '/'});
+              } else {
+                signOut()
+              }
             }}
             className="w-full"
           >
