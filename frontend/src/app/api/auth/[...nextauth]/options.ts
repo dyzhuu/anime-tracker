@@ -27,7 +27,6 @@ export const options: NextAuthOptions = {
           'https://dzmsabackend.azurewebsites.net/api/auth/login',
           {
             method: 'POST',
-            cache: 'no-store',
             headers: {
               'Content-Type': 'application/json'
             },
