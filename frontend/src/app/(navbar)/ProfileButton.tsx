@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 export function ProfileButton({className}: {className?: string}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const url = pathname + '?' + searchParams.toString();
+  const url = pathname + '?' + searchParams?.toString();
   return (
     <Button
       asChild

@@ -44,13 +44,13 @@ export default function AnimeCard({ anime, size }: any) {
               >
                 <BookmarkButton
                   anime={anime}
-                  className="-sm:hidden fill-white"
+                  className="-sm:hidden"
                 ></BookmarkButton>
               </Suspense>
             </div>
           </AspectRatio>
-          <div className="group-hover:opacity-0">
-            <p className="text-sm font-medium vertical-text-ellipsis h-16 m-1">
+          <div>
+            <p className="text-sm font-medium vertical-text-ellipsis h-16 m-1 group-hover:opacity-0 pointer-events-none">
               {anime?.title?.english ?? anime?.title?.romaji}
             </p>
           </div>

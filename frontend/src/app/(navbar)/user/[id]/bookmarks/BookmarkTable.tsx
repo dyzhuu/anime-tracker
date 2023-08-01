@@ -30,7 +30,7 @@ export function BookmarkTable({
   const queryClient = useQueryClient();
   const session = useSession();
   const searchParams = useSearchParams();
-  const sortTag = searchParams.get('sort');
+  const sortTag = searchParams?.get('sort');
 
   bookmarks.sort((a: any, b: any) => {
     switch (sortTag) {

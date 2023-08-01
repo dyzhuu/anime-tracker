@@ -6,6 +6,7 @@ import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { AnimeBar } from "@/components/AnimeBar";
 import BookmarkButton from "@/components/BookmarkButton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 async function getRecommendedAnime(id: number) {
   const recommendationQuery = `query {
@@ -51,14 +52,14 @@ async function getRecommendedAnime(id: number) {
 
 export default async function AnimePage({ params }: { params: { id: number } }) {
   let anime = (await getAnimeFromId([params.id]))
-  if (!anime) {
+  if (anime.length === 0) {
     notFound()
   }
   const recommendations = await getRecommendedAnime(params.id)
   anime = anime[0]
   return (
-    <div className="flex justify-center p-3 md:p-10">
-      <Card className="w-full pt-5 max-w-6xl">
+    <div className="flex justify-center -md:bg-card p-3 md:p-10">
+      <Card className="w-full pt-5 max-w-6xl -md:border-none">
         <CardHeader className="-md:text-center pb-2">
           <h1 className="text-2xl font-medium">
             {anime?.title?.english ?? anime?.title?.romaji}
@@ -73,7 +74,8 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
         <CardContent className="">
           <div className="flex -md:flex-col -md:items-center gap-10">
             <div className="w-[250px] shrink-0">
-              <AspectRatio ratio={3 / 4}>
+              <AspectRatio ratio={3 / 4} className="relative">
+                <Skeleton className="absolute w-full h-full"></Skeleton>
                 <Image
                   src={anime?.coverImage?.extraLarge ?? ''}
                   alt={anime?.title?.english ?? anime?.title?.romaji}

@@ -74,7 +74,7 @@ export default function UserBookmarksPage({
   const isUser = params.id === session.data?.user?.userId?.toString();
     
   return (
-    <div className="flex justify-center py-10 md:px-10">
+    <div className="flex justify-center py-10 md:px-10 bg-card">
       <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl">
         <CardHeader className="text-4xl font-semibold px-1 text-center">
           {isUser ? 'Your' : `${userQuery.data?.username}'s`} anime list
