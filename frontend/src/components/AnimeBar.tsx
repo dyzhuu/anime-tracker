@@ -62,7 +62,7 @@ export function AnimeBar({ animeList, size }: {animeList: any, size: string}) {
   };
 
   return (
-    <div className="relative md:px-8 hide-scrollbar">
+    <div className="relative md:px-8 hide-scrollbar" aria-label='Anime Bar'>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {animeList.map((anime: any, index: ConcatArray<never>) => (
           <AnimeCard

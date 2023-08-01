@@ -169,7 +169,12 @@ export function ProfileForm() {
                   setCurrentPassword((e.target as HTMLInputElement).value)
                 }
               >
-                <Input autoComplete="off" type="password" {...field} />
+                <Input
+                  autoComplete="off"
+                  type="password"
+                  disabled={session.data?.user?.email != null}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -187,7 +192,9 @@ export function ProfileForm() {
                 }
               >
                 <Input
-                  disabled={!currentPassword}
+                  disabled={
+                    !currentPassword || session.data?.user?.email != null
+                  }
                   autoComplete="off"
                   type="password"
                   {...field}
@@ -202,7 +209,9 @@ export function ProfileForm() {
           onChangeScore={(s: number) => setPasswordScore(s)}
         ></PasswordStrengthBar>
 
-        <Button disabled={!username && !currentPassword} type="submit">Update profile</Button>
+        <Button disabled={!username && !currentPassword} type="submit">
+          Update profile
+        </Button>
       </form>
     </Form>
   );

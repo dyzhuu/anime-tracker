@@ -61,17 +61,8 @@ namespace Backend.Api.Controllers
             int internalId = await _userService.GetInternalId(externalId);
             UserDto user = await _userService.GetUser(internalId);
 
-            return Ok(new { userId = internalId, Username = user.Username });
+            return Ok(new { userId = internalId, username = user.Username });
         }
-
-        //      [HttpGet]
-        //      [ProducesResponseType(200)]
-        //      public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-        //{
-        //          IEnumerable<UserDto> userDtos = await _userService.GetUsers();
-
-        //          return Ok(userDtos);
-        //}
 
         [HttpGet("{userId}")]
         [ProducesResponseType(200)]

@@ -30,17 +30,23 @@ export function BookmarkTable({
   const queryClient = useQueryClient();
   const session = useSession();
   const searchParams = useSearchParams();
-
+  const sortTag = searchParams.get('sort');
 
   bookmarks.sort((a: any, b: any) => {
-    switch (searchParams.get('sort')) {
+    switch (sortTag) {
       case 'title':
         return a.title.localeCompare(b.title); // sort alphabetically
       case 'rating':
         return b.rating - a.rating; // sort by rating
-      }
-    return a.status - b.status; // sort by status
-    
+    }
+
+    if (a.status === 0 && b.status !== 0) {
+      return 1;
+    } else if (a.status !== 0 && b.status === 0) {
+      return -1;
+    } else {
+      return a.status - b.status; // sort by status for other cases
+    }
   });
 
   return (
@@ -52,21 +58,47 @@ export function BookmarkTable({
           <Link
             href="?sort=title"
             replace={true}
-            className="border-r-[1px] col-span-7 -md:col-span-11"
+            className={`border-r-[1px] col-span-7 -md:hidden ${
+              sortTag === 'title' && 'text-secondary'
+            }`}
           >
             Title
           </Link>
           <Link
+            href={`?sort=${
+              sortTag === 'title'
+                ? 'status'
+                : sortTag === 'status'
+                ? 'rating'
+                : 'title'
+            }`}
+            replace={true}
+            className="border-r-[1px] col-span-11 md:hidden"
+          >
+            Sorted By:{' '}
+            <span className="text-secondary">
+              {sortTag === 'title'
+                ? 'Title'
+                : sortTag === 'rating'
+                ? 'Rating'
+                : 'Status'}
+            </span>
+          </Link>
+          <Link
             href="?sort=rating"
             replace={true}
-            className="border-r-[1px] -md:hidden"
+            className={`border-r-[1px] -md:hidden ${
+              sortTag === 'rating' && 'text-secondary'
+            }`}
           >
             Rating
           </Link>
           <Link
             href="?sort=status"
             replace={true}
-            className="col-span-2 -md:hidden"
+            className={`col-span-2 -md:hidden ${
+              sortTag === 'status' && 'text-secondary'
+            }`}
           >
             Status
           </Link>
@@ -132,15 +164,15 @@ export function BookmarkTable({
                 </AspectRatio>
               </div>
             </Link>
-            <div className="w-full col-span-6 -sm:col-span-7 -md:col-span-8 flex items-center pl-2 text-sm font-medium text-left">
+            <div className="w-full col-span-6 -sm:col-span-7 -md:col-span-8 flex items-center pl-2 text-sm font-medium text-left pr-4">
               <Link
                 href={`/anime/${bookmark.animeId}`}
-                className="hover:underline underline-offset-2 hover:font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
+                className="hover:underline underline-offset-2 hover:font-semibold -md:whitespace-nowrap -md:text-ellipsis -md:overflow-hidden"
               >
                 {bookmark.title}
               </Link>
             </div>
-            <div className="w-full flex items-center justify-center -md:col-span-2">
+            <div className="w-full flex items-center justify-center -md:justify-end pr-1 -md:col-span-2">
               {isUser && (
                 <div className="flex gap-2">
                   <BookmarkButton

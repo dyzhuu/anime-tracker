@@ -59,6 +59,7 @@ function TriggerButton({
       {session.status === 'loading' ? (
         <Button
           variant="icon"
+          aria-label='Bookmark Button'
           className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
         >
             {children ?? (

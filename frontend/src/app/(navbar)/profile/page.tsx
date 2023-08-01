@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { useSession } from 'next-auth/react';
 import { ProfileForm } from './ProfileForm';
 
-export default function UserBookmarksPage() {
+export default function ProfilePage() {
   const session = useSession({
     required: true
   });
