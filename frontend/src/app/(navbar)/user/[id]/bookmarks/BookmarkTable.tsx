@@ -39,8 +39,14 @@ export function BookmarkTable({
       case 'rating':
         return b.rating - a.rating; // sort by rating
     }
-    return a.status - b.status; // sort by status
-    
+
+    if (a.status === 0 && b.status !== 0) {
+      return 1;
+    } else if (a.status !== 0 && b.status === 0) {
+      return -1;
+    } else {
+      return a.status - b.status; // sort by status for other cases
+    }
   });
 
   return (

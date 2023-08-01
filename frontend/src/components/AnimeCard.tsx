@@ -12,7 +12,10 @@ function BookmarkButtonFallback() {
 export default function AnimeCard({ anime, size }: any) {
   return (
     <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
-      <div className="overflow-hidden cursor-pointer rounded-lg">
+      <div
+        className="overflow-hidden cursor-pointer rounded-lg"
+        aria-label="Anime Card"
+      >
         <div
           className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}
         >
