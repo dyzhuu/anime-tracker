@@ -51,9 +51,11 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
       body: JSON.stringify({ query })
     });
     const data = (await res.json()).data.Page.media;
-    const filteredResults = data.filter((anime: Anime) => anime?.id);
-    const reducedResults = filteredResults.slice(0, 5);
-    setAnimeResults(reducedResults);
+    if (data) {
+      const filteredResults = data.filter((anime: Anime) => anime?.id);
+      const reducedResults = filteredResults.slice(0, 5);
+      setAnimeResults(reducedResults);
+    }
   }
 
   return (
@@ -71,7 +73,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
           autoComplete="false"
           autoCorrect="false"
           spellCheck="false"
-          className={`peer ${className}`}
+          className={`peer text-base ${className}`}
           onChange={(e) => onSearch(e.target.value)}
           onBlur={() => {
             setTimeout(() => setFocus(false), 300);

@@ -70,13 +70,25 @@ export function NavBar() {
           </Link>
         </div>
 
-        <div className="flex flex-row-reverse w-full ml-2 gap-x-2">
-          <div className="flex items-center">
+        <div className="flex flex-row w-full ml-2 gap-x-2">
+          <div className='flex grow'></div>
+          <div
+            className={`-lg:w-full items-center peer ${
+              pathname === '/' && 'hidden'
+            }`}
+          >
+            <SearchBar
+              className="pl-10 lg:w-[450px]"
+              icon="h-[20px] translate-x-3"
+              imageSize="h-[10dvh]"
+            ></SearchBar>
+          </div>
+          <div className="flex items-center -lg:peer-focus-within:hidden">
             {session.status === 'loading' ? (
               <>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent2"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2 hidden"
                 >
                   <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
                 </Button>
@@ -91,7 +103,7 @@ export function NavBar() {
               <>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent2"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2 hidden"
                   onClick={() => {
                     toast({
                       variant: 'destructive',
@@ -118,12 +130,11 @@ export function NavBar() {
                 </Suspense>
               </>
             ) : (
-              <>
+              <div className="flex peer-focus:hidden">
                 <Button
                   variant="ghost"
                   className={`fill-foreground hover:fill-primary hover:bg-accent2 ${
-                    pathname === `/user/${userId}/bookmarks` &&
-                    'fill-primary'
+                    pathname === `/user/${userId}/bookmarks` && 'fill-primary'
                   }`}
                   asChild
                 >
@@ -139,19 +150,8 @@ export function NavBar() {
                     <Icons.profile className="h-8"></Icons.profile>
                   </Button>
                 </ProfileDropdown>
-              </>
+              </div>
             )}
-          </div>
-          <div
-            className={`-lg:w-full items-center ${
-              pathname === '/' && 'hidden'
-            }`}
-          >
-            <SearchBar
-              className="pl-10 lg:w-[420px]"
-              icon="h-[20px] translate-x-3"
-              imageSize="h-[10dvh]"
-            ></SearchBar>
           </div>
         </div>
       </div>
