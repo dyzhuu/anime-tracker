@@ -41,10 +41,10 @@ export async function getAnime(sort: string, page: number = 1) {
   });
 
   const data = await res.json().then((res) => res.data.Page.media);
-  let filteredResults = data.filter((anime: any) => anime.id);
+  let filteredResults = data.filter((anime: Anime) => anime.id);
   if (sort === query.new) {
     filteredResults = filteredResults.filter(
-      (anime: any) => anime.startDate?.year
+      (anime: Anime) => anime.startDate?.year
     );
   }
   return filteredResults;

@@ -33,7 +33,7 @@ import {
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { User } from 'next-auth';
+import { DefaultSession, Session, User } from 'next-auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 
@@ -121,7 +121,7 @@ function TriggerButton({
   );
 }
 
-function SelectMenu({ anime, user }: { anime: any; user: User }) {
+function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { data } = useQuery({
@@ -148,9 +148,8 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
     }
   });
 
-
   const mutation = useMutation({
-    mutationFn: async (bookmarkData) => {
+    mutationFn: async (bookmarkData: Bookmark) => {
       const method = data ? 'PUT' : 'POST';
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       return fetch(
@@ -187,13 +186,13 @@ function SelectMenu({ anime, user }: { anime: any; user: User }) {
     }
   });
 
-  async function onSubmit(submitData: any) {
+  async function onSubmit(submitData: {rating: number, status: number}) {
     const bookmarkData = {
-      userId: user.userId,
+      userId: user.userId!,
       animeId: anime.id,
       title: anime.title.english ?? anime.title.romaji,
-      description: anime.description,
-      imageUrl: anime?.coverImage.medium,
+      description: anime.description!,
+      imageURL: anime?.coverImage.medium,
       ...submitData
     };
     mutation.mutate(bookmarkData);
@@ -286,7 +285,7 @@ export default function BookmarkButton({
   hasTooltip,
   className
 }: {
-  anime: any;
+  anime: Anime;
   children?: React.ReactNode;
   hasTooltip?: boolean;
   className?: string;
@@ -301,11 +300,7 @@ export default function BookmarkButton({
         className={className}
         onMouseEnter={async () => {
           queryClient.prefetchQuery({
-            queryKey: [
-              'bookmark',
-              anime.id,
-              session.data?.user?.userId
-            ],
+            queryKey: ['bookmark', anime.id, session.data?.user?.userId],
             queryFn: async () => {
               const token = (
                 await fetch('/api/token').then((res) => res.json())

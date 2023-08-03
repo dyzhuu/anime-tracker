@@ -8,7 +8,6 @@ import AnimeSearchCard from './AnimeSearchCard';
 export function SearchBar({ className, icon, imageSize }: {className: string, icon: string, imageSize: string}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [focus, setFocus] = useState(false);
-  const [hidden, setHidden] = useState(true);
   const [animeResults, setAnimeResults] = useState([]);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -52,7 +51,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
       body: JSON.stringify({ query })
     });
     const data = (await res.json()).data.Page.media;
-    const filteredResults = data.filter((anime: any) => anime?.id);
+    const filteredResults = data.filter((anime: Anime) => anime?.id);
     const reducedResults = filteredResults.slice(0, 5);
     setAnimeResults(reducedResults);
   }
@@ -62,7 +61,8 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
       <div className="relative transition-all">
         <Icons.search
           className={
-            'absolute top-[50%] -translate-y-[50%] pointer-events-none fill-foreground ' + icon
+            'absolute top-[50%] -translate-y-[50%] pointer-events-none fill-foreground ' +
+            icon
           }
         ></Icons.search>
         <Input
@@ -79,11 +79,11 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
           onFocus={() => setFocus(true)}
         />
         <div
-          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 opacity-100 peer-focus:opacity-100 ${
+          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 opacity-0 peer-focus:opacity-100 ${
             (searchQuery.length === 0 || !focus) && 'hidden'
           }`}
         >
-          {animeResults.map((anime: any, index: number) => {
+          {animeResults.map((anime: Anime, index: number) => {
             return (
               <div key={index}>
                 <AnimeSearchCard

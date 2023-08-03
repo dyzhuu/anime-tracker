@@ -9,7 +9,7 @@ function BookmarkButtonFallback() {
   return <Skeleton className="h-10 w-full rounded-md"></Skeleton>;
 }
 
-export default function AnimeCard({ anime, size }: any) {
+export default function AnimeCard({ anime, size }: { anime: Anime, size: string, onClick?: () => void, selected?: boolean }) {
   return (
     <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
       <div

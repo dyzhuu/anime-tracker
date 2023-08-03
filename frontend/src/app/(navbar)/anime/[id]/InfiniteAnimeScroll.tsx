@@ -42,7 +42,7 @@ export function InfiniteAnimeScroll({ query, initial}: {query: string, initial: 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 justify-center -md:p-1 mb-10">
-        {animeList?.map((anime: any, index: number) => {
+        {animeList?.map((anime: Anime, index: number) => {
           if (index === animeList.length - 1) {
             return (
               <div key={index} ref={ref}>
@@ -55,7 +55,9 @@ export function InfiniteAnimeScroll({ query, initial}: {query: string, initial: 
       </div>
       <div className="flex justify-center">
         <div className="w-[40px]">
-        {isFetchingNextPage && <Icons.spinner className="h-full w-full justify-center animate-spin" />}
+          {isFetchingNextPage && (
+            <Icons.spinner className="h-full w-full justify-center animate-spin" />
+          )}
         </div>
       </div>
     </>

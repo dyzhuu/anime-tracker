@@ -7,9 +7,9 @@ export default function AnimeSearchCard({
   index,
   imageSize
 }: {
-  anime: any
-  index: number
-  imageSize: string
+  anime: Anime;
+  index: number;
+  imageSize: string;
 }) {
   return (
     <Link href={`/anime/${anime.id}`} passHref legacyBehavior>

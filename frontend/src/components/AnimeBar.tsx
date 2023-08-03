@@ -45,32 +45,32 @@ function RightArrow() {
   );
 }
 
-export function AnimeBar({ animeList, size }: {animeList: any, size: string}) {
-  const [selected, setSelected] = useState([]);
+export function AnimeBar({ animeList, size }: { animeList: Anime[], size: string }) {
+  // const [selected, setSelected] = useState([]);
 
-  const isItemSelected = (id: ConcatArray<never>) =>
-    !!selected.find((el) => el === id);
+  // const isItemSelected = (id: ConcatArray<never>) =>
+  //   !!selected.find((el) => el === id);
 
-  const handleClick = (id: ConcatArray<never>) => () => {
-    const itemSelected = isItemSelected(id);
+  // const handleClick = (id: ConcatArray<never>) => () => {
+  //   const itemSelected = isItemSelected(id);
 
-    setSelected((currentSelected) =>
-      itemSelected
-        ? currentSelected.filter((el) => el !== id)
-        : currentSelected.concat(id)
-    );
-  };
+  //   setSelected((currentSelected) =>
+  //     itemSelected
+  //       ? currentSelected.filter((el) => el !== id)
+  //       : currentSelected.concat(id)
+  //   );
+  // };
 
   return (
-    <div className="relative md:px-8 hide-scrollbar" aria-label='Anime Bar'>
+    <div className="relative md:px-8 hide-scrollbar" aria-label="Anime Bar">
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        {animeList.map((anime: any, index: ConcatArray<never>) => (
+        {animeList.map((anime: Anime, index: number) => (
           <AnimeCard
             anime={anime}
             key={index as unknown as number}
             size={size}
-            onClick={handleClick(index)}
-            selected={isItemSelected(index)}
+            // onClick={handleClick(index)}
+            // selected={isItemSelected(index)}
           ></AnimeCard>
         ))}
       </ScrollMenu>

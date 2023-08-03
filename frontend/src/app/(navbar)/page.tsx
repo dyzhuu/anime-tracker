@@ -5,9 +5,9 @@ import { getAnime, query } from '@/lib/gql';
 import Link from 'next/link';
 
 export default async function Home() {
-  const trendingAnime = await getAnime(query.trending);
-  const topAnime = await getAnime(query.top);
-  const newAnime = await getAnime(query.new)
+  const trendingAnime: Anime[] = await getAnime(query.trending);
+  const topAnime: Anime[] = await getAnime(query.top);
+  const newAnime: Anime[] = await getAnime(query.new);
   
   // prefetch queries
   return (

@@ -24,7 +24,7 @@ export function BookmarkTable({
   className
 }: {
   isUser: boolean;
-  bookmarks: any;
+  bookmarks: Bookmark[];
   className?: string;
 }) {
   const queryClient = useQueryClient();
@@ -32,7 +32,7 @@ export function BookmarkTable({
   const searchParams = useSearchParams();
   const sortTag = searchParams?.get('sort');
 
-  bookmarks.sort((a: any, b: any) => {
+  bookmarks.sort((a: Bookmark, b: Bookmark) => {
     switch (sortTag) {
       case 'title':
         return a.title.localeCompare(b.title); // sort alphabetically
@@ -105,7 +105,7 @@ export function BookmarkTable({
         </div>
       </div>
       <div>
-        {bookmarks.map((bookmark: any, index: number) => (
+        {bookmarks.map((bookmark: Bookmark, index: number) => (
           <div
             className="w-full grid grid-cols-12 border border-t-0 group last:rounded-b-lg"
             key={bookmark.animeId}
@@ -180,7 +180,8 @@ export function BookmarkTable({
                     anime={{
                       id: bookmark.animeId,
                       title: {
-                        english: bookmark.title
+                        english: bookmark.title,
+                        romaji: bookmark.title
                       },
                       description: bookmark.description,
                       coverImage: {

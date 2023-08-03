@@ -13,7 +13,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 
-export function Drawer({ className }: any) {
+export function Drawer({ className }: { className: string}) {
   const pathname = usePathname();
   const session = useSession();
   return (
@@ -83,7 +83,13 @@ export function Drawer({ className }: any) {
           {session.status === 'authenticated' && (
             <DialogFooter className="absolute left-6 bottom-5 font-medium">
               <DialogPrimitive.Close asChild>
-                <Button variant={'ghost'} className="text-destructive text-md" onClick={() => signOut()}>
+                <Button variant={'ghost'} className="text-destructive text-md" onClick={() => {
+                  if (pathname === '/profile') {
+                    signOut({ callbackUrl: '/' });
+                  } else {
+                    signOut();
+                  }
+                }}>
                   Log out
                 </Button>
               </DialogPrimitive.Close>

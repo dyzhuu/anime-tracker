@@ -52,7 +52,9 @@ async function getRecommendedAnime(id: number) {
   const data = await res
     .json()
     .then((res) =>
-      res.data.Page.recommendations.map((rec: any) => rec.mediaRecommendation)
+      res.data.Page.recommendations.map(
+        (rec: { mediaRecommendation: Anime }) => rec.mediaRecommendation
+      )
     );
   return data;
 }
