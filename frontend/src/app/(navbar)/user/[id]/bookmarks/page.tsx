@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import { UserBookmarksPage } from "./UserBookmarksPage";
 
 export async function generateMetadata({ params }: { params: { id: number } }) {

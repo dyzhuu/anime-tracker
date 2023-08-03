@@ -16,7 +16,7 @@ export default async function Home() {
         <SearchBar
           className="pl-14 pr-[21px] w-[80dvw] h-14 text-xl"
           icon="h-[28px] translate-x-4"
-          imageSize="h-[20dvh]"
+          imageSize="h-[10dvh] md:h-[15dvh]"
         ></SearchBar>
       </div>
       <div className="space-y-2 md:space-y-10 pb-10">

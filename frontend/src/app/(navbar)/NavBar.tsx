@@ -88,7 +88,7 @@ export function NavBar() {
               <>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent2 hidden"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2"
                 >
                   <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
                 </Button>
@@ -103,7 +103,7 @@ export function NavBar() {
               <>
                 <Button
                   variant="ghost"
-                  className="fill-foreground hover:fill-primary hover:bg-accent2 hidden"
+                  className="fill-foreground hover:fill-primary hover:bg-accent2"
                   onClick={() => {
                     toast({
                       variant: 'destructive',

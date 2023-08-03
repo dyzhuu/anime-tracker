@@ -14,7 +14,7 @@ export default function AnimeSearchCard({
   return (
     <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
       <div
-        className={`flex w-full cursor-pointer hover:bg-primary p-2 space-x-5 group z-50 ${
+        className={`flex w-full cursor-pointer hover:bg-primary p-2 space-x-5 group z-50 min-h-[64px] ${
           imageSize as string
         } ${index % 2 == 1 && 'bg-muted'}`}
       >

@@ -15,7 +15,6 @@ export function UserBookmarksPage({
 }) {
   const session = useSession();
 
-
   if (session.status === 'authenticated' && params.id === 'undefined') {
     redirect(`/user/${session?.data?.user?.userId}/bookmarks`);
   }
