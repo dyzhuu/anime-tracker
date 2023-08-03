@@ -5,14 +5,18 @@ import { Toaster } from '@/components/ui/toaster';
 import AuthProvider from './context/AuthProvider';
 import QueryProvider from './context/QueryProvider';
 import ThemeProvider from './context/ThemeProvider';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'MSAnime',
   description: 'Fullstack anime tracking website for NZMSA23',
-  manifest: "/manifest.json",
-  themeColor: "#ffffff"
+  manifest: '/manifest.json',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'hsl(0 0% 99%)' },
+    { media: '(prefers-color-scheme: dark)', color: 'hsl(255 9% 8%)' }
+  ],
 };
 
 export default function RootLayout({
@@ -24,12 +28,12 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="en">
         <body className={inter.className}>
-          <AuthProvider>
-            <ThemeProvider>
+          <ThemeProvider>
+            <AuthProvider>
               <main>{children}</main>
               <Toaster />
-            </ThemeProvider>
-          </AuthProvider>
+            </AuthProvider>
+          </ThemeProvider>
         </body>
       </html>
     </QueryProvider>

@@ -2,6 +2,12 @@ import { InfiniteAnimeScroll } from "@/app/(navbar)/anime/[id]/InfiniteAnimeScro
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getAnime, query } from "@/lib/gql";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Trending Anime'
+};
+
 
 export default async function TrendingPage() {
   const anime = await getAnime(query.trending)

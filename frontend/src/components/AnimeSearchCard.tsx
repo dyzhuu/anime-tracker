@@ -19,7 +19,7 @@ export default function AnimeSearchCard({
         } ${index % 2 == 1 && 'bg-muted'}`}
       >
         <div className="aspect-[3/4] flex items-center overflow-hidden">
-          <AspectRatio ratio={3 / 4} className="bg-primary object-cover">
+          <AspectRatio ratio={3 / 4} className="bg-muted object-cover">
             <Image
               src={anime.coverImage.medium}
               alt={anime.title.english ?? anime.title.romaji}

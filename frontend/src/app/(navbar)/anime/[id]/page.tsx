@@ -8,6 +8,13 @@ import { AnimeBar } from "@/components/AnimeBar";
 import BookmarkButton from "@/components/BookmarkButton";
 import { Skeleton } from "@/components/ui/skeleton";
 
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const anime = await getAnimeFromId([params.id]);
+  return {
+    title: anime[0]?.title?.english ?? anime[0]?.title?.romaji
+  };
+}
+
 async function getRecommendedAnime(id: number) {
   const recommendationQuery = `query {
   Page {

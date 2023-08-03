@@ -29,7 +29,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
 
   async function fetchAnimeResults(search: string) {
     const query = `query {
-  Page(perPage: 15) {
+  Page(perPage: 10) {
     media(search: "${search}", isAdult: false, sort: [POPULARITY_DESC, SEARCH_MATCH], type: ANIME) {
       id
       title {
@@ -53,7 +53,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
     });
     const data = (await res.json()).data.Page.media;
     const filteredResults = data.filter((anime: any) => anime?.id);
-    const reducedResults = filteredResults.slice(0, 10);
+    const reducedResults = filteredResults.slice(0, 5);
     setAnimeResults(reducedResults);
   }
 
@@ -79,7 +79,7 @@ export function SearchBar({ className, icon, imageSize }: {className: string, ic
           onFocus={() => setFocus(true)}
         />
         <div
-          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 opacity-0 peer-focus:opacity-100 ${
+          className={`absolute w-full bg-background shadow-lg rounded-bl rounded-br z-10 opacity-100 peer-focus:opacity-100 ${
             (searchQuery.length === 0 || !focus) && 'hidden'
           }`}
         >

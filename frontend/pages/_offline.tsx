@@ -4,7 +4,7 @@ import { ThemeProvider } from 'next-themes';
 import Link from 'next/link';
 import './styles.css';
 
-export default function Error() {
+export default function Offline() {
   return (
     <ThemeProvider>
       <div className="w-full h-[100dvh] -md:bg-card flex justify-center items-center">
