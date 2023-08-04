@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Text;
+using FluentValidation;
 
 namespace Backend.Api.Controllers
 {
@@ -14,15 +15,18 @@ namespace Backend.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IValidator<UserReqDto> _validator;
 
-        public AuthController(IUserService userService, IConfiguration configuration) {
+        public AuthController(IUserService userService, IValidator<UserReqDto> validator) {
             _userService = userService;
+            _validator = validator;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserReqDto userReqDto)
         {
-            if (userReqDto is null) 
+            var validationResult = await _validator.ValidateAsync(userReqDto);
+            if (!validationResult.IsValid) 
                 return BadRequest();
             if (await _userService.UserExists(userReqDto.Username))
                 return BadRequest("Username already exists");
@@ -51,7 +55,9 @@ namespace Backend.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserReqDto userReqDto)
         {
-            if (string.IsNullOrEmpty(userReqDto.Password))
+            var validationResult = await _validator.ValidateAsync(userReqDto);
+
+            if (!validationResult.IsValid)
             {
                 return BadRequest("Invalid credentials");
             }
@@ -77,27 +83,27 @@ namespace Backend.Api.Controllers
             return Ok(new { id = userId });
         }
 
-        private string CreateToken(UserDto userDto)
-        {
-            List<Claim> claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
+        //private string CreateToken(UserDto userDto)
+        //{
+        //    List<Claim> claims = new List<Claim> {
+        //        new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
+        //        new Claim(ClaimTypes.Role, "Admin")
+        //    };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Token")));
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Token")));
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        //    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var token = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddDays(1),
-                    signingCredentials: credentials
-                );
+        //    var token = new JwtSecurityToken(
+        //            claims: claims,
+        //            expires: DateTime.Now.AddDays(1),
+        //            signingCredentials: credentials
+        //        );
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        //    var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return jwt;
-        }
+        //    return jwt;
+        //}
     }
      
 

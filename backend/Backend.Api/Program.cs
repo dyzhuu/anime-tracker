@@ -3,11 +3,14 @@ using Backend.Core.Services;
 using Backend.Infrastructure.Contexts;
 using Backend.Infrastructure.Repositories;
 using Backend.Core.Helper;
+using Backend.Core.Dtos;
+using Backend.Api.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAnimeService, AnimeService>();
 builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 
+builder.Services.AddScoped<IValidator<UserReqDto>, UserReqDtoValidator>();
 
 string token = Environment.GetEnvironmentVariable("Token");
 string connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
