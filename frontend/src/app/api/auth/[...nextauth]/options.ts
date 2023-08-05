@@ -48,7 +48,7 @@ export const options: NextAuthOptions = {
       const encodedToken = jsonwebtoken.sign(
         {
           ...token,
-          exp: Math.floor(Date.now() / 1000) + 3 * 24 * 60 * 60
+          exp: Math.floor(Date.now() / 1000) + 1 * 24 * 60 * 60
         },
         secret
       );
@@ -104,6 +104,6 @@ export const options: NextAuthOptions = {
   },
   session: {
     strategy: 'jwt',
-    maxAge: 3 * 24 * 60 * 60
+    maxAge: 1 * 24 * 60 * 60
   }
 };

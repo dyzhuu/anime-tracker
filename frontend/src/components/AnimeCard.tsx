@@ -11,7 +11,7 @@ function BookmarkButtonFallback() {
 
 export default function AnimeCard({ anime, size }: { anime: Anime, size: string, onClick?: () => void, selected?: boolean }) {
   return (
-    <Link href={`/anime/${anime.id}`} passHref legacyBehavior>
+    <Link href={`/anime/${anime.id}`} prefetch={false} passHref legacyBehavior>
       <div
         className="overflow-hidden cursor-pointer rounded-lg"
         aria-label="Anime Card"
