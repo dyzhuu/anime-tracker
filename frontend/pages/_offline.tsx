@@ -16,11 +16,6 @@ export default function Offline() {
             <p className="text-lg font-medium text-center">
               Please try again later...
             </p>
-            <Button asChild className="p-5 mt-5">
-              <Link href="/" className="text-lg text-center">
-                Return home
-              </Link>
-            </Button>
           </CardContent>
         </Card>
       </div>

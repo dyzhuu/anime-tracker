@@ -57,7 +57,6 @@ export default function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const res = (await signIn('credentials', { ...values, redirect: false }))!;
-    console.log(res)
     if (!res.error) {
       router.push(redirectUrl(searchParams));
     } else if (res.error === 'CredentialsSignin') {

@@ -1,18 +1,19 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { getAnimeFromId } from "@/lib/gql"
-import { notFound } from "next/navigation"
-import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { AnimeBar } from "@/components/AnimeBar";
-import BookmarkButton from "@/components/BookmarkButton";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { getAnimeFromId } from '@/lib/gql';
+import Image from 'next/image';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { AnimeBar } from '@/components/AnimeBar';
+import BookmarkButton from '@/components/BookmarkButton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const anime = await getAnimeFromId([params.id]);
-  return {
-    title: anime[0]?.title?.english ?? anime[0]?.title?.romaji
-  };
+  if (anime) {
+    return {
+      title: anime?.title?.english ?? anime?.title?.romaji
+    };
+  }
 }
 
 async function getRecommendedAnime(id: number) {
@@ -46,26 +47,33 @@ async function getRecommendedAnime(id: number) {
     },
     body: JSON.stringify({
       query: recommendationQuery
-    }),
+    })
   });
-  
-  const data = await res
-    .json()
-    .then((res) =>
-      res.data.Page.recommendations.map(
-        (rec: { mediaRecommendation: Anime }) => rec.mediaRecommendation
-      )
-    );
-  return data;
+  if (res.ok) {
+    const data = await res
+      .json()
+      .then(
+        (res) =>
+          res?.data?.Page?.recommendations.map(
+            (rec: { mediaRecommendation: Anime }) => rec.mediaRecommendation
+          )
+      );
+    if (data.length !== 0) {
+      return data;
+    }
+  }
 }
 
-export default async function AnimePage({ params }: { params: { id: number } }) {
-  let anime = (await getAnimeFromId([params.id]))
-  if (anime.length === 0) {
-    notFound()
+export default async function AnimePage({
+  params
+}: {
+  params: { id: number };
+}) {
+  let anime = await getAnimeFromId([params.id]);
+  if (!anime) {
+    throw new Error('Too Many Requests');
   }
-  const recommendations = await getRecommendedAnime(params.id)
-  anime = anime[0]
+  const recommendations = await getRecommendedAnime(params.id);
   return (
     <div className="flex justify-center -md:bg-card p-3 md:p-10">
       <Card className="w-full pt-5 max-w-6xl -md:border-none">
@@ -94,7 +102,10 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
                   priority={true}
                 ></Image>
               </AspectRatio>
-              <BookmarkButton anime={anime} className=" mt-5 w-full bg-primary hover:bg-primary/90 active:bg-primary/90"></BookmarkButton>
+              <BookmarkButton
+                anime={anime}
+                className=" mt-5 w-full bg-primary hover:bg-primary/90 active:bg-primary/90"
+              ></BookmarkButton>
             </div>
             <Separator className="md:hidden"></Separator>
             <div className="md:h-[393px] overflow-y-auto mask-image py-1 md:pr-3">
@@ -106,7 +117,7 @@ export default async function AnimePage({ params }: { params: { id: number } }) 
               </p>
             </div>
           </div>
-          {recommendations.length !== 0 && (
+          {recommendations && (
             <>
               <Separator className="my-5"></Separator>
               <div className="space-y-5">

@@ -15,7 +15,7 @@ export default function Error() {
           <p className="text-lg font-medium">Please try again later...</p>
           <Button asChild variant={'destructive'} className="p-5 mt-5">
             <Link href="/" className="text-lg text-center">
-              Return home
+              Return Home
             </Link>
           </Button>
         </CardContent>

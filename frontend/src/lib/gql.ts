@@ -75,16 +75,22 @@ export async function getAnimeFromId(id: number[]) {
   }
 }
   `;
-    const res = await fetch('https://graphql.anilist.co', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query
-      }),
-      next: { revalidate: 3600 }
-    });
 
-    return res.json().then((res) => res?.data?.Page?.media);
+  const res = await fetch('https://graphql.anilist.co', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query
+    }),
+    next: { revalidate: 3600 }
+  });
+  if (res.ok) {
+    const data = await res.json();
+    const anime = data?.data?.Page?.media;
+    if (anime && anime.length !== 0) {
+      return anime[0];
+    }
+  }
 }
