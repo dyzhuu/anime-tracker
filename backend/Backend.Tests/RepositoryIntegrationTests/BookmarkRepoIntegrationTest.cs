@@ -13,22 +13,18 @@ public class BookmarkRepoIntegrationTests
     [SetUp]
     public void Setup()
     {
-        // Set up the in-memory database options
         var dbContextOptions = new DbContextOptionsBuilder<DataContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        // Create a new instance of DataContext using the in-memory database options
         _context = new DataContext(dbContextOptions);
 
-        // Initialize the repository with the DataContext
         _repository = new BookmarkRepository(_context);
     }
 
     [TearDown]
     public void Cleanup()
     {
-        // Clean up the test database by removing all records and disposing the DataContext
         _context.Database.EnsureDeleted();
         _context.Dispose();
     }
