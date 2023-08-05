@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { notFound, redirect } from 'next/navigation';
 import { BookmarkTable } from './BookmarkTable';
 import { useQuery } from '@tanstack/react-query';
-import { Icons } from '@/lib/icons';
+import BookmarkLoadingPage from './loading';
 
 export function UserBookmarksPage({
   params
@@ -48,15 +48,7 @@ export function UserBookmarksPage({
 
   if (session.status === 'loading' || isLoading) {
     return (
-      <div className="flex justify-center py-10 md:px-10 -md:bg-card -md:min-h-[calc(100dvh-64px)]">
-        <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl">
-          <CardContent className="p-2 h-full animate-pulse">
-            <div className="flex justify-center h-full">
-              <Icons.spinner className="animate-spin w-[50px] h-[50px]"></Icons.spinner>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <BookmarkLoadingPage></BookmarkLoadingPage>
     );
   }
 
@@ -67,8 +59,8 @@ export function UserBookmarksPage({
   const isUser = params.id === session.data?.user?.userId?.toString();
     
   return (
-    <div className="flex justify-center py-10 md:px-10 -md:bg-card -md:min-h-[calc(100dvh-64px)]">
-      <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl">
+    <div className="flex justify-center py-10 md:px-10 -md:min-h-[calc(100dvh-64px)]">
+      <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl -md:bg-background">
         <CardHeader className="text-4xl font-semibold px-1 text-center">
           {isUser ? 'Your' : `${userQuery.data?.username}'s`} anime list
         </CardHeader>

@@ -12,7 +12,7 @@ export default async function TopPage() {
   const anime = await getAnime(query.top);
   return (
     <div className="flex justify-center md:p-10">
-      <Card className="w-full py-5 -md:border-hidden -md:shadow-none">
+      <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:bg-background">
         <CardHeader className="text-3xl font-medium px-10">
           Top Anime
         </CardHeader>

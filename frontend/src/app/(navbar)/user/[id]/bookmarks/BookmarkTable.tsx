@@ -104,7 +104,7 @@ export function BookmarkTable({
           </Link>
         </div>
       </div>
-      <div>
+      <div className='bg-card'>
         {bookmarks.map((bookmark: Bookmark, index: number) => (
           <div
             className="w-full grid grid-cols-12 border border-t-0 group last:rounded-b-lg"
