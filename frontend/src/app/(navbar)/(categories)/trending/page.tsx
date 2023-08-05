@@ -5,7 +5,7 @@ import { getAnime, query } from "@/lib/gql";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Trending Anime'
+  title: 'MSAnime / Trending'
 };
 
 

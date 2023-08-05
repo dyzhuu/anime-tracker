@@ -2,10 +2,15 @@ import Link from 'next/link';
 import RegisterForm from '@/app/(auth)/register/RegisterForm';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 
 function RegisterFormFallback() {
   return <Skeleton className="w-[350px] h-[385px] rounded-md"></Skeleton>;
 }
+
+export const metadata: Metadata = {
+  title: 'MSAnime / Register'
+};
 
 export default function RegisterPage() {
   return (

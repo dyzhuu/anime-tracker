@@ -73,7 +73,7 @@ export function BookmarkTable({
                 : 'title'
             }`}
             replace={true}
-            className="border-r-[1px] col-span-11 md:hidden"
+            className="border-r-[1px] col-span-11 md:hidden -md:border-r-0"
           >
             Sorted By:{' '}
             <span className="text-secondary">

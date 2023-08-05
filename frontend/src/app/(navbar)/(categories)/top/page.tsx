@@ -5,7 +5,7 @@ import { getAnime, query } from '@/lib/gql';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Top Anime'
+  title: 'MSAnime / Top'
 };
 
 export default async function TopPage() {

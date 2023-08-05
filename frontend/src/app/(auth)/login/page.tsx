@@ -2,6 +2,11 @@ import Link from 'next/link';
 import LoginForm from '@/app/(auth)/login/LoginForm';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'MSAnime / Login'
+};
 
 function LoginFormFallback() {
   return <Skeleton className="w-[350px] h-[344px] rounded-md"></Skeleton>;

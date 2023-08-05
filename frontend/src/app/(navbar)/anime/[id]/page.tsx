@@ -6,15 +6,16 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { AnimeBar } from '@/components/AnimeBar';
 import BookmarkButton from '@/components/BookmarkButton';
 import { Skeleton } from '@/components/ui/skeleton';
+import { notFound } from 'next/navigation';
 
-// export async function generateMetadata({ params }: { params: { id: number } }) {
-//   const anime = await getAnimeFromId([params.id]);
-//   if (anime) {
-//     return {
-//       title: anime?.title?.english ?? anime?.title?.romaji
-//     };
-//   }
-// }
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const anime = await getAnimeFromId([params.id]);
+  if (anime) {
+    return {
+      title: `MSAnime / ${anime?.title?.english ?? anime?.title?.romaji}`
+    };
+  }
+}
 
 async function getRecommendedAnime(id: number) {
   const recommendationQuery = `query {
@@ -71,8 +72,9 @@ export default async function AnimePage({
 }) {
   let anime = await getAnimeFromId([params.id]);
   if (!anime) {
-    throw new Error('Too Many Requests');
+    notFound()
   }
+
   const recommendations = await getRecommendedAnime(params.id);
   return (
     <div className="flex justify-center -md:bg-card p-3 md:p-10">
