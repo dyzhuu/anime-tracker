@@ -7,14 +7,14 @@ import { AnimeBar } from '@/components/AnimeBar';
 import BookmarkButton from '@/components/BookmarkButton';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export async function generateMetadata({ params }: { params: { id: number } }) {
-  const anime = await getAnimeFromId([params.id]);
-  if (anime) {
-    return {
-      title: anime?.title?.english ?? anime?.title?.romaji
-    };
-  }
-}
+// export async function generateMetadata({ params }: { params: { id: number } }) {
+//   const anime = await getAnimeFromId([params.id]);
+//   if (anime) {
+//     return {
+//       title: anime?.title?.english ?? anime?.title?.romaji
+//     };
+//   }
+// }
 
 async function getRecommendedAnime(id: number) {
   const recommendationQuery = `query {
