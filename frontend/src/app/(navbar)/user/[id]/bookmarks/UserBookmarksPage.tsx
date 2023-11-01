@@ -20,7 +20,6 @@ export function UserBookmarksPage({ params }: { params: { id: string } }) {
     queryFn: async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${params.id}/bookmarks`
-        // `http://localhost:5148/api/user/${id}/bookmarks`,
       );
       if (res.ok) {
         return await res.json();
@@ -33,7 +32,6 @@ export function UserBookmarksPage({ params }: { params: { id: string } }) {
     queryFn: async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${params.id}`
-        // `http://localhost:5148/api/user/${params.id}`,
       );
       if (res.ok) {
         return await res.json();
@@ -41,7 +39,7 @@ export function UserBookmarksPage({ params }: { params: { id: string } }) {
     }
   });
 
-  if (session.status === 'loading' || isLoading) {
+  if (session.status === 'loading' || isLoading || userQuery.isLoading) {
     return <BookmarkLoadingPage></BookmarkLoadingPage>;
   }
 
@@ -55,7 +53,7 @@ export function UserBookmarksPage({ params }: { params: { id: string } }) {
     <div className="flex justify-center py-10 md:px-10 -md:min-h-[calc(100dvh-64px)]">
       <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl -md:bg-background">
         <CardHeader className="text-4xl font-semibold px-1 text-center">
-          {isUser ? 'Your' : `${userQuery.data?.username}'s`} anime list
+          {isUser ? 'Your' : `${userQuery.data.name}'s`} anime list
         </CardHeader>
         <div className="mx-5">
           <Separator className="mb-5"></Separator>
