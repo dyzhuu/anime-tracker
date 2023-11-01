@@ -8,11 +8,7 @@ import { BookmarkTable } from './BookmarkTable';
 import { useQuery } from '@tanstack/react-query';
 import BookmarkLoadingPage from './loading';
 
-export function UserBookmarksPage({
-  params
-}: {
-  params: { id: string };
-}) {
+export function UserBookmarksPage({ params }: { params: { id: string } }) {
   const session = useSession();
 
   if (session.status === 'authenticated' && params.id === 'undefined') {
@@ -23,20 +19,20 @@ export function UserBookmarksPage({
     queryKey: ['bookmarks'],
     queryFn: async () => {
       const res = await fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/${params.id}/bookmarks`
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${params.id}/bookmarks`
         // `http://localhost:5148/api/user/${id}/bookmarks`,
       );
       if (res.ok) {
         return await res.json();
       }
-    },
+    }
   });
 
   const userQuery = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
       const res = await fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${params.id}`
         // `http://localhost:5148/api/user/${params.id}`,
       );
       if (res.ok) {
@@ -44,20 +40,17 @@ export function UserBookmarksPage({
       }
     }
   });
-  
 
   if (session.status === 'loading' || isLoading) {
-    return (
-      <BookmarkLoadingPage></BookmarkLoadingPage>
-    );
+    return <BookmarkLoadingPage></BookmarkLoadingPage>;
   }
 
   if (isError) {
-    notFound()
+    notFound();
   }
 
   const isUser = params.id === session.data?.user?.userId?.toString();
-    
+
   return (
     <div className="flex justify-center py-10 md:px-10 -md:min-h-[calc(100dvh-64px)]">
       <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl -md:bg-background">

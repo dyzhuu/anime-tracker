@@ -59,12 +59,12 @@ function TriggerButton({
       {session.status === 'loading' ? (
         <Button
           variant="icon"
-          aria-label='Bookmark Button'
+          aria-label="Bookmark Button"
           className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
         >
-            {children ?? (
-              <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
-            )}
+          {children ?? (
+            <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
+          )}
         </Button>
       ) : session.status === 'authenticated' ? (
         <TooltipProvider>
@@ -74,7 +74,7 @@ function TriggerButton({
                 <Button
                   variant="icon"
                   className={`fill-primary-foreground group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
-                          onClick={(e) => {
+                  onClick={(e) => {
                     e.stopPropagation();
                     if (session.status !== 'authenticated') {
                       toast({
@@ -129,7 +129,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
     queryFn: async () => {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       const res = await fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/${user.userId}/bookmarks/${anime.id}`,
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${user.userId}/bookmarks/${anime.id}`,
         // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
         {
           headers: {
@@ -153,7 +153,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
       const method = data ? 'PUT' : 'POST';
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       return fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${anime.id}`,
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/profile/bookmarks/${anime.id}`,
         // `http://localhost:5148/api/user/profile/bookmarks/${anime.id}`,
         {
           method,
@@ -186,7 +186,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
     }
   });
 
-  async function onSubmit(submitData: {rating: number, status: number}) {
+  async function onSubmit(submitData: { rating: number; status: number }) {
     const bookmarkData = {
       userId: user.userId!,
       animeId: anime.id,
@@ -306,7 +306,7 @@ export default function BookmarkButton({
                 await fetch('/api/token').then((res) => res.json())
               ).token;
               const res = await fetch(
-                `https://dzmsabackend.azurewebsites.net/api/user/${session.data?.user?.userId}/bookmarks/${anime.id}`,
+                `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${session.data?.user?.userId}/bookmarks/${anime.id}`,
                 // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
                 {
                   headers: {

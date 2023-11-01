@@ -22,9 +22,8 @@ export const options: NextAuthOptions = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        // const res = await fetch('http://localhost:5148/api/auth/login',
         const res = await fetch(
-          'https://dzmsabackend.azurewebsites.net/api/auth/login',
+          `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/auth/login`,
           {
             method: 'POST',
             headers: {
@@ -38,6 +37,7 @@ export const options: NextAuthOptions = {
           const user = await res.json();
           return user;
         } else {
+          console.log('error');
           return null;
         }
       }
@@ -64,9 +64,8 @@ export const options: NextAuthOptions = {
       if (account?.provider === 'google' || account?.provider === 'github') {
         const username = user.name?.split(' ')[0];
         try {
-          // const res = await fetch('http://localhost:5148/api/auth/oauth2',
           const res = await fetch(
-            'https://dzmsabackend.azurewebsites.net/api/auth/oauth2',
+            `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/auth/oauth2`,
             {
               method: 'POST',
               headers: {
@@ -79,6 +78,7 @@ export const options: NextAuthOptions = {
             }
           );
         } catch (e) {
+          console.log(e);
           return false;
         }
       }
@@ -89,9 +89,9 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       const id = token.id;
-      // const res = await fetch(`http://localhost:5148/api/user/external/${id}`);
       const res = await fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/external/${id}`);
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/external/${id}`
+      );
       const user = await res.json();
       session.user = { ...token, ...user };
       return session;

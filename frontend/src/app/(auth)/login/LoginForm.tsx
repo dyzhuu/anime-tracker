@@ -16,10 +16,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  useRouter,
-  useSearchParams,
-} from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { redirectUrl } from '@/lib/utils';
 
@@ -57,6 +54,7 @@ export default function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const res = (await signIn('credentials', { ...values, redirect: false }))!;
+    console.log(res);
     if (!res.error) {
       router.push(redirectUrl(searchParams));
     } else if (res.error === 'CredentialsSignin') {
@@ -68,7 +66,7 @@ export default function LoginForm() {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'There was an error processing your request'
+        description: res.error
       });
     }
     setIsLoading(false);

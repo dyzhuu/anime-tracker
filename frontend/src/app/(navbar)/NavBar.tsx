@@ -71,7 +71,7 @@ export function NavBar() {
         </div>
 
         <div className="flex flex-row w-full ml-2 gap-x-2">
-          <div className='flex grow'></div>
+          <div className="flex grow"></div>
           <div
             className={`-lg:w-full items-center peer ${
               pathname === '/' && 'hidden'
@@ -112,7 +112,7 @@ export function NavBar() {
                   }}
                   asChild
                 >
-                  <Link href="/login?redirectTo=/user/undefined/bookmarks">
+                  <Link href="/login">
                     <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
                   </Link>
                 </Button>

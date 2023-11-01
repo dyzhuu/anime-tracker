@@ -67,7 +67,7 @@ export default function RegisterForm() {
     try {
       // const res = await fetch('http://localhost:5148/api/auth/register',
       const res = await fetch(
-        'https://dzmsabackend.azurewebsites.net/api/auth/register',
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/auth/register`,
         {
           method: 'POST',
           cache: 'no-store',

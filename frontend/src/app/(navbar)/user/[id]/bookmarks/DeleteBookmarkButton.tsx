@@ -28,7 +28,7 @@ export default function DeleteBookmarkButton({
     mutationFn: async (animeId: string) => {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       return fetch(
-        `https://dzmsabackend.azurewebsites.net/api/user/profile/bookmarks/${animeId}`,
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/profile/bookmarks/${animeId}`,
         // `http://localhost:5148/api/user/profile/bookmarks/${bookmark.animeId}`,
         {
           method: 'DELETE',

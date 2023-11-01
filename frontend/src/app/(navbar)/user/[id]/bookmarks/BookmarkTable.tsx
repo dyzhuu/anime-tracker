@@ -121,7 +121,7 @@ export function BookmarkTable({
                     await fetch('/api/token').then((res) => res.json())
                   ).token;
                   const res = await fetch(
-                    `https://dzmsabackend.azurewebsites.net/api/user/${session.data?.user?.userId}/bookmarks/${bookmark.animeId}`,
+                    `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${session.data?.user?.userId}/bookmarks/${bookmark.animeId}`,
                     // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
                     {
                       headers: {

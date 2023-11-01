@@ -64,20 +64,25 @@ export function ProfileForm() {
   async function onSubmit(values: z.infer<typeof profileFormSchema>) {
     const data = {
       id: session.data?.user?.userId,
-      username: values.username ? values.username : session.data?.user?.username,
+      username: values.username
+        ? values.username
+        : session.data?.user?.username,
       password: values.newPassword ?? ''
     };
 
     if (data.password) {
       const res = await fetch(
-        'https://dzmsabackend.azurewebsites.net/api/auth/login',
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/auth/login`,
         {
           method: 'POST',
           cache: 'no-store',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({username: data.username, password: currentPassword})
+          body: JSON.stringify({
+            username: data.username,
+            password: currentPassword
+          })
         }
       );
       if (!res.ok) {
@@ -89,13 +94,12 @@ export function ProfileForm() {
       }
     }
 
-    
     try {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       // const res = await fetch(
       //   'http://localhost:5148/api/user/profile',
-        const res = await fetch(
-          'https://dzmsabackend.azurewebsites.net/api/user/profile',
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/profile`,
         {
           method: 'PUT',
           headers: {
@@ -109,7 +113,7 @@ export function ProfileForm() {
       if (res.ok) {
         toast({
           title: 'Profile Updated'
-        })
+        });
         form.reset({
           newPassword: '',
           currentPassword: '',

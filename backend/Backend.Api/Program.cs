@@ -31,17 +31,17 @@ builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 
 builder.Services.AddScoped<IValidator<UserReqDto>, UserReqDtoValidator>();
 
-string token = Environment.GetEnvironmentVariable("Token");
-string connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
+// string token = Environment.GetEnvironmentVariable("Token");
+// string connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
 
-//var configuration = new ConfigurationBuilder()
-//    .SetBasePath(builder.Environment.ContentRootPath)
-//    .AddJsonFile("appsettings.json")
-//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
-//    .AddEnvironmentVariables()
-//    .Build();
-//string connectionString = configuration.GetConnectionString("DatabaseConnection");
-//string token = configuration.GetSection("AppSettings:Token").Value!;
+var configuration = new ConfigurationBuilder()
+   .SetBasePath(builder.Environment.ContentRootPath)
+   .AddJsonFile("appsettings.json")
+   .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
+   .AddEnvironmentVariables()
+   .Build();
+string connectionString = configuration.GetConnectionString("DatabaseConnection");
+string token = configuration.GetSection("AppSettings:Token").Value!;
 
 
 
