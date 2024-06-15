@@ -5,7 +5,7 @@ import { getAnime, query } from '@/lib/gql';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'MSAnime / New'
+  title: 'AniTrack / New'
 };
 
 export default async function NewPage() {

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
   const anime = await getAnimeFromId([params.id]);
   if (anime) {
     return {
-      title: `MSAnime / ${anime?.title?.english ?? anime?.title?.romaji}`
+      title: `AniTrack / ${anime?.title?.english ?? anime?.title?.romaji}`
     };
   }
 }
@@ -72,7 +72,7 @@ export default async function AnimePage({
 }) {
   let anime = await getAnimeFromId([params.id]);
   if (!anime) {
-    notFound()
+    notFound();
   }
 
   const recommendations = await getRecommendedAnime(params.id);

@@ -15,7 +15,7 @@ export function ProfilePage() {
       <div className="flex justify-center py-10 md:px-10">
         <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:w-[100dvw] max-w-4xl -md:bg-background">
           <CardHeader className="text-4xl font-semibold px-1 text-center">
-            Your profile
+            Update your account settings
           </CardHeader>
           <div className="mx-5">
             <Separator className="mb-5"></Separator>

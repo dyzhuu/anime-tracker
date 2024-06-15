@@ -5,23 +5,23 @@ import { getAnime, query } from '@/lib/gql';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'MSAnime / Top'
+  title: 'AniTrack / Trending'
 };
 
-export default async function TopPage() {
-  const anime = await getAnime(query.top);
+export default async function TrendingPage() {
+  const anime = await getAnime(query.trending);
   return (
     <div className="flex justify-center md:p-10">
       <Card className="w-full py-5 -md:border-hidden -md:shadow-none -md:bg-background">
         <CardHeader className="text-3xl font-medium px-10">
-          Top Anime
+          Trending Anime
         </CardHeader>
         <div className="mx-5">
           <Separator className="mb-10"></Separator>
         </div>
         <CardContent>
           <InfiniteAnimeScroll
-            query={query.top}
+            query={query.trending}
             initial={anime}
           ></InfiniteAnimeScroll>
         </CardContent>

@@ -1,5 +1,5 @@
 import { Button } from '../src/components/ui/button';
-import { Card, CardContent, CardTitle } from '../src//components/ui/card';
+import { Card, CardContent, CardTitle } from '../src/components/ui/card';
 import { ThemeProvider } from 'next-themes';
 import Link from 'next/link';
 import './styles.css';

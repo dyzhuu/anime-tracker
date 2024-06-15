@@ -1,4 +1,4 @@
-name: main_dzmsabackend
+name: anitrack-api
 
 on:
   push:
@@ -8,8 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE: msabackend
-  AZURE_WEBAPP_NAME: dzmsabackend
+  IMAGE: anitrack-api
 
 jobs:
   build-backend:

@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'MSAnime / Login'
+  title: 'AniTrack / Login'
 };
 
 function LoginFormFallback() {
@@ -15,9 +15,7 @@ function LoginFormFallback() {
 export default async function LoginPage() {
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">
-        Log In
-      </h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Log In</h1>
       <Suspense fallback={<LoginFormFallback></LoginFormFallback>}>
         <LoginForm />
       </Suspense>

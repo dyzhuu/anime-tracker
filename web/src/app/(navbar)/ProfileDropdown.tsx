@@ -16,7 +16,7 @@ import { usePathname } from 'next/navigation';
 
 export function ProfileDropdown({ children }: { children: React.ReactNode }) {
   const { theme, systemTheme, setTheme } = useTheme();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <DropdownMenu>
@@ -29,7 +29,8 @@ export function ProfileDropdown({ children }: { children: React.ReactNode }) {
             <Link href="/profile">Account Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <button className='w-full'
+            <button
+              className="w-full"
               onClick={() => {
                 if (theme === 'system') {
                   if (systemTheme === 'dark') {
@@ -44,7 +45,7 @@ export function ProfileDropdown({ children }: { children: React.ReactNode }) {
                 }
               }}
             >
-              Change Theme
+              Toggle theme
             </button>
           </DropdownMenuItem>
         </DropdownMenuGroup>
@@ -53,9 +54,9 @@ export function ProfileDropdown({ children }: { children: React.ReactNode }) {
           <button
             onClick={() => {
               if (pathname === '/profile') {
-                signOut({callbackUrl: '/'});
+                signOut({ callbackUrl: '/' });
               } else {
-                signOut()
+                signOut();
               }
             }}
             className="w-full"

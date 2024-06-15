@@ -9,15 +9,13 @@ function RegisterFormFallback() {
 }
 
 export const metadata: Metadata = {
-  title: 'MSAnime / Register'
+  title: 'AniTrack / Register'
 };
 
 export default function RegisterPage() {
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">
-        Sign up
-      </h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Sign up</h1>
       <Suspense fallback={<RegisterFormFallback></RegisterFormFallback>}>
         <RegisterForm />
       </Suspense>

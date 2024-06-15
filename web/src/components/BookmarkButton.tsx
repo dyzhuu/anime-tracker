@@ -32,28 +32,27 @@ import {
 } from '@/components/ui/form';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { DefaultSession, Session, User } from 'next-auth';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { User } from 'next-auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
+import { Skeleton } from './ui/skeleton';
 
-function TriggerButton({
+function BookmarkTriggerButton({
   session,
   hasTooltip = true,
   children,
-  className,
-  onMouseEnter
+  className
 }: {
   session: any;
   hasTooltip?: boolean;
   children?: React.ReactNode;
   className?: string;
-  onMouseEnter?: React.MouseEventHandler;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
   const url = pathname + '?' + searchParams?.toString();
+
   return (
     <>
       {session.status === 'loading' ? (
@@ -61,6 +60,7 @@ function TriggerButton({
           variant="icon"
           aria-label="Bookmark Button"
           className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
+          onClick={(e) => e.stopPropagation()}
         >
           {children ?? (
             <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
@@ -74,17 +74,7 @@ function TriggerButton({
                 <Button
                   variant="icon"
                   className={`fill-primary-foreground group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (session.status !== 'authenticated') {
-                      toast({
-                        variant: 'destructive',
-                        title: 'Log in to use bookmarks'
-                      });
-                      router.push(`/login?redirectTo=${url}`);
-                    }
-                  }}
-                  onMouseEnter={onMouseEnter}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   {children ?? (
                     <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
@@ -124,13 +114,12 @@ function TriggerButton({
 function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['bookmark', anime.id, user.userId],
     queryFn: async () => {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${user.userId}/bookmarks/${anime.id}`,
-        // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -141,12 +130,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
     }
   });
 
-  const form = useForm({
-    defaultValues: {
-      status: data?.status?.toString(),
-      rating: data?.rating?.toString()
-    }
-  });
+  const form = useForm();
 
   const mutation = useMutation({
     mutationFn: async (bookmarkData: Bookmark) => {
@@ -154,7 +138,6 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       return fetch(
         `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/profile/bookmarks/${anime.id}`,
-        // `http://localhost:5148/api/user/profile/bookmarks/${anime.id}`,
         {
           method,
           headers: {
@@ -166,7 +149,9 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmarks'] });
+      queryClient.invalidateQueries({
+        queryKey: ['bookmark', anime.id, user.userId]
+      });
       if (data) {
         toast({
           title: 'Bookmark Updated'
@@ -186,17 +171,33 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
     }
   });
 
-  async function onSubmit(submitData: { rating: number; status: number }) {
+  async function onSubmit(submitData: { rating?: number; status?: number }) {
     const bookmarkData = {
       userId: user.userId!,
       animeId: anime.id,
       title: anime.title.english ?? anime.title.romaji,
       description: anime.description!,
       imageURL: anime?.coverImage.medium,
-      ...submitData
+      rating: submitData.rating ?? data?.rating,
+      status: submitData.status ?? data?.status
     };
     mutation.mutate(bookmarkData);
   }
+
+  if (isLoading)
+    return (
+      <div className="space-y-6 z-50">
+        <div>
+          <Skeleton className="h-3 w-16 mb-1" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <div>
+          <Skeleton className="h-3 w-16 mb-1" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <Skeleton className="h-10 w-full" />
+      </div>
+    );
 
   return (
     <Form {...form}>
@@ -209,9 +210,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
               <FormLabel>Status</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={
-                  data?.status === 0 ? field.value : data?.status?.toString()
-                }
+                defaultValue={data?.status?.toString()}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -237,9 +236,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
               <FormLabel>Rating</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={
-                  data?.rating === 0 ? field.value : data?.rating?.toString()
-                }
+                defaultValue={data?.rating?.toString()}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -291,36 +288,15 @@ export default function BookmarkButton({
   className?: string;
 }) {
   const session = useSession();
-  const queryClient = useQueryClient();
   return (
     <Dialog>
-      <TriggerButton
+      <BookmarkTriggerButton
         hasTooltip={hasTooltip}
         session={session}
         className={className}
-        onMouseEnter={async () => {
-          queryClient.prefetchQuery({
-            queryKey: ['bookmark', anime.id, session.data?.user?.userId],
-            queryFn: async () => {
-              const token = (
-                await fetch('/api/token').then((res) => res.json())
-              ).token;
-              const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${session.data?.user?.userId}/bookmarks/${anime.id}`,
-                // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`
-                  }
-                }
-              );
-              if (res.ok) return await res.json();
-            }
-          });
-        }}
       >
         {children}
-      </TriggerButton>
+      </BookmarkTriggerButton>
       {session.status === 'authenticated' && (
         <DialogContent className="z-50 sm:max-w-[425px] fixed left-[50%] top-[50%] pointer-events-auto grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full">
           <DialogHeader>
