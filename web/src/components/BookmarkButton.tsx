@@ -153,6 +153,9 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
       queryClient.invalidateQueries({
         queryKey: ['bookmark', anime.id, user.userId]
       });
+      queryClient.invalidateQueries({
+        queryKey: ['bookmarks']
+      });
       if (data) {
         toast({
           title: 'Bookmark Updated'
