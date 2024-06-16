@@ -37,7 +37,6 @@ export const options: NextAuthOptions = {
           const user = await res.json();
           return user;
         } else {
-          console.log('error');
           return null;
         }
       }
@@ -78,7 +77,6 @@ export const options: NextAuthOptions = {
             }
           );
         } catch (e) {
-          console.log(e);
           return false;
         }
       }

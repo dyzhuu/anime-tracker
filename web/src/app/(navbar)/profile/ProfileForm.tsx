@@ -18,8 +18,11 @@ import { toast } from '@/components/ui/use-toast';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import { Router } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function ProfileForm() {
+  const router = useRouter();
   const session = useSession();
   const [username, setUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -96,8 +99,6 @@ export function ProfileForm() {
 
     try {
       const token = (await fetch('/api/token').then((res) => res.json())).token;
-      // const res = await fetch(
-      //   'http://localhost:5148/api/user/profile',
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/profile`,
         {
@@ -110,21 +111,19 @@ export function ProfileForm() {
         }
       );
 
-      if (res.ok) {
-        toast({
-          title: 'Profile Updated'
-        });
-        form.reset({
-          newPassword: '',
-          currentPassword: '',
-          username: ''
-        });
-      } else {
+      if (!res.ok) {
         toast({
           variant: 'destructive',
           title: 'Username taken.'
         });
       }
+
+      toast({
+        title: 'Profile Updated'
+      });
+
+      session.update({ user: username });
+      router.refresh();
     } catch (e) {
       toast({
         variant: 'destructive',
@@ -155,6 +154,7 @@ export function ProfileForm() {
                 <Input
                   autoComplete="off"
                   placeholder={session.data?.user?.username}
+                  defaultValue={session.data?.user?.username}
                   {...field}
                 />
               </FormControl>

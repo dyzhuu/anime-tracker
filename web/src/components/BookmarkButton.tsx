@@ -32,10 +32,9 @@ import {
 } from '@/components/ui/form';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { User } from 'next-auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
 import { Skeleton } from './ui/skeleton';
 
 function BookmarkTriggerButton({
@@ -49,65 +48,66 @@ function BookmarkTriggerButton({
   children?: React.ReactNode;
   className?: string;
 }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const url = pathname + '?' + searchParams?.toString();
 
-  return (
-    <>
-      {session.status === 'loading' ? (
-        <Button
-          variant="icon"
-          aria-label="Bookmark Button"
-          className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {children ?? (
-            <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
-          )}
-        </Button>
-      ) : session.status === 'authenticated' ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DialogTrigger asChild>
-                <Button
-                  variant="icon"
-                  className={`fill-primary-foreground group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {children ?? (
-                    <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
-                  )}
-                </Button>
-              </DialogTrigger>
-            </TooltipTrigger>
-            <TooltipContent className={`w-30 p-1 ${!hasTooltip && 'hidden'}`}>
-              <p className="text-xs">Add to Bookmarks</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <Button
-          variant="icon"
-          className={`group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            toast({
-              variant: 'destructive',
-              title: 'Log in to use bookmarks'
-            });
-          }}
-          asChild
-        >
-          <Link href={`/login?redirectTo=${url}`}>
-            {children ?? (
-              <Icons.bookmarkHollow className="group-hover/button:scale-110 fill-white"></Icons.bookmarkHollow>
-            )}
-          </Link>
-        </Button>
+  if (session.status === 'loading') {
+    <Button
+      variant="icon"
+      aria-label="Bookmark Button"
+      className={`fill-white group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {children ?? (
+        <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
       )}
-    </>
+    </Button>;
+  }
+
+  if (session.status !== 'authenticated') {
+    return (
+      <Button
+        variant="icon"
+        className={`group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          toast({
+            variant: 'destructive',
+            title: 'Log in to use bookmarks'
+          });
+          router.push(`/login?redirectTo=${url}`);
+        }}
+      >
+        {children ?? (
+          <Icons.bookmarkHollow className="group-hover/button:scale-110 fill-white"></Icons.bookmarkHollow>
+        )}
+      </Button>
+    );
+  }
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button
+              variant="icon"
+              className={`fill-primary-foreground group/button hover:bg-zinc-300/[0.4] active:bg-zinc-500/[0.3] active:scale-95 ${className}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {children ?? (
+                <Icons.bookmarkHollow className="group-hover/button:scale-110"></Icons.bookmarkHollow>
+              )}
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent className={`w-30 p-1 ${!hasTooltip && 'hidden'}`}>
+          <p className="text-xs">Add to Bookmarks</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -127,6 +127,7 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
         }
       );
       if (res.ok) return await res.json();
+      return null;
     }
   });
 
@@ -238,12 +239,11 @@ function SelectMenu({ anime, user }: { anime: Anime; user: User }) {
                 onValueChange={field.onChange}
                 defaultValue={data?.rating?.toString()}
               >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select rating" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
+                <FormControl></FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select rating" />
+                </SelectTrigger>
+                <SelectContent className="*:hover:bg-accent">
                   <SelectItem value="0">Select Rating</SelectItem>
                   <SelectItem value="10">10</SelectItem>
                   <SelectItem value="9">9</SelectItem>
@@ -288,23 +288,27 @@ export default function BookmarkButton({
   className?: string;
 }) {
   const session = useSession();
+
   return (
-    <Dialog>
-      <BookmarkTriggerButton
-        hasTooltip={hasTooltip}
-        session={session}
-        className={className}
-      >
-        {children}
-      </BookmarkTriggerButton>
-      {session.status === 'authenticated' && (
-        <DialogContent className="z-50 sm:max-w-[425px] fixed left-[50%] top-[50%] pointer-events-auto grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full">
-          <DialogHeader>
-            <DialogTitle>Add / Edit bookmark information</DialogTitle>
-          </DialogHeader>
-          <SelectMenu anime={anime} user={session.data.user!}></SelectMenu>
-        </DialogContent>
-      )}
-    </Dialog>
+    <>
+      <Dialog>
+        <BookmarkTriggerButton
+          hasTooltip={hasTooltip}
+          session={session}
+          className={className}
+        >
+          {children}
+        </BookmarkTriggerButton>
+        {session.status === 'authenticated' && (
+          <DialogContent className="z-50 sm:max-w-[425px] fixed left-[50%] top-[50%] pointer-events-auto grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full">
+            <DialogHeader>
+              <DialogTitle>Add / Edit bookmark information</DialogTitle>
+            </DialogHeader>
+
+            <SelectMenu anime={anime} user={session.data.user!}></SelectMenu>
+          </DialogContent>
+        )}
+      </Dialog>
+    </>
   );
 }

@@ -45,22 +45,13 @@ function RightArrow() {
   );
 }
 
-export function AnimeBar({ animeList, size }: { animeList: Anime[], size: string }) {
-  // const [selected, setSelected] = useState([]);
-
-  // const isItemSelected = (id: ConcatArray<never>) =>
-  //   !!selected.find((el) => el === id);
-
-  // const handleClick = (id: ConcatArray<never>) => () => {
-  //   const itemSelected = isItemSelected(id);
-
-  //   setSelected((currentSelected) =>
-  //     itemSelected
-  //       ? currentSelected.filter((el) => el !== id)
-  //       : currentSelected.concat(id)
-  //   );
-  // };
-
+export function AnimeBar({
+  animeList,
+  size
+}: {
+  animeList: Anime[];
+  size: string;
+}) {
   return (
     <div className="relative md:px-8 hide-scrollbar" aria-label="Anime Bar">
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
@@ -69,8 +60,6 @@ export function AnimeBar({ animeList, size }: { animeList: Anime[], size: string
             anime={anime}
             key={index as unknown as number}
             size={size}
-            // onClick={handleClick(index)}
-            // selected={isItemSelected(index)}
           ></AnimeCard>
         ))}
       </ScrollMenu>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { SearchBar } from '@/components/SearchBar';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Icons } from '@/lib/icons';
 import { useSession } from 'next-auth/react';
 import { Drawer } from '@/app/(navbar)/Drawer';
@@ -14,6 +14,7 @@ import { Suspense } from 'react';
 import { ProfileButton } from './ProfileButton';
 
 export function NavBar() {
+  const router = useRouter();
   const pathname = usePathname();
   const session = useSession();
   const { toast } = useToast();
@@ -109,12 +110,10 @@ export function NavBar() {
                       variant: 'destructive',
                       title: 'Log in to view content'
                     });
+                    router.push('/login');
                   }}
-                  asChild
                 >
-                  <Link href="/login">
-                    <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
-                  </Link>
+                  <Icons.bookmarkSolid className="h-7"></Icons.bookmarkSolid>
                 </Button>
                 <Suspense
                   fallback={

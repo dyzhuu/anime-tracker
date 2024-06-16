@@ -9,15 +9,28 @@ function BookmarkButtonFallback() {
   return <Skeleton className="h-10 w-full rounded-md"></Skeleton>;
 }
 
-export default function AnimeCard({ anime, size }: { anime: Anime, size: string, onClick?: () => void, selected?: boolean }) {
+export default function AnimeCard({
+  anime,
+  size
+}: {
+  anime: Anime;
+  size: string;
+  onClick?: () => void;
+  selected?: boolean;
+}) {
   return (
-    <Link href={`/anime/${anime.id}`} prefetch={false} passHref legacyBehavior>
+    <div
+      className="overflow-hidden cursor-pointer rounded-lg"
+      aria-label="Anime Card"
+    >
       <div
-        className="overflow-hidden cursor-pointer rounded-lg"
-        aria-label="Anime Card"
+        className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}
       >
-        <div
-          className={`group space-y-1 p-2 ${size} h-full hover:scale-105 overflow-hidden transition-all`}
+        <Link
+          href={`/anime/${anime.id}`}
+          prefetch={false}
+          passHref
+          legacyBehavior
         >
           <AspectRatio ratio={3 / 4} className="rounded-md">
             <Skeleton className="w-full h-full bg-muted absolute group-hover:scale-[1.5]"></Skeleton>
@@ -49,13 +62,13 @@ export default function AnimeCard({ anime, size }: { anime: Anime, size: string,
               </Suspense>
             </div>
           </AspectRatio>
-          <div>
-            <p className="text-sm font-medium vertical-text-ellipsis h-16 m-1 group-hover:opacity-0 pointer-events-none">
-              {anime?.title?.english ?? anime?.title?.romaji}
-            </p>
-          </div>
+        </Link>
+        <div>
+          <p className="text-sm font-medium vertical-text-ellipsis h-16 m-1 group-hover:opacity-0 pointer-events-none">
+            {anime?.title?.english ?? anime?.title?.romaji}
+          </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

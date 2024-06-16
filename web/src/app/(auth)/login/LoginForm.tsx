@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/lib/icons';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -31,18 +31,6 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // useEffect(() => {
-  //   if (searchParams?.get('error') !== null) {
-  //     setTimeout(() => {
-  //       toast({
-  //         variant: 'destructive',
-  //         title: 'Error',
-  //         description: searchParams.get('error')
-  //       });
-  //     }, 100);
-  //   }
-  // }, [toast, searchParams]);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +42,6 @@ export default function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const res = (await signIn('credentials', { ...values, redirect: false }))!;
-    console.log(res);
     if (!res.error) {
       router.push(redirectUrl(searchParams));
     } else if (res.error === 'CredentialsSignin') {

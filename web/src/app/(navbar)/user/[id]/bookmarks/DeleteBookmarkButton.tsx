@@ -29,7 +29,6 @@ export default function DeleteBookmarkButton({
       const token = (await fetch('/api/token').then((res) => res.json())).token;
       return fetch(
         `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/profile/bookmarks/${animeId}`,
-        // `http://localhost:5148/api/user/profile/bookmarks/${bookmark.animeId}`,
         {
           method: 'DELETE',
           headers: {

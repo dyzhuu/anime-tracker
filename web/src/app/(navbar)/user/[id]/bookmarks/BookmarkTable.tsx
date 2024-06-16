@@ -104,7 +104,7 @@ export function BookmarkTable({
           </Link>
         </div>
       </div>
-      <div className='bg-card'>
+      <div className="bg-card">
         {bookmarks.map((bookmark: Bookmark, index: number) => (
           <div
             className="w-full grid grid-cols-12 border border-t-0 group last:rounded-b-lg"
@@ -122,7 +122,6 @@ export function BookmarkTable({
                   ).token;
                   const res = await fetch(
                     `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${session.data?.user?.userId}/bookmarks/${bookmark.animeId}`,
-                    // `http://localhost:5148/api/user/${user.userId}/bookmarks/${anime.id}`,
                     {
                       headers: {
                         Authorization: `Bearer ${token}`

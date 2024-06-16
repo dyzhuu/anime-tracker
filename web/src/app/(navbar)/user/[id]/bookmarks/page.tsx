@@ -3,7 +3,6 @@ import { UserBookmarksPage } from './UserBookmarksPage';
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/user/${params.id}`
-    // `http://localhost:5148/api/user/${params.id}`,
   );
   const user = await res.json();
   return {
