@@ -66,7 +66,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("*")
+            policy.WithOrigins("https://anitrackk.vercel.app", "https://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -120,15 +120,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
+
+// CORS should be enabled before authentication/authorization
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors(MyAllowSpecificOrigins);
 
 app.Run();
