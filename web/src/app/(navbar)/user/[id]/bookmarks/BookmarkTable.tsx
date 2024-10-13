@@ -69,8 +69,8 @@ export function BookmarkTable({
               sortTag === 'title'
                 ? 'status'
                 : sortTag === 'status'
-                ? 'rating'
-                : 'title'
+                  ? 'rating'
+                  : 'title'
             }`}
             replace={true}
             className="border-r-[1px] col-span-11 md:hidden -md:border-r-0"
@@ -80,8 +80,8 @@ export function BookmarkTable({
               {sortTag === 'title'
                 ? 'Title'
                 : sortTag === 'rating'
-                ? 'Rating'
-                : 'Status'}
+                  ? 'Rating'
+                  : 'Status'}
             </span>
           </Link>
           <Link
@@ -105,6 +105,11 @@ export function BookmarkTable({
         </div>
       </div>
       <div className="bg-card">
+        {!bookmarks.length && (
+          <div className="w-full p-6 font-bold border border-t-0 group last:rounded-b-lg text-center">
+            No bookmarks found.
+          </div>
+        )}
         {bookmarks.map((bookmark: Bookmark, index: number) => (
           <div
             className="w-full grid grid-cols-12 border border-t-0 group last:rounded-b-lg"
@@ -138,10 +143,10 @@ export function BookmarkTable({
                 bookmark.status === 1
                   ? 'border-green-600'
                   : bookmark.status === 2
-                  ? 'border-blue-900'
-                  : bookmark.status === 4
-                  ? 'border-red-700'
-                  : 'border-muted-foreground'
+                    ? 'border-blue-900'
+                    : bookmark.status === 4
+                      ? 'border-red-700'
+                      : 'border-muted-foreground'
               }`}
             >
               {index + 1}

@@ -1,6 +1,8 @@
 .env
 .env.local
 
+**/node_modules
+
 # next-pwa
 /public/sw.js
 /public/workbox-*.js

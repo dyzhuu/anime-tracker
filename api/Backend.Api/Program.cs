@@ -31,19 +31,27 @@ builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 
 builder.Services.AddScoped<IValidator<UserReqDto>, UserReqDtoValidator>();
 
-// string token = Environment.GetEnvironmentVariable("Token");
-// string connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
+string token;
+string connectionString;
 
-var configuration = new ConfigurationBuilder()
-   .SetBasePath(builder.Environment.ContentRootPath)
-   .AddJsonFile("appsettings.json")
-   .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
-   .AddEnvironmentVariables()
-   .Build();
-string connectionString = configuration.GetConnectionString("DatabaseConnection");
-string token = configuration.GetSection("AppSettings:Token").Value!;
+if (builder.Environment.IsDevelopment())
+{
+    var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // Optional environment-specific settings file
+    .AddEnvironmentVariables()
+    .Build();
 
-
+    connectionString = configuration.GetSection("AppSettings:DatabaseConnection").Value;
+    token = configuration.GetSection("AppSettings:Token").Value;
+}
+else
+{
+    // Use environment variables for production
+    token = Environment.GetEnvironmentVariable("Token");
+    connectionString = Environment.GetEnvironmentVariable("DatabaseConnection");
+}
 
 
 builder.Services.AddDbContext<DataContext>(o =>
@@ -58,7 +66,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("https://davidzhumsa.azurewebsites.net", "http://localhost:3000")
+            policy.WithOrigins("*")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
